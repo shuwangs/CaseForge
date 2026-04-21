@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with: 
+          version: latest
+      - name: Check client
+        working-directory: client
+        run: biome ci .
+      
+      - name: Checkout server
+        working-directory: server
+        run: biome ci .
