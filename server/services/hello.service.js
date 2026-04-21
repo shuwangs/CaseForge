@@ -1,7 +1,6 @@
 export function getHelloMessage() {
-    return {
-        success: true,
-        message: "Test service is working"
-    };
+	return {
+		success: true,
+		message: "Test service is working",
+	};
 }
-
