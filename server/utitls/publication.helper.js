@@ -1,4 +1,4 @@
 export const validateOrcid = () => {
-	// placeholder vailidation methods
+	// TODO: implement the logic of validation 
 	return true;
 };
