@@ -1,11 +1,15 @@
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage.jsx";
 
-function App() {
+const App = () => {
 	return (
-		<>
-			<h1>CaseForge</h1>
-		</>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<LandingPage />} />
+			</Routes>
+		</BrowserRouter>
 	);
-}
+};
 
 export default App;
