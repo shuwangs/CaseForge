@@ -1,4 +1,4 @@
-import AppError from "../errors/appError.js";
+import AppError from "../errors/AppError.js";
 import { searchPublicationsByOrcid } from "../services/publication.service.js";
 import { validateOrcid } from "../utitls/publication.helper.js";
 

@@ -1,0 +1,44 @@
+services:
+  caseforge-app:
+
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./client/.env
+
+    depends_on:
+      - caseforge-server
+
+  caseforge-server:
+
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env.docker
+    environment:
+      - PGHOST=caseforge-db
+    depends_on:
+      - caseforge-db
+
+  caseforge-db:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./server/.env.docker
+    environment:
+      - POSTGRES_DB=caseforge
+      - POSTGRES_PASSWORD=caseforge
+
+    volumes:
+
+      - caseforge-data:/var/lib/postgresql/data
+
+volumes:
+  caseforge-data:
