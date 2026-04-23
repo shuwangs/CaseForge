@@ -8,7 +8,8 @@ services:
       - "5173:5173"
     env_file:
       - ./client/.env
-
+    environment:
+      - DOCKER_ENV=true
     depends_on:
       - caseforge-server
 
