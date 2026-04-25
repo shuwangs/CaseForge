@@ -77,3 +77,30 @@ caseforge-db on localhost:5432
 
 #### Remove containers and database volume
 `docker compose down -v`
+
+
+## Run Locally
+### 1. Clone repo
+
+git clone https://github.com/yourname/caseforge.git
+cd caseforge
+
+### 2. Setup environment variables
+
+Create `server/.env.docker`:
+
+DATABASE_URL=your_neon_connection_string
+PORT=3000
+
+Create `client/.env`:
+
+VITE_API_BASE_URL=http://localhost:3000
+
+### 3. Install dependencies (optional if using Docker)
+
+cd server && npm install
+cd ../client && npm install
+
+### 4. Run with Docker
+
+docker compose up --build
