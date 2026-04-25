@@ -48,7 +48,26 @@ export const parsePublisher = (publisherString) => {
 		publisherCrossrefId,
 	};
 };
+const normalizeDate = (dateString) => {
+	if (!dateString) return null;
 
+	// 2021 -> 2021-01-01
+	if (/^\d{4}$/.test(dateString)) {
+		return `${dateString}-01-01`;
+	}
+
+	// 2021-06 -> 2021-06-01
+	if (/^\d{4}-\d{2}$/.test(dateString)) {
+		return `${dateString}-01`;
+	}
+
+	// 2021-06-15
+	if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+		return dateString;
+	}
+
+	return null;
+};
 export const normalizePublication = (rawPublication) => {
 	const ids = extractIds(rawPublication.id);
 	const journal = parseJournal(rawPublication.venue);
@@ -58,7 +77,7 @@ export const normalizePublication = (rawPublication) => {
 		title: rawPublication.title || null,
 		authors: rawPublication.author || null,
 		publicationType: rawPublication.type || null,
-		publicationDate: rawPublication.pub_date || null,
+		publicationDate: normalizeDate(rawPublication.pub_date) || null,
 
 		doi: ids.doi,
 		openalexId: ids.openalexId,
@@ -66,7 +85,7 @@ export const normalizePublication = (rawPublication) => {
 
 		journalName: journal.journalName,
 		journalIssns: journal.journalIssns,
-		journalOpenalexId: journal.journalOpenalexId,
+		journalOpenalexId: journal.journalOpenalex,
 
 		publisherName: publisher.publisherName,
 		publisherCrossrefId: publisher.publisherCrossrefId,

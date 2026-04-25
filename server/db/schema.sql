@@ -57,10 +57,10 @@ CREATE TABLE publications (
   pmid VARCHAR(50),
 
   journal_name TEXT,
-  journal_issns VARCHAR(20),
+  journal_issns VARCHAR(255),
   journal_openalex VARCHAR(20),
 
-  publisher_name TEXT
+  publisher_name TEXT,
   publisher_crossrefId VARCHAR(10),
 
   raw_data JSONB,

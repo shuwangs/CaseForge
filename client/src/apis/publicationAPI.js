@@ -18,16 +18,15 @@ export const fetchPublications = async (orcidId) => {
 	return data.data;
 };
 
-
-export const postPublications = async (payload) => {
+export const postPublications = async (projectId, payload) => {
 	console.log("In apis,  posting publications to db:", payload);
-	const result = await fetch(`api/publication/search`, {
+	const result = await fetch(`api/projects/${projectId}/publications`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			payload
+			publications: payload,
 		}),
 	});
 

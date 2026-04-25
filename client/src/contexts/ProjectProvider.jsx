@@ -4,7 +4,7 @@ import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
-	const [project, setProject] = useState(null);
+	const [projectId, setProjectId] = useState(1);
 	const [publications, setPubulications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -26,25 +26,25 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
-	const savePublications = async (payload) => {
+	const savePublications = async (projectId, payload) => {
 		try {
 			setError("");
 			setLoading(true);
-			const data = await postPublications(payload);
-
+			console.log("savePublications in the provider :", payload);
+			const data = await postPublications(projectId, payload);
 		} catch (err) {
 			setError(err.message || "Failed to save publications");
 		} finally {
 			setLoading(false);
 		}
-	}
+	};
 
 	const values = {
-		project,
+		projectId,
 		publications,
 		setPubulications,
 		onFetchPubliction,
-		savePublications
+		savePublications,
 	};
 
 	return (
