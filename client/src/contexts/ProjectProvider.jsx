@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { fetchPublications } from "../apis/publicationAPI.js";
+import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 
 export const ProjectContext = createContext();
 
@@ -26,11 +26,25 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
+	const savePublications = async (payload) => {
+		try {
+			setError("");
+			setLoading(true);
+			const data = await postPublications(payload);
+
+		} catch (err) {
+			setError(err.message || "Failed to save publications");
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	const values = {
 		project,
 		publications,
 		setPubulications,
 		onFetchPubliction,
+		savePublications
 	};
 
 	return (

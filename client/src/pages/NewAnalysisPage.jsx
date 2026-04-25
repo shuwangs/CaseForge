@@ -12,10 +12,12 @@ const NewAnalysisPage = () => {
 			</div>
 			<OrcidInput />
 
-			{publications.length > 0 && <PublicationsGrid publications={publications} />}
+			{publications.length > 0 &&
+				<PublicationsGrid publications={publications} />
+
+			}
 
 		</div>
-
 
 	);
 };
