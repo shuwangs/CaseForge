@@ -9,7 +9,7 @@
 		"lint": "eslint .",
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
-		"test": "echo \"No tests yet\""
+		"test": "vitest"
 	},
 	"keywords": [],
 	"author": "",
@@ -23,6 +23,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.12",
-		"nodemon": "^3.1.14"
+		"nodemon": "^3.1.14",
+		"vitest": "^4.1.5"
 	}
 }
