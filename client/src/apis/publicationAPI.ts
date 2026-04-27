@@ -19,7 +19,9 @@ interface ApiResponse<T> {
 	data: T;
 }
 
-export const fetchPublications = async (orcidId: string): Promise<Publication[]> => {
+export const fetchPublications = async (
+	orcidId: string,
+): Promise<Publication[]> => {
 	console.log("In apis, resqing orcid is:", orcidId);
 	const result = await fetch(`api/publication/search`, {
 		method: "POST",
@@ -39,7 +41,10 @@ export const fetchPublications = async (orcidId: string): Promise<Publication[]>
 	return data.data;
 };
 
-export const postPublications = async (projectId: number, payload: Publication[]) => {
+export const postPublications = async (
+	projectId: number,
+	payload: Publication[],
+) => {
 	console.log("In apis,  posting publications to db:", payload);
 	const result = await fetch(`api/projects/${projectId}/publications`, {
 		method: "POST",

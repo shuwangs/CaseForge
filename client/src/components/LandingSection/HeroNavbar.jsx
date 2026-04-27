@@ -21,8 +21,12 @@ const HeroNavbar = () => {
 			</div>
 
 			<div className="flex px-15 text-2xl gap-6">
-				<button className="rounded-xl px-4 py-2">Login</button>
-				<button className="bg-primary rounded-xl px-4 py-2">Start Free</button>
+				<button className="rounded-xl px-4 py-2" type="button">
+					Login
+				</button>
+				<button className="bg-primary rounded-xl px-4 py-2" type="button">
+					Start Free
+				</button>
 			</div>
 		</nav>
 	);

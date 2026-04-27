@@ -4,15 +4,11 @@ import useProject from "../hooks/useProject.js";
 import { validateOrcidId } from "../utils/validateOrcidId.js";
 
 const OrcidInput = () => {
-	const { onFetchPubliction, publications, setPublications } = useProject();
+	const { onFetchPubliction, publications } = useProject();
 
 	useEffect(() => {
 		console.log("fetched publications are: ", publications);
 	}, [publications]);
-
-	useEffect(() => {
-		console.log("fetched publications are: ", publications);
-	}, []);
 
 	const initialFormData = {
 		projectName: "",
@@ -53,7 +49,7 @@ const OrcidInput = () => {
 					<input
 						id="orcidId"
 						name="orcidId"
-						text="text"
+						type="text"
 						value={formData.orcidId}
 						onChange={handleChange}
 						required

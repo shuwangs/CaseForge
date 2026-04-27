@@ -4,7 +4,8 @@ import { fetchPublications, postPublications } from "../apis/publicationAPI.ts";
 export const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
-	const [projectId, setProjectId] = useState(1);
+	const [projects, setProjects] = useState([]);
+	const [currProjectId, setCurrProjectId] = useState(1);
 	const [publications, setPubulications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -40,7 +41,8 @@ export const ProjectProvider = ({ children }) => {
 	};
 
 	const values = {
-		projectId,
+		projects,
+		currProjectId,
 		publications,
 		setPubulications,
 		onFetchPubliction,

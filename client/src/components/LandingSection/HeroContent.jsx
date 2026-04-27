@@ -17,9 +17,13 @@ const HeroContent = () => {
 				</p>
 			</div>
 			<div>
-				<button className="">Start Free Analysis</button>
+				<button className="" type="button">
+					Start Free Analysis
+				</button>
 
-				<button className="">View Demo</button>
+				<button className="" type="button">
+					View Demo
+				</button>
 			</div>
 		</div>
 	);

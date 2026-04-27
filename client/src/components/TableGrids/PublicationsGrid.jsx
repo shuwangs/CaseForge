@@ -19,8 +19,10 @@ const PublicationsGrid = ({ projectId, publications }) => {
 			<BaseDataGrid rowData={publications} columnDefs={publicationColumns} />
 
 			<div>
-				<button onClick={handleSavePublications}>Save</button>
-				<button>Cancel</button>
+				<button type="submit" onClick={handleSavePublications}>
+					Save
+				</button>
+				<button type="button">Cancel</button>
 			</div>
 		</div>
 	);
