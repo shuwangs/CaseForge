@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProjectProvider } from "./contexts/ProjectContext.jsx";
 import AppLayout from "./layouts/AppLayout.js";
 import LandingPage from "./pages/LandingPage.jsx";
-import NewAnalysisPage from "./pages/NewAnalysisPage.jsx";
 import NewProjectPage from "./pages/NewProjectPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
 import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
@@ -19,7 +18,6 @@ const App = () => {
 
 						<Route path="/projects/new" element={<NewProjectPage />} />
 
-						<Route path="/new-analysis" element={<NewAnalysisPage />} />
 					</Route>
 				</Routes>
 			</ProjectProvider>
