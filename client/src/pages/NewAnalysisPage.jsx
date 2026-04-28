@@ -1,7 +1,7 @@
 import { IoArrowBack } from "react-icons/io5";
-import OrcidInput from "../components/OrcidInput.jsx";
-import PublicationsGrid from "../components/TableGrids/PublicationsGrid.jsx";
-import useProject from "../hooks/useProject.js";
+import OrcidInput from "../components/project/OrcidInput.jsx";
+import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
+import useProject from "../contexts/useProject.js";
 
 const NewAnalysisPage = () => {
 	const { projectId, publications } = useProject();

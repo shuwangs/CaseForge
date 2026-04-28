@@ -1,5 +1,5 @@
-import useProject from "../hooks/useProject.js";
-import type { Project } from "../types/project.ts";
+import useProject from "../contexts/useProject.js";
+import type { Project } from "../types/project.js";
 
 const ProjectsPage = () => {
     const { projects } = useProject();

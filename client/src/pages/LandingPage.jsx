@@ -1,6 +1,6 @@
-import HeroContent from "../components/LandingSection/HeroContent.jsx";
-import HeroFeatures from "../components/LandingSection/HeroFeatures.jsx";
-import HeroNavbar from "../components/LandingSection/HeroNavbar";
+import HeroContent from "../components/landing/HeroContent.jsx";
+import HeroFeatures from "../components/landing/HeroFeatures.jsx";
+import HeroNavbar from "../components/landing/HeroNavbar.jsx";
 
 const LandingPage = () => {
 	return (

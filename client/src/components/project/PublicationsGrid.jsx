@@ -1,5 +1,5 @@
-import useProject from "../../hooks/useProject.js";
-import BaseDataGrid from "./BaseDataGrid.jsx";
+import useProject from "../../contexts/useProject.js";
+import BaseDataGrid from "../ui/BaseDataGrid.jsx";
 
 const publicationColumns = [
 	{ field: "title", headerName: "Title", flex: 2 },

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { fetchPublications, postPublications } from "../apis/publicationAPI.ts";
+import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 
 export const ProjectContext = createContext();
 
