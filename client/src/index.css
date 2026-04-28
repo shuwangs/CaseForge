@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-	--color-bg: #F7F6F2;
-	--color-surface: #FFFFFF;
+	--color-bg: #f7f6f2;
+	--color-surface: #ffffff;
 
 	--color-primary: #063154;
-	--color-accent: #025F67;
-	--color-secondary: #2F9D94;
-	--color-muted: #BCC5CC;
-
+	--color-accent: #025f67;
+	--color-secondary: #2f9d94;
+	--color-muted: #bcc5cc;
 
 	--sans: system-ui, "Segoe UI", Roboto, sans-serif;
 	--heading: system-ui, "Segoe UI", Roboto, sans-serif;

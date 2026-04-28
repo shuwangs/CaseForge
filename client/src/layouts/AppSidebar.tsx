@@ -1,8 +1,3 @@
-
 const AppSidebar = () => {
-    return (
-        <aside>
-
-        </aside>
-    )
-}
+	return <aside></aside>;
+};
