@@ -1,3 +1,5 @@
+import type { ApiResponse } from "../types/ApiResponse.ts";
+
 export interface Publication {
 	title: string | null;
 	authors: string | null;
@@ -14,16 +16,12 @@ export interface Publication {
 	publisherCrossrefId?: string | null;
 	rawData?: unknown;
 }
-interface ApiResponse<T> {
-	success: boolean;
-	data: T;
-}
 
 export const fetchPublications = async (
 	orcidId: string,
 ): Promise<Publication[]> => {
 	console.log("In apis, resqing orcid is:", orcidId);
-	const result = await fetch(`api/publication/search`, {
+	const result = await fetch(`api/publications/search`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

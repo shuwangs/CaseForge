@@ -36,6 +36,11 @@ const ProjectsPage = () => {
 					{projects.map((project: Project) => (
 						<div key={project.id}>
 							<h2>{project.projectName}</h2>
+							<h2>
+								{project.firstName} {project.lastName}
+							</h2>
+							<h2>{project.orcid} </h2>
+							<h2>{new Date(project.createdAt).toLocaleDateString()} </h2>
 						</div>
 					))}
 				</div>

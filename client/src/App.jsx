@@ -3,8 +3,9 @@ import { ProjectProvider } from "./contexts/ProjectContext.jsx";
 import AppLayout from "./layouts/AppLayout.js";
 import LandingPage from "./pages/LandingPage.jsx";
 import NewAnalysisPage from "./pages/NewAnalysisPage.jsx";
-import ProjectsPage from "./pages/ProjectsPage.tsx";
 import NewProjectPage from "./pages/NewProjectPage.tsx";
+import ProjectsPage from "./pages/ProjectsPage.tsx";
+
 const App = () => {
 	return (
 		<BrowserRouter>

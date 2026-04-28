@@ -1,14 +1,31 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { fetchAllProjects } from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
-
 export const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
+	const user_id = 1;
 	const [projects, setProjects] = useState([]);
 	const [currProjectId, setCurrProjectId] = useState(1);
 	const [publications, setPubulications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+
+	const getAllProjects = async (user_id) => {
+		try {
+			setLoading(true);
+			setError("");
+			const userId = Number(user_id);
+			const data = await fetchAllProjects(userId);
+			console.log("In context getallprojects: ", data);
+			setProjects(data);
+		} catch (err) {
+			setError(err.message || "Failed to fetch projects");
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	const onFetchPubliction = async (orcidId) => {
 		try {
@@ -33,6 +50,7 @@ export const ProjectProvider = ({ children }) => {
 			setLoading(true);
 			console.log("savePublications in the provider :", payload);
 			const data = await postPublications(projectId, payload);
+			return data;
 		} catch (err) {
 			setError(err.message || "Failed to save publications");
 		} finally {
@@ -40,10 +58,20 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
+	useEffect(() => {
+		getAllProjects(user_id);
+	}, [user_id]);
+
+	useEffect(() => {
+		console.log("total projects are: ", projects);
+	}, [projects]);
+
 	const values = {
+		user_id,
 		projects,
 		currProjectId,
 		publications,
+		getAllProjects,
 		setPubulications,
 		onFetchPubliction,
 		savePublications,

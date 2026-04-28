@@ -14,7 +14,7 @@ describe("publicationApi", async () => {
 		} as Response);
 
 		const result = await fetchPublications("0000-0002-2164-6551");
-		expect(fetchMock).toHaveBeenCalledWith("api/publication/search", {
+		expect(fetchMock).toHaveBeenCalledWith("api/publications/search", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
