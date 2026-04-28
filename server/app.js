@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/publication", publicationRoute);
+app.use("/api/publications", publicationRoute);
 app.use("/api/projects", projectPublicationRoute);
 
 app.use(errorHandler);

@@ -32,6 +32,7 @@ CREATE TABLE institutions (
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  project_name VARCHAR(255) NOT NULL,
   institution_id INT REFERENCES institutions(id) ON DELETE SET NULL,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,

@@ -5,9 +5,6 @@ export const savePublications = async (req, res, next) => {
 		const { projectId } = req.params;
 		const { publications } = req.body;
 
-		console.log("in controller, project to be inserted: ", projectId);
-		console.log("in controller, tobe saved publications are: ", publications);
-
 		const result = await saveProjectPublication(projectId, publications);
 
 		res.status(201).json({
