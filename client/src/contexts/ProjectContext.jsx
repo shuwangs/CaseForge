@@ -73,6 +73,7 @@ export const ProjectProvider = ({ children }) => {
 		publications,
 		getAllProjects,
 		setPubulications,
+		setCurrProjectId,
 		onFetchPubliction,
 		savePublications,
 	};

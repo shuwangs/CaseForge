@@ -1,11 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NewBtn from "../components/ui/NewBtn.tsx";
 import useProject from "../contexts/useProject.js";
 import type { Project } from "../types/project.js";
+import ProjectCard from "../components/ui/ProjectCard.tsx";
 
 const ProjectsPage = () => {
 	const navigate = useNavigate();
-	const { projects } = useProject();
+	const { projects, currProjectId, setCurrProjectId } = useProject();
+
 	return (
 		<div className="mx-auto space-y-6 px-16">
 			<div className="flex justify-between py-8">
@@ -34,14 +36,9 @@ const ProjectsPage = () => {
 			) : (
 				<div>
 					{projects.map((project: Project) => (
-						<div key={project.id}>
-							<h2>{project.projectName}</h2>
-							<h2>
-								{project.firstName} {project.lastName}
-							</h2>
-							<h2>{project.orcid} </h2>
-							<h2>{new Date(project.createdAt).toLocaleDateString()} </h2>
-						</div>
+						<ProjectCard project={project}
+							key={project.id}
+							onClick={() => navigate(`/projects/${project.id}`)} />
 					))}
 				</div>
 			)}

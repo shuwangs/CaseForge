@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useProject from "../../contexts/useProject.js";
 import BaseDataGrid from "../ui/BaseDataGrid.jsx";
 
@@ -9,9 +10,12 @@ const publicationColumns = [
 
 const PublicationsGrid = ({ projectId, publications }) => {
 	const { savePublications } = useProject();
+	const navigate = useNavigate();
 
 	const handleSavePublications = async () => {
 		await savePublications(projectId, publications);
+		navigate(`/projects/${projectId}`);
+
 	};
 
 	return (

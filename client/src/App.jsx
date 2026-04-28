@@ -5,7 +5,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import NewAnalysisPage from "./pages/NewAnalysisPage.jsx";
 import NewProjectPage from "./pages/NewProjectPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
-
+import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
 const App = () => {
 	return (
 		<BrowserRouter>
@@ -15,6 +15,8 @@ const App = () => {
 
 					<Route element={<AppLayout />}>
 						<Route path="/projects" element={<ProjectsPage />} />
+						<Route path="/projects/:projectId" element={<ProjectDetailPage />} />
+
 						<Route path="/projects/new" element={<NewProjectPage />} />
 
 						<Route path="/new-analysis" element={<NewAnalysisPage />} />

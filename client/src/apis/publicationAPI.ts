@@ -1,4 +1,5 @@
 import type { ApiResponse } from "../types/ApiResponse.ts";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export interface Publication {
 	title: string | null;
@@ -21,7 +22,7 @@ export const fetchPublications = async (
 	orcidId: string,
 ): Promise<Publication[]> => {
 	console.log("In apis, resqing orcid is:", orcidId);
-	const result = await fetch(`api/publications/search`, {
+	const result = await fetch(`${API_BASE_URL}/api/publications/search`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -36,7 +37,7 @@ export const fetchPublications = async (
 	}
 	const data: ApiResponse<Publication[]> = await result.json();
 
-	return data.data;
+	return data.data ?? [];
 };
 
 export const postPublications = async (
@@ -44,7 +45,7 @@ export const postPublications = async (
 	payload: Publication[],
 ) => {
 	console.log("In apis,  posting publications to db:", payload);
-	const result = await fetch(`api/projects/${projectId}/publications`, {
+	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}/publications`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
