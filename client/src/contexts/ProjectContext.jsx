@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { fetchAllProjects } from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
@@ -58,13 +58,13 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
-	useEffect(() => {
-		const fetchData = async () => {
-			await getAllProjects(user_id);
-		};
+	const fetchData = useCallback(async () => {
+		await getAllProjects(user_id);
+	}, [user_id])
 
+	useEffect(() => {
 		fetchData();
-	}, [user_id]);
+	}, [fetchData])
 
 	const values = {
 		user_id,
