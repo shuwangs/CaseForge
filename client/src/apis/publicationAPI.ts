@@ -1,4 +1,5 @@
 import type { ApiResponse } from "../types/ApiResponse.ts";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 export interface Publication {
@@ -45,15 +46,18 @@ export const postPublications = async (
 	payload: Publication[],
 ) => {
 	console.log("In apis,  posting publications to db:", payload);
-	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}/publications`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
+	const result = await fetch(
+		`${API_BASE_URL}/api/projects/${projectId}/publications`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				publications: payload,
+			}),
 		},
-		body: JSON.stringify({
-			publications: payload,
-		}),
-	});
+	);
 
 	if (!result.ok) {
 		throw new Error("Post publications failed");

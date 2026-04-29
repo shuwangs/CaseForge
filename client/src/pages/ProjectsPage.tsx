@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import NewBtn from "../components/ui/NewBtn.tsx";
+import ProjectCard from "../components/ui/ProjectCard.tsx";
 import useProject from "../contexts/useProject.js";
 import type { Project } from "../types/project.js";
-import ProjectCard from "../components/ui/ProjectCard.tsx";
 
 const ProjectsPage = () => {
 	const navigate = useNavigate();
@@ -36,9 +36,11 @@ const ProjectsPage = () => {
 			) : (
 				<div>
 					{projects.map((project: Project) => (
-						<ProjectCard project={project}
+						<ProjectCard
+							project={project}
 							key={project.id}
-							onClick={() => navigate(`/projects/${project.id}`)} />
+							onClick={() => navigate(`/projects/${project.id}`)}
+						/>
 					))}
 				</div>
 			)}

@@ -15,7 +15,6 @@ const PublicationsGrid = ({ projectId, publications }) => {
 	const handleSavePublications = async () => {
 		await savePublications(projectId, publications);
 		navigate(`/projects/${projectId}`);
-
 	};
 
 	return (

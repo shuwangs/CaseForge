@@ -1,4 +1,3 @@
-
 export interface Project {
 	userId: number | null;
 	projectName: string | null;
