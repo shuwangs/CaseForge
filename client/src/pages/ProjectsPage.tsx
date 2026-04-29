@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NewBtn from "../components/ui/NewBtn.tsx";
 import ProjectCard from "../components/ui/ProjectCard.tsx";
 import useProject from "../contexts/useProject.js";
@@ -6,7 +6,7 @@ import type { Project } from "../types/project.js";
 
 const ProjectsPage = () => {
 	const navigate = useNavigate();
-	const { projects, currProjectId, setCurrProjectId } = useProject();
+	const { projects } = useProject();
 
 	return (
 		<div className="mx-auto space-y-6 px-16">

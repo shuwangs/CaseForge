@@ -1,3 +1,3 @@
-const AppSidebar = () => {
-	return <aside></aside>;
+const _AppSidebar = () => {
+	return <aside>{/* To be implemented */}</aside>;
 };

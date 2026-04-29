@@ -19,12 +19,13 @@ const ProjectDetailPage = () => {
 	return (
 		<div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
 			<div>
-				<p
+				<button
+					type="button"
 					onClick={() => navigate("/projects")}
 					className="mb-4 cursor-pointer text-sm text-gray-500 hover:text-[var(--color-primary)]"
 				>
 					← Back to Projects
-				</p>
+				</button>
 
 				<h1 className="text-2xl font-semibold text-[var(--color-primary)]">
 					{project.projectName || "Untitled Project"}
@@ -96,9 +97,11 @@ const ProjectDetailPage = () => {
 
 				{!hasPublication ? (
 					<div className="mt-5 flex gap-3">
-						<button>Edit Project</button>
+						<button type="button">Edit Project</button>
 
-						<button onClick={handleSubmit}>Fetch Publications</button>
+						<button type="button" onClick={handleSubmit}>
+							Fetch Publications
+						</button>
 					</div>
 				) : (
 					<div>
@@ -107,7 +110,7 @@ const ProjectDetailPage = () => {
 						</p>
 
 						<div className="mt-4 flex gap-3">
-							<button>Manage Publications</button>
+							<button type="button">Manage Publications</button>
 						</div>
 					</div>
 				)}

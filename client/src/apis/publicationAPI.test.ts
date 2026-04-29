@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
-import { fetchPublications, postPublications } from "./publicationAPI.ts";
+import { describe, expect, it, vi } from "vitest";
+import { fetchPublications } from "./publicationAPI.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 

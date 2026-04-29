@@ -10,8 +10,7 @@ const NewBtn = ({ onClick, children = "New", className = "" }) => {
                 text-md font-medium
                 hover:opacity-80 
                 transition 
-                ${className}
-            `}
+                ${className}`}
 		>
 			{children}
 		</button>

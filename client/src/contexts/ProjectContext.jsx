@@ -59,18 +59,20 @@ export const ProjectProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getAllProjects(user_id);
-	}, [user_id]);
+		const fetchData = async () => {
+			await getAllProjects(user_id);
+		};
 
-	useEffect(() => {
-		console.log("total projects are: ", projects);
-	}, [projects]);
+		fetchData();
+	}, [user_id]);
 
 	const values = {
 		user_id,
 		projects,
 		currProjectId,
 		publications,
+		loading,
+		error,
 		getAllProjects,
 		setPubulications,
 		setCurrProjectId,

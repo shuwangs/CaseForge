@@ -16,7 +16,7 @@ const NewProjectPage = () => {
 	};
 	const { formData, handleChange } = useForm(initialForm);
 
-	const handleSubmit = (e) => {
+	const _handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(formData);
 		// POST /api/projects
@@ -24,51 +24,66 @@ const NewProjectPage = () => {
 
 	return (
 		<div className="mx-auto px-16 space-y-6 mt-8">
-			<div
+			<button
 				onClick={() => navigate("/projects")}
 				className="flex text-2xl justify-center items-center gap-2"
 			>
 				<IoArrowBack />
 				<span>Back to Projects</span>
-			</div>
+			</button>
 			<form className="flex flex-col text-xl justify-center">
 				<div>New Project</div>
 				<div>
-					<label>Project Name </label>
-					<input />
+					<label htmlFor="projectName">Project Name </label>
+					<input
+						id="projectName"
+						name="projectName"
+						placeholder="Enter Project Name"
+					/>
 				</div>
 				<div>
-					<label>First Name</label>
-					<input />
-					<label>Last Name</label>
-					<input />
+					<label htmlFor="firstName">First Name</label>
+					<input id="firstName" name="firstName" placeholder="Bobo" />
+
+					<label htmlFor="lastName">Last Name</label>
+					<input id="lastName" name="lastName" placeholder="Wang" />
 				</div>
 				<div>
-					<label>Institution / Organization</label>
-					<input />
+					<label htmlFor="institution">Institution / Organization</label>
+					<input
+						id="institution"
+						name="institution"
+						placeholder="HomeStay University"
+					/>
 				</div>
 
 				<div>
-					<label>Research Field </label>
-					<input />
+					<label htmlFor="researchArea">Research Field </label>
+					<input
+						id="institution"
+						name="institution"
+						placeholder="HomeStay University"
+					/>
 				</div>
 				<div>
-					<label>Project Name </label>
-					<input />
+					<label htmlFor="careerStage">Career Stage</label>
+					<input id="careerStage" name="careerStage" placeholder="Advisor" />
 				</div>
 				<div>
-					<label>Orcid ID</label>
-					<input />
+					<label htmlFor="orcid">Orcid ID</label>
+					<input id="orcid" name="orcid" placeholder="0000-0002-2164-6551" />
 				</div>
 
 				<div>
-					<label>Petition Type </label>
-					<select>
+					<label htmlFor="target">Petition Type </label>
+					<select id="target" name="target">
 						<option>EB-1A Extraordinary Ability</option>
 						<option>NIW National Interest Waiver</option>
 						<option>O1 </option>
 					</select>
 				</div>
+
+				<NewBtn>Submit</NewBtn>
 			</form>
 		</div>
 	);
