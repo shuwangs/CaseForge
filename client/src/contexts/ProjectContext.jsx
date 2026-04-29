@@ -11,7 +11,7 @@ export const ProjectProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	const getAllProjects = async (user_id) => {
+	const getAllProjects = useCallback(async (user_id) => {
 		try {
 			setLoading(true);
 			setError("");
@@ -25,7 +25,7 @@ export const ProjectProvider = ({ children }) => {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, []);
 
 	const onFetchPubliction = async (orcidId) => {
 		try {
@@ -58,13 +58,9 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
-	const fetchData = useCallback(async () => {
-		await getAllProjects(user_id);
-	}, [user_id])
-
 	useEffect(() => {
-		fetchData();
-	}, [fetchData])
+		getAllProjects();
+	}, [getAllProjects]);
 
 	const values = {
 		user_id,
