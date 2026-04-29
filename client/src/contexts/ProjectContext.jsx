@@ -64,7 +64,7 @@ export const ProjectProvider = ({ children }) => {
 		};
 
 		fetchData();
-	}, []);
+	}, [,·[getAllProjects]);
 
 	const values = {
 		user_id,
