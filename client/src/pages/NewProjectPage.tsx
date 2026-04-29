@@ -14,7 +14,7 @@ const NewProjectPage = () => {
 		orcid: "",
 		target: "EB1A",
 	};
-	const { formData, handleChange } = useForm(initialForm);
+	const { formData, _handleChange } = useForm(initialForm);
 
 	const _handleSubmit = (e) => {
 		e.preventDefault();
@@ -25,6 +25,7 @@ const NewProjectPage = () => {
 	return (
 		<div className="mx-auto px-16 space-y-6 mt-8">
 			<button
+				type="button"
 				onClick={() => navigate("/projects")}
 				className="flex text-2xl justify-center items-center gap-2"
 			>

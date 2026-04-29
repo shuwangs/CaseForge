@@ -1,6 +1,7 @@
 const NewBtn = ({ onClick, children = "New", className = "" }) => {
 	return (
 		<button
+			type="submit"
 			onClick={onClick}
 			className={`
                 bg-[var(--color-accent)] 

@@ -7,7 +7,8 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
 	return (
-		<div
+		<button
+			type="button"
 			className="bg-[var(--color-surface)] rounded-xl border border-[var(--color-primary)]
             shadow-md p-5 hover:shadow-md "
 			key={project.id}
@@ -32,7 +33,7 @@ const ProjectCard = ({ project, onClick }: ProjectCardProps) => {
 					? new Date(project.createdAt).toLocaleDateString()
 					: "—"}
 			</p>
-		</div>
+		</button>
 	);
 };
 

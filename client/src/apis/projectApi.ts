@@ -1,9 +1,9 @@
 import type { ApiResponse } from "../types/ApiResponse.ts";
-import type { Project } from "../types/project.ts";
+import type { Project, ProjectDTO } from "../types/project.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-const mapProject = (data: any): Project => ({
+const mapProject = (data: ProjectDTO): Project => ({
 	id: data.id,
 	userId: data.user_id,
 	projectName: data.project_name,
