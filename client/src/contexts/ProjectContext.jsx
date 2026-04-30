@@ -60,7 +60,7 @@ export const ProjectProvider = ({ children }) => {
 
 	useEffect(() => {
 		getAllProjects(user_id);
-	}, []);
+	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
 
 	const values = {
 		user_id,
