@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import useProject from "../../contexts/useProject.js";
 import useForm from "../../hooks/useForm.js";
+import { validateOrcidId } from "../../utils/validateOrcidId.js";
 import FormInputField from "../ui/FormInputField.tsx";
 import NewBtn from "../ui/NewBtn.tsx";
 
 const NewProjectForm = () => {
-	const { user_id, createProject } = useProject();
+	const { user_id, createProject, error, setError } = useProject();
 	const navigate = useNavigate();
 	const initialForm = {
 		userId: user_id,
@@ -20,11 +21,21 @@ const NewProjectForm = () => {
 	};
 	const { formData, handleChange, resetForm } = useForm(initialForm);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log(formData);
-		createProject(formData);
-		navigate("/projects");
+		if (!validateOrcidId(formData.orcid)) {
+			setError("Invalid ORCID ID");
+			return;
+		}
+
+		try {
+			setError("");
+			await createProject(formData);
+			navigate("/projects");
+		} catch (err) {
+			setError(err.message || "Failed to create project");
+		}
 	};
 	const handleClear = () => {
 		resetForm();
@@ -95,6 +106,7 @@ const NewProjectForm = () => {
 				onChange={handleChange}
 				placeholder="0000-0000-0002-0005"
 			/>
+			{error && <p className="text-sm text-red-500">{error}</p>}
 
 			<div>
 				<label htmlFor="target">Petition Type</label>

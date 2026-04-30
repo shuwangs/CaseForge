@@ -86,6 +86,7 @@ export const ProjectProvider = ({ children }) => {
 		publications,
 		loading,
 		error,
+		setError,
 		getAllProjects,
 		createProject,
 		setPubulications,
