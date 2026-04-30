@@ -4,12 +4,12 @@ export interface Project {
 	projectName: string | null;
 	institutionId: number | null;
 	firstName: string | null;
-	LastName: string | null;
+	lastName: string | null;
 	researchArea: string | null;
 	orcid: string | null;
 	careerStage: string | null;
 	target: string | null;
-	createAt: string | null;
+	createdAt: string | null;
 }
 
 // Backend data formate
@@ -26,3 +26,17 @@ export interface ProjectDTO {
 	target: string | null;
 	created_at: string | null;
 }
+
+// Frontend request format for creating a project
+
+export type NewProjectPayload = {
+	userId: number,
+	projectName: string;
+	firstName: string;
+	lastName: string;
+	institution: string;
+	researchArea: string;
+	orcid: string;
+	careerStage: string;
+	target: string;
+};

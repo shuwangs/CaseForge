@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-import { fetchAllProjects } from "../apis/projectApi.ts";
+import { addNewProject, fetchAllProjects } from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
 
@@ -26,6 +26,23 @@ export const ProjectProvider = ({ children }) => {
 			setLoading(false);
 		}
 	}, []);
+
+	const createProject = async (payload) => {
+		try {
+			setLoading(true);
+			setError("");
+
+			const data = await addNewProject(payload.userId);
+			await fetchAllProjects(user_id);
+
+		} catch (err) {
+			setError(err.message || "Failed to fetch publications");
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	}
+
 
 	const onFetchPubliction = async (orcidId) => {
 		try {
@@ -70,6 +87,7 @@ export const ProjectProvider = ({ children }) => {
 		loading,
 		error,
 		getAllProjects,
+		createProject,
 		setPubulications,
 		setCurrProjectId,
 		onFetchPubliction,

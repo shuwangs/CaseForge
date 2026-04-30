@@ -1,30 +1,35 @@
 import NewBtn from "../ui/NewBtn.tsx"
 import useForm from "../../hooks/useForm.js";
-import { Project } from "../../types/project.ts";
 import FormInputField from "../ui/FormInputField.tsx";
-
+import useProject from "../../contexts/useProject.js";
 const NewProjectForm = () => {
-
+    const { user_id, createProject } = useProject();
     const initialForm = {
+        userId: user_id,
         projectName: "",
         firstName: "",
         lastName: "",
         institution: "",
         researchArea: "",
         orcid: "",
+        careerStage: "",
         target: "EB1A",
     };
-    const { formData, handleChange } = useForm(initialForm);
+    const { formData, handleChange, setFormData } = useForm(initialForm);
 
-    const _handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
-        // POST /api/projects
+        createProject(formData);
     };
-
+    const handleClear = (e) => {
+        setFormData(initialForm);
+    };
     return (
 
-        <form className="flex flex-col text-xl justify-center max-w-xl gap-4">
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col text-xl justify-center max-w-xl gap-4">
 
             <FormInputField
                 label="Project Name"
@@ -105,8 +110,8 @@ const NewProjectForm = () => {
 
             </div>
             <div className="flex gap-10 justify-center">
-                <NewBtn>Submit</NewBtn>
-                <NewBtn>Clear</NewBtn>
+                <NewBtn type="submit">Submit</NewBtn>
+                <button type="button" onClick={handleClear}>Clear</button>
             </div>
 
         </form >
