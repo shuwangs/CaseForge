@@ -30,7 +30,7 @@ export interface ProjectDTO {
 // Frontend request format for creating a project
 
 export type NewProjectPayload = {
-	userId: number,
+	userId: number;
 	projectName: string;
 	firstName: string;
 	lastName: string;

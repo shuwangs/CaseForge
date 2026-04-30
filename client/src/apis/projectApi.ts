@@ -1,5 +1,9 @@
 import type { ApiResponse } from "../types/ApiResponse.ts";
-import type { NewProjectPayload, Project, ProjectDTO } from "../types/project.ts";
+import type {
+	NewProjectPayload,
+	Project,
+	ProjectDTO,
+} from "../types/project.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -17,8 +21,6 @@ const mapProject = (data: ProjectDTO): Project => ({
 	createdAt: data.created_at,
 });
 
-
-
 export const fetchAllProjects = async (userId: number): Promise<Project[]> => {
 	const result = await fetch(`${API_BASE_URL}/api/projects/user/${userId}`);
 	if (!result.ok) {
@@ -29,13 +31,15 @@ export const fetchAllProjects = async (userId: number): Promise<Project[]> => {
 	return (data.data ?? []).map(mapProject);
 };
 
-
-export const addNewProject = async (payload: NewProjectPayload): Promise<Project> => {
+export const addNewProject = async (
+	payload: NewProjectPayload,
+): Promise<Project> => {
 	const result = await fetch(`${API_BASE_URL}/api/projects`, {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/json"
-		}
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(payload),
 	});
 
 	if (!result.ok) {
@@ -47,4 +51,4 @@ export const addNewProject = async (payload: NewProjectPayload): Promise<Project
 		throw new Error("No project returned from server");
 	}
 	return mapProject(data.data);
-}
+};

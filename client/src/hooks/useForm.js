@@ -12,7 +12,10 @@ const useForm = (initialData) => {
 		}));
 	};
 
-	return { formData, handleChange, setFormData };
+	const resetForm = () => {
+		setFormData(initialData);
+	};
+	return { formData, handleChange, resetForm, setFormData };
 };
 
 export default useForm;

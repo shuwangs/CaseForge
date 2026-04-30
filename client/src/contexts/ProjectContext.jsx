@@ -33,16 +33,16 @@ export const ProjectProvider = ({ children }) => {
 			setError("");
 
 			const data = await addNewProject(payload.userId);
-			await fetchAllProjects(user_id);
+			console.log("In context createProject result: ", data);
 
+			await fetchAllProjects(user_id);
 		} catch (err) {
 			setError(err.message || "Failed to fetch publications");
 			throw err;
 		} finally {
 			setLoading(false);
 		}
-	}
-
+	};
 
 	const onFetchPubliction = async (orcidId) => {
 		try {
