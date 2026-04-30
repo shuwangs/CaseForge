@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useProject from "../../contexts/useProject.js";
 import useForm from "../../hooks/useForm.js";
 import FormInputField from "../ui/FormInputField.tsx";
@@ -5,6 +6,7 @@ import NewBtn from "../ui/NewBtn.tsx";
 
 const NewProjectForm = () => {
 	const { user_id, createProject } = useProject();
+	const navigate = useNavigate();
 	const initialForm = {
 		userId: user_id,
 		projectName: "",
@@ -22,6 +24,7 @@ const NewProjectForm = () => {
 		e.preventDefault();
 		console.log(formData);
 		createProject(formData);
+		navigate("/projects");
 	};
 	const handleClear = () => {
 		resetForm();
