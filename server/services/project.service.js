@@ -68,3 +68,16 @@ export const addProject = async (project) => {
 	);
 	return projectRes.rows[0];
 };
+
+export const deleteProjectById = async (projectId) => {
+	const results = await pool.query(
+		` 
+		DELETE FROM caseforge.projects
+		WHERE id = $1
+		RETURNING *
+		`,
+		[projectId],
+	);
+	console.log("in project Sevice, deleteProject...", results.rows);
+	return results.rows[0];
+};

@@ -1,11 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
+import DeleteBtn from "../components/ui/DeleteBtn.tsx";
 import useProject from "../contexts/useProject";
 
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, publications, onFetchPubliction } = useProject();
+	const { projects, publications, onDeleteProject, onFetchPubliction } =
+		useProject();
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
 	);
@@ -14,6 +16,11 @@ const ProjectDetailPage = () => {
 	const handleSubmit = async () => {
 		await onFetchPubliction(project.orcid);
 		navigate(`/projects/${projectId}`);
+	};
+
+	const handleDelete = async () => {
+		await onDeleteProject(project.id);
+		navigate(`/projects/`);
 	};
 
 	return (
@@ -98,6 +105,8 @@ const ProjectDetailPage = () => {
 				{!hasPublication ? (
 					<div className="mt-5 flex gap-3">
 						<button type="button">Edit Project</button>
+
+						<DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn>
 
 						<button type="button" onClick={handleSubmit}>
 							Fetch Publications

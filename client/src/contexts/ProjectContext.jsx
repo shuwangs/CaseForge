@@ -1,5 +1,9 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-import { addNewProject, fetchAllProjects } from "../apis/projectApi.ts";
+import {
+	addNewProject,
+	deleteProject,
+	fetchAllProjects,
+} from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
 
@@ -36,6 +40,25 @@ export const ProjectProvider = ({ children }) => {
 			console.log("In context createProject result: ", data);
 			setProjects((prev) => [...prev, data]);
 			await fetchAllProjects(user_id);
+		} catch (err) {
+			setError(err.message || "Failed to fetch publications");
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const onDeleteProject = async (projecId) => {
+		try {
+			setLoading(true);
+			setError("");
+
+			const data = await deleteProject(projecId);
+			console.log("In context deleteProject result: ", data);
+			setProjects((prev) =>
+				prev.filter((p) => Number(p.id) !== Number(projecId)),
+			);
+			return data;
 		} catch (err) {
 			setError(err.message || "Failed to fetch publications");
 			throw err;
@@ -86,6 +109,7 @@ export const ProjectProvider = ({ children }) => {
 		publications,
 		loading,
 		error,
+		onDeleteProject,
 		setError,
 		getAllProjects,
 		createProject,

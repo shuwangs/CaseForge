@@ -53,3 +53,15 @@ export const addNewProject = async (
 	}
 	return mapProject(data.data);
 };
+
+export const deleteProject = async (projectId: number) => {
+	console.log("in projectApi, the project to be deteletd is: ", projectId);
+	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
+		method: "DELETE",
+	});
+	if (!result.ok) {
+		throw new Error("Delete Project failed");
+	}
+	const data = await result.json();
+	return data.data;
+};
