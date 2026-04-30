@@ -1,11 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NewBtn from "../components/ui/NewBtn.tsx";
 import ProjectCard from "../components/ui/ProjectCard.tsx";
 import useProject from "../contexts/useProject.js";
 import type { Project } from "../types/project.js";
 
 const ProjectsPage = () => {
-	const navigate = useNavigate();
 	const { projects } = useProject();
 
 	return (
@@ -20,7 +19,9 @@ const ProjectsPage = () => {
 					</p>
 				</div>
 
-				<NewBtn onClick={() => navigate("/projects/new")}>+ New Project</NewBtn>
+				<Link to="/projects/new">
+					<NewBtn>+ New Project</NewBtn>
+				</Link>
 			</div>
 			{projects.length === 0 ? (
 				<div className="bg-[var(--color-surface)] rounded-xl shadow-sm p-10 text-center max-w-md mx-auto mt-10">
@@ -39,7 +40,7 @@ const ProjectsPage = () => {
 						<ProjectCard
 							project={project}
 							key={project.id}
-							onClick={() => navigate(`/projects/${project.id}`)}
+							href={`/projects/${project.id}`}
 						/>
 					))}
 				</div>
