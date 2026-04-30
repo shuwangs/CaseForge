@@ -32,7 +32,7 @@ export const ProjectProvider = ({ children }) => {
 			setLoading(true);
 			setError("");
 
-			const data = await addNewProject(payload.userId);
+			const data = await addNewProject(payload);
 			console.log("In context createProject result: ", data);
 
 			await fetchAllProjects(user_id);

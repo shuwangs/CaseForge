@@ -34,6 +34,8 @@ export const fetchAllProjects = async (userId: number): Promise<Project[]> => {
 export const addNewProject = async (
 	payload: NewProjectPayload,
 ): Promise<Project> => {
+	console.log("in projectApi, the passed in payload is: ", payload);
+
 	const result = await fetch(`${API_BASE_URL}/api/projects`, {
 		method: "POST",
 		headers: {
@@ -41,7 +43,6 @@ export const addNewProject = async (
 		},
 		body: JSON.stringify(payload),
 	});
-
 	if (!result.ok) {
 		throw new Error("Add new project failed");
 	}
