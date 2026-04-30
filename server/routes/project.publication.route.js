@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
-	getProjects,
 	createProject,
+	getProjects,
 } from "../controllers/project.controller.js";
 import { savePublications } from "../controllers/project.publication.controller.js";
 
