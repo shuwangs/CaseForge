@@ -59,8 +59,8 @@ export const ProjectProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getAllProjects();
-	}, [getAllProjects]);
+		getAllProjects(user_id);
+	}, []);
 
 	const values = {
 		user_id,
