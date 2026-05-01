@@ -1,0 +1,24 @@
+services:
+  caseforge-app:
+
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./client/.env
+    environment:
+      - DOCKER_ENV=true
+    depends_on:
+      - caseforge-server
+
+  caseforge-server:
+
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env.docker

@@ -1,12 +1,16 @@
-import express from "express";
 import cors from "cors";
-import helloRoute from "./routes/hello.route.js";
+import express from "express";
+import errorHandler from "./middleware/errorHandler.js";
+import projectPublicationRoute from "./routes/project.publication.route.js";
+import publicationRoute from "./routes/publication.route.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/api", helloRoute);
+app.use("/api/publications", publicationRoute);
+app.use("/api/projects", projectPublicationRoute);
 
+app.use(errorHandler);
 export default app;

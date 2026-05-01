@@ -32,6 +32,7 @@ CREATE TABLE institutions (
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  project_name VARCHAR(255) NOT NULL,
   institution_id INT REFERENCES institutions(id) ON DELETE SET NULL,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
@@ -49,13 +50,23 @@ CREATE TABLE publications (
   project_id INT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   authors TEXT,
-  journal TEXT,
-  publication_year INT,
+  publication_type VARCHAR(100),
+  publication_date DATE,
+
   doi VARCHAR(255),
   openalex_id VARCHAR(255),
   pmid VARCHAR(50),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 
+  journal_name TEXT,
+  journal_issns VARCHAR(255),
+  journal_openalex VARCHAR(20),
+
+  publisher_name TEXT,
+  publisher_crossrefId VARCHAR(10),
+
+  raw_data JSONB,
+
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Table citation_records

@@ -33,3 +33,74 @@ See it in [LucidChart](https://lucid.app/lucidchart/ef84a645-25a5-410e-8a57-82d6
 ## Wireframes
 [Wireframe](https://whimsical.com/shu-s-project/caseforge-wireframe-KZAevhXCaLBMzJUHBLbDeu)
 
+## Setup
+CaseForge can be run in two ways:
+
+1. Docker setup
+Recommended if you want a containerized development environment for the client, server, and database.
+
+2. Local setup
+Recommended if you do not use Docker and want to run the project directly on your machine.
+
+
+### Option 1: Run With Docker
+- Prerequisites
+Docker Desktop installed
+Docker Compose available
+
+## Setup Environment 
+Make sure these files exist before starting:
+
+1. `client/.env`
+
+`VITE_API_BASE_URL=http://localhost:3000`
+
+2. server/.env.docker
+```md
+cp .env.docker.example .env.docker
+```
+
+#### Start the app
+From the project root, run:
+
+`docker compose up --build`
+
+This will start:
+```md
+caseforge-app on http://localhost:5173
+caseforge-server on http://localhost:3000
+caseforge-db on localhost:5432
+```
+
+#### Stop containers
+`docker compose down`
+
+#### Remove containers and database volume
+`docker compose down -v`
+
+
+## Run Locally
+### 1. Clone repo
+
+git clone https://github.com/yourname/caseforge.git
+cd caseforge
+
+### 2. Setup environment variables
+
+Create `server/.env.docker`:
+
+DATABASE_URL=your_neon_connection_string
+PORT=3000
+
+Create `client/.env`:
+
+VITE_API_BASE_URL=http://localhost:3000
+
+### 3. Install dependencies (optional if using Docker)
+
+cd server && npm install
+cd ../client && npm install
+
+### 4. Run with Docker
+
+docker compose up --build

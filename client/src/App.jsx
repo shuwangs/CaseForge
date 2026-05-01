@@ -1,11 +1,31 @@
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ProjectProvider } from "./contexts/ProjectContext.jsx";
+import AppLayout from "./layouts/AppLayout.js";
+import LandingPage from "./pages/LandingPage.jsx";
+import NewProjectPage from "./pages/NewProjectPage.tsx";
+import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
+import ProjectsPage from "./pages/ProjectsPage.tsx";
 
-function App() {
+const App = () => {
 	return (
-		<>
-			<h1>CaseForge</h1>
-		</>
+		<BrowserRouter>
+			<ProjectProvider>
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+
+					<Route element={<AppLayout />}>
+						<Route path="/projects" element={<ProjectsPage />} />
+						<Route
+							path="/projects/:projectId"
+							element={<ProjectDetailPage />}
+						/>
+
+						<Route path="/projects/new" element={<NewProjectPage />} />
+					</Route>
+				</Routes>
+			</ProjectProvider>
+		</BrowserRouter>
 	);
-}
+};
 
 export default App;
