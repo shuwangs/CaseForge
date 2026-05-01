@@ -1,3 +1,5 @@
+import AppError from "../errors/AppError";
+
 export const validateOrcid = () => {
 	// TODO: implement the logic of validation
 	return true;
