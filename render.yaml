@@ -1,0 +1,36 @@
+services:
+  - name: caseforge-api
+    plan: free
+    type: web
+    runtime: docker
+    repo: https://github.com/shuwangs/CaseForge.git
+    rootDir: server
+    dockerfilePath: ./Dockerfile.dev
+    dockerContext: .
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: caseforge
+          property: connectionString
+      - key: PUBLICATION_API
+        value: "https://api.opencitations.net/meta/v1/author/orcid:"
+
+
+  - name: caseforge-web
+    plan: free
+    type: web
+    runtime: static
+    repo: https://github.com/shuwangs/CaseForge.git
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://caseforge-api.onrender.com
+databases:
+  - name: caseforge
+    plan: free
