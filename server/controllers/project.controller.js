@@ -3,6 +3,7 @@ import {
 	addProject,
 	deleteProjectById,
 	getProjectsByUserId,
+	updateProjectById,
 } from "../services/project.service.js";
 import { idValidate } from "../utitls/idValidate.js";
 export const getProjects = async (req, res, next) => {
@@ -53,6 +54,30 @@ export const deleteProject = async (req, res, next) => {
 		}
 
 		const result = await deleteProjectById(projectId);
+
+		res.status(200).json({
+			success: true,
+			data: result,
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const putProject = async (req, res, next) => {
+	try {
+		console.log("in putProject controller request params: ", req.params);
+		const projectId = req.params.id;
+		console.log("in controller the tobe updated projectID is ", projectId);
+
+		const payload = req.body;
+		console.log("in controller the tobe updated project field ", payload);
+
+		if (!idValidate(projectId)) {
+			throw new AppError("Invalid Project", 400);
+		}
+
+		const result = await updateProjectById(projectId, payload);
 
 		res.status(200).json({
 			success: true,

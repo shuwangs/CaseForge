@@ -81,3 +81,63 @@ export const deleteProjectById = async (projectId) => {
 	console.log("in project Sevice, deleteProject...", results.rows);
 	return results.rows[0];
 };
+
+export const updateProjectById = async (projectId, payload) => {
+	const {
+		projectName,
+		firstName,
+		lastName,
+		institution,
+		researchArea,
+		careerStage,
+		orcid,
+		target,
+	} = payload;
+
+	let institutionId = null;
+	if (institution !== undefined) {
+		if (institution.trim()) {
+			const institutionResult = await pool.query(
+				`
+				INSERT INTO caseforge.institutions (institution_name)
+				VALUES (LOWER($1))
+				ON CONFLICT (institution_name)
+				DO NOTHING
+				RETURNING id
+				`,
+				[payload.institution],
+			);
+
+			institutionId = institutionResult.rows[0].id;
+		}
+	}
+	console.log("the institution id is updating :", institutionId);
+	// add to DB
+	const projectRes = await pool.query(
+		`UPDATE caseforge.projects 
+			SET 
+				project_name = $1, 
+				institution_id = $2,
+				first_name = $3,
+				last_name = $4,
+				research_area = $5,
+				orcid = $6,
+				career_stage  = $7,
+				target = $8
+			WHERE id = $9
+			RETURNING *
+        	`,
+		[
+			projectName,
+			institutionId,
+			firstName,
+			lastName,
+			researchArea,
+			orcid,
+			careerStage,
+			target,
+			projectId,
+		],
+	);
+	return projectRes.rows[0];
+};
