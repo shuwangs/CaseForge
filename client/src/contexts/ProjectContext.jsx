@@ -27,7 +27,7 @@ export const ProjectProvider = ({ children }) => {
 		}
 	}, []);
 
-	const onFetchPubliction = async (orcidId) => {
+	const onFetchPublication = async (orcidId) => {
 		try {
 			setLoading(true);
 			setError("");
@@ -72,7 +72,7 @@ export const ProjectProvider = ({ children }) => {
 		getAllProjects,
 		setPubulications,
 		setCurrProjectId,
-		onFetchPubliction,
+		onFetchPublication,
 		savePublications,
 	};
 
