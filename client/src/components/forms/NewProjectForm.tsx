@@ -14,7 +14,7 @@ const NewProjectForm = ({
 	initialValues,
 	mode = "create",
 	onSubmit,
-}): ProjectFormProps => {
+}: ProjectFormProps) => {
 	const { error } = useProject();
 	const { formData, handleChange, resetForm } = useForm(initialValues);
 
@@ -22,9 +22,14 @@ const NewProjectForm = ({
 		resetForm();
 	};
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log("FORM submit values:", formData);
+		await onSubmit(formData);
+	};
 	return (
 		<form
-			onSubmit={onSubmit}
+			onSubmit={handleSubmit}
 			className="flex flex-col text-xl justify-center max-w-xl gap-4"
 		>
 			<FormInputField
@@ -55,12 +60,13 @@ const NewProjectForm = ({
 				/>
 			</div>
 			<FormInputField
-				label="Institution / Organization"
+				label="Institution / Organization*"
 				id="institution"
 				name="institution"
 				value={formData.institution}
 				onChange={handleChange}
 				placeholder="Harvard University"
+				required
 			/>
 
 			<FormInputField

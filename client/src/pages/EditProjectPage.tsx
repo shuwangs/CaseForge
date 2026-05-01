@@ -1,12 +1,12 @@
 import { IoArrowBack } from "react-icons/io5";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import type { ProjectFormValues } from "../../types/project.ts";
-import NewProjectForm from "../components/forms/NewProjectForm.tsx";
+import NewProjectForm from "../components/forms/NewProjectForm.js";
 import useProject from "../contexts/useProject.js";
 
 const NewProjectPage = () => {
-	const { user_id, projects } = useProject();
-	const _navigate = useNavigate();
+	const { user_id, projects, onUpdateProject } = useProject();
+	const navigate = useNavigate();
 	const { projectId } = useParams();
 
 	const currProject = projects.find((p) => Number(p.id) === Number(projectId));
@@ -14,7 +14,6 @@ const NewProjectPage = () => {
 	if (!currProject) {
 		return <div>Loading project...</div>;
 	}
-
 	const initialValues: ProjectFormValues = {
 		userId: currProject.userId ?? user_id,
 		projectName: currProject.projectName ?? "",
@@ -26,8 +25,10 @@ const NewProjectPage = () => {
 		careerStage: currProject.careerStage ?? "",
 		target: currProject.target ?? "EB1A",
 	};
-	const handleSubmit = async () => {
-		console.log("editing the current Project");
+
+	const handleSubmit = async (values: ProjectFormValues) => {
+		await onUpdateProject(currProject.id, values);
+		navigate(`/projects/${currProject.id}`);
 	};
 
 	return (

@@ -20,17 +20,16 @@ const NewProjectPage = () => {
 		target: "EB1A",
 	};
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log(formData);
-		if (!validateOrcidId(formData.orcid)) {
+	const handleSubmit = async (values: ProjectFormValues) => {
+		console.log(values);
+		if (!validateOrcidId(values.orcid)) {
 			setError("Invalid ORCID ID");
 			return;
 		}
 
 		try {
 			setError("");
-			await createProject(formData);
+			await createProject(values);
 			navigate("/projects");
 		} catch (err) {
 			setError(err.message || "Failed to create project");

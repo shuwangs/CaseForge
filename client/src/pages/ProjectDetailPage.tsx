@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
 import useProject from "../contexts/useProject";
@@ -23,6 +23,13 @@ const ProjectDetailPage = () => {
 		navigate(`/projects/`);
 	};
 
+	if (!project) {
+		return (
+			<div className="mx-auto max-w-5xl px-6 py-8">
+				<p className="text-gray-500">Loading project...</p>
+			</div>
+		);
+	}
 	return (
 		<div className="mx-auto max-w-5xl px-6 py-8 space-y-6">
 			<div>
@@ -104,7 +111,9 @@ const ProjectDetailPage = () => {
 
 				{!hasPublication ? (
 					<div className="mt-5 flex gap-3">
-						<button type="button">Edit Project</button>
+						<Link to={`/projects/${project.id}/edit`}>
+							<button type="button">Edit Project</button>
+						</Link>
 
 						<DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn>
 

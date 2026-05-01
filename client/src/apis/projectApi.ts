@@ -65,3 +65,20 @@ export const deleteProject = async (projectId: number) => {
 	const data = await result.json();
 	return data.data;
 };
+
+export const updateProject = async (
+	projectId: number,
+	payload: NewProjectPayload,
+) => {
+	console.log("calling updateProject API:", projectId, payload);
+	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload),
+	});
+	if (!result.ok) {
+		throw new Error("Update Project failed");
+	}
+	const data = await result.json();
+	return data.data;
+};

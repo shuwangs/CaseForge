@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProjectProvider } from "./contexts/ProjectContext.jsx";
 import AppLayout from "./layouts/AppLayout.js";
-import EditProjectPage from "./pages/ EditProjectPage.tsx";
+import EditProjectPage from "./pages/EditProjectPage.js";
 import LandingPage from "./pages/LandingPage.jsx";
 import NewProjectPage from "./pages/NewProjectPage.tsx";
 import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";

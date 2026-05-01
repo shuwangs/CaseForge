@@ -3,6 +3,7 @@ import {
 	addNewProject,
 	deleteProject,
 	fetchAllProjects,
+	updateProject,
 } from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
@@ -66,7 +67,7 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
-	const onFetchPubliction = async (orcidId) => {
+	const onFetchPublication = async (orcidId) => {
 		try {
 			setLoading(true);
 			setError("");
@@ -97,6 +98,27 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
+	const onUpdateProject = async (projectId, payload) => {
+		try {
+			setError("");
+			setLoading(true);
+			console.log("update project in the provider :", payload);
+			const data = await updateProject(projectId, payload);
+
+			setProjects((prev) =>
+				prev.map((project) =>
+					Number(project.id) === Number(projectId) ? data : project,
+				),
+			);
+
+			return data;
+		} catch (err) {
+			setError(err.message || "Failed to save publications");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		getAllProjects(user_id);
 	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
@@ -112,7 +134,8 @@ export const ProjectProvider = ({ children }) => {
 		getAllProjects,
 		createProject,
 		setPubulications,
-		onFetchPubliction,
+		onFetchPublication,
+		onUpdateProject,
 		savePublications,
 	};
 
