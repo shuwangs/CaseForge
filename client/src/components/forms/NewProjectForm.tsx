@@ -1,48 +1,30 @@
-import { useNavigate } from "react-router-dom";
 import useProject from "../../contexts/useProject.js";
 import useForm from "../../hooks/useForm.js";
-import { validateOrcidId } from "../../utils/validateOrcidId.js";
+import type { Project, ProjectFormValues } from "../../types/project.ts";
 import FormInputField from "../ui/FormInputField.tsx";
 import NewBtn from "../ui/NewBtn.tsx";
 
-const NewProjectForm = () => {
-	const { user_id, createProject, error, setError } = useProject();
-	const navigate = useNavigate();
-	const initialForm = {
-		userId: user_id,
-		projectName: "",
-		firstName: "",
-		lastName: "",
-		institution: "",
-		researchArea: "",
-		orcid: "",
-		careerStage: "",
-		target: "EB1A",
-	};
-	const { formData, handleChange, resetForm } = useForm(initialForm);
+interface ProjectFormProps {
+	initialValues: ProjectFormValues;
+	mode: "create" | "edit";
+	onSubmit: (values: ProjectFormValues) => Promise<Project>;
+}
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		console.log(formData);
-		if (!validateOrcidId(formData.orcid)) {
-			setError("Invalid ORCID ID");
-			return;
-		}
+const NewProjectForm = ({
+	initialValues,
+	mode = "create",
+	onSubmit,
+}): ProjectFormProps => {
+	const { error } = useProject();
+	const { formData, handleChange, resetForm } = useForm(initialValues);
 
-		try {
-			setError("");
-			await createProject(formData);
-			navigate("/projects");
-		} catch (err) {
-			setError(err.message || "Failed to create project");
-		}
-	};
 	const handleClear = () => {
 		resetForm();
 	};
+
 	return (
 		<form
-			onSubmit={handleSubmit}
+			onSubmit={onSubmit}
 			className="flex flex-col text-xl justify-center max-w-xl gap-4"
 		>
 			<FormInputField
@@ -123,7 +105,9 @@ const NewProjectForm = () => {
 				</select>
 			</div>
 			<div className="flex gap-10 justify-center">
-				<NewBtn type="submit">Submit</NewBtn>
+				<NewBtn type="submit">
+					{mode === "edit" ? "Save Changes" : "Create Project"}
+				</NewBtn>
 				<button type="button" onClick={handleClear}>
 					Clear
 				</button>

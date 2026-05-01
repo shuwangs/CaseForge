@@ -40,3 +40,15 @@ export type NewProjectPayload = {
 	careerStage: string;
 	target: string;
 };
+
+export type ProjectFormValues = {
+	userId: number;
+	projectName: string;
+	firstName: string;
+	lastName: string;
+	institution: string;
+	researchArea: string;
+	orcid: string;
+	careerStage: string;
+	target: string;
+};
