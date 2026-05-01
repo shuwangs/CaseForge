@@ -9,12 +9,9 @@ services:
     dockerContext: .
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: caseforge
-          property: connectionString
+        sync: false
       - key: PUBLICATION_API
         value: "https://api.opencitations.net/meta/v1/author/orcid:"
-
 
   - name: caseforge-web
     plan: free
@@ -27,6 +24,3 @@ services:
     envVars:
       - key: VITE_API_BASE_URL
         value: https://caseforge-api.onrender.com
-databases:
-  - name: caseforge
-    plan: free
