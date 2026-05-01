@@ -5,7 +5,7 @@ import useProject from "../contexts/useProject";
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, publications, onFetchPublication } = useProject();
+	const { projects, publications } = useProject();
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
 	);
