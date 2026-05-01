@@ -10,7 +10,6 @@ export const ProjectContext = createContext();
 export const ProjectProvider = ({ children }) => {
 	const user_id = 1;
 	const [projects, setProjects] = useState([]);
-	const [currProjectId, setCurrProjectId] = useState(1);
 	const [publications, setPubulications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -105,7 +104,6 @@ export const ProjectProvider = ({ children }) => {
 	const values = {
 		user_id,
 		projects,
-		currProjectId,
 		publications,
 		loading,
 		error,
@@ -114,7 +112,6 @@ export const ProjectProvider = ({ children }) => {
 		getAllProjects,
 		createProject,
 		setPubulications,
-		setCurrProjectId,
 		onFetchPubliction,
 		savePublications,
 	};
