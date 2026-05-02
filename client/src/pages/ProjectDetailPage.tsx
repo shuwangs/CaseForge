@@ -6,7 +6,7 @@ import useProject from "../contexts/useProject";
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, publications, onDeleteProject, onFetchPubliction } =
+	const { projects, publications, onDeleteProject, onFetchPublication } =
 		useProject();
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
@@ -14,7 +14,7 @@ const ProjectDetailPage = () => {
 	const hasPublication = publications.length > 0;
 
 	const handleSubmit = async () => {
-		await onFetchPubliction(project.orcid);
+		await onFetchPublication(project.orcid);
 		navigate(`/projects/${projectId}`);
 	};
 

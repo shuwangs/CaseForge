@@ -39,7 +39,8 @@ export const addProject = async (project) => {
 			`
             INSERT INTO caseforge.institutions (institution_name)
             VALUES(LOWER($1))
-            ON CONFLICT DO NOTHING
+            ON CONFLICT(institution_name)
+			DO UPDATE SET institution_name = EXCLUDED.institution_name
             RETURNING id;
         `,
 			[institution],
@@ -102,7 +103,7 @@ export const updateProjectById = async (projectId, payload) => {
 				INSERT INTO caseforge.institutions (institution_name)
 				VALUES (LOWER($1))
 				ON CONFLICT (institution_name)
-				DO NOTHING
+				DO UPDATE SET institution_name = EXCLUDED.institution_name
 				RETURNING id
 				`,
 				[payload.institution],
@@ -139,5 +140,6 @@ export const updateProjectById = async (projectId, payload) => {
 			projectId,
 		],
 	);
-	return projectRes.rows[0];
+	console.log("in service updated is: ", projectRes.rows);
+	return projectRes.rows;
 };

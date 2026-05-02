@@ -28,7 +28,7 @@ const NewProjectPage = () => {
 
 	const handleSubmit = async (values: ProjectFormValues) => {
 		await onUpdateProject(currProject.id, values);
-		navigate(`/projects/${currProject.id}`);
+		navigate(`/projects/`);
 	};
 
 	return (
