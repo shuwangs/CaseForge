@@ -5,7 +5,7 @@ import useProject from "../contexts/useProject.js";
 import { validateOrcidId } from "../utils/validateOrcidId.js";
 
 const NewProjectPage = () => {
-	const { user_id, createProject, setError } = useProject();
+	const { user_id, createProject, setError, setPublications } = useProject();
 	const navigate = useNavigate();
 
 	const initialValues: ProjectFormValues = {
@@ -30,6 +30,7 @@ const NewProjectPage = () => {
 		try {
 			setError("");
 			await createProject(values);
+			setPublications([]);
 			navigate("/projects");
 		} catch (err) {
 			setError(err.message || "Failed to create project");
