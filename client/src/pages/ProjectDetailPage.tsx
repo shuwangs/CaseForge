@@ -7,7 +7,7 @@ import useProject from "../contexts/useProject";
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, publications, onDeleteProject, onFetchPublication, setPubulications } =
+	const { projects, publications, onDeleteProject, onFetchPublication, postPublications, setPublications } =
 		useProject();
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
@@ -25,8 +25,8 @@ const ProjectDetailPage = () => {
 	};
 
 	useEffect(() => {
-		setPubulications([]);
-	}, [projectId, setPubulications]);
+		setPublications([]);
+	}, [projectId, postPublications]);
 
 	if (!project) {
 		return (

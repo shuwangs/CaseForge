@@ -11,7 +11,7 @@ export const ProjectContext = createContext();
 export const ProjectProvider = ({ children }) => {
 	const user_id = 1;
 	const [projects, setProjects] = useState([]);
-	const [publications, setPubulications] = useState([]);
+	const [publications, setPublications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
@@ -73,7 +73,7 @@ export const ProjectProvider = ({ children }) => {
 			setError("");
 
 			const data = await fetchPublications(orcidId);
-			setPubulications(data);
+			setPublications(data);
 
 			return data;
 		} catch (err) {
@@ -104,7 +104,7 @@ export const ProjectProvider = ({ children }) => {
 			setLoading(true);
 			console.log("update project in the provider :", payload);
 			const data = await updateProject(projectId, payload);
-
+			getAllProjects(user_id);
 			setProjects((prev) =>
 				prev.map((project) =>
 					Number(project.id) === Number(projectId) ? data : project,
@@ -123,6 +123,7 @@ export const ProjectProvider = ({ children }) => {
 		getAllProjects(user_id);
 	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
 
+
 	const values = {
 		user_id,
 		projects,
@@ -133,10 +134,11 @@ export const ProjectProvider = ({ children }) => {
 		setError,
 		getAllProjects,
 		createProject,
-		setPubulications,
+		postPublications,
 		onFetchPublication,
 		onUpdateProject,
 		savePublications,
+		setPublications
 	};
 
 	return (
