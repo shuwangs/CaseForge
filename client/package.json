@@ -13,6 +13,7 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
+		"@clerk/react": "^6.5.0",
 		"@tailwindcss/vite": "^4.2.3",
 		"ag-grid-react": "^35.2.1",
 		"react": "^19.2.5",

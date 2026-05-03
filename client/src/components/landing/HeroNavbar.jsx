@@ -1,3 +1,5 @@
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
+
 const HeroNavbar = () => {
 	return (
 		<nav className="flex justify-between py-4 bg-olive">
@@ -21,12 +23,26 @@ const HeroNavbar = () => {
 			</div>
 
 			<div className="flex px-15 text-2xl gap-6">
-				<button className="rounded-xl px-4 py-2" type="button">
-					Login
-				</button>
-				<button className="bg-primary rounded-xl px-4 py-2" type="button">
-					Start Free
-				</button>
+				<Show when="signed-out">
+					<SignInButton mode="modal">
+						<button
+							type="button"
+							className="rounded-xl px-4 py-2 hover:bg-gray-100"
+						>
+							Login
+						</button>
+					</SignInButton>
+
+					<SignUpButton mode="modal">
+						<button type="button" className="bg-primary rounded-xl px-4 py-2">
+							Start Free
+						</button>
+					</SignUpButton>
+				</Show>
+
+				<Show when="signed-in">
+					<UserButton />
+				</Show>
 			</div>
 		</nav>
 	);
