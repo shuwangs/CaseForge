@@ -8,29 +8,26 @@ import ProjectsPage from "./pages/ProjectsPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
 
-
 const App = () => {
-
 	return (
+		<Routes>
+			<Route path="/" element={<LandingPage />} />
+			<Route path="/sign-in/*" element={<SignInPage />} />
+			<Route path="/sign-up/*" element={<SignUpPage />} />
 
-		<ProjectProvider>
-			<Routes>
-				<Route path="/" element={<LandingPage />} />
-				<Route path="/sign-in/*" element={<SignInPage />} />
-				<Route path="/sign-up/*" element={<SignUpPage />} />
+			<Route
+				element={
+					<ProjectProvider>
+						<ProtectedLayout />
+					</ProjectProvider>
+				}
+			>
+				<Route path="/projects" element={<ProjectsPage />} />
+				<Route path="/projects/:projectId" element={<ProjectDetailPage />} />
 
-				<Route element={<ProtectedLayout />}>
-					<Route path="/projects" element={<ProjectsPage />} />
-					<Route
-						path="/projects/:projectId"
-						element={<ProjectDetailPage />}
-					/>
-
-					<Route path="/projects/new" element={<NewProjectPage />} />
-				</Route>
-			</Routes>
-		</ProjectProvider>
-
+				<Route path="/projects/new" element={<NewProjectPage />} />
+			</Route>
+		</Routes>
 	);
 };
 

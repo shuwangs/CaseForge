@@ -1,5 +1,6 @@
+import { Show, UserButton } from "@clerk/react";
 import { useNavigate } from "react-router-dom";
-import { Show, UserButton, } from "@clerk/react";
+
 const AppNavbar = () => {
 	const navigate = useNavigate();
 	return (

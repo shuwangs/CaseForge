@@ -24,7 +24,7 @@ const HeroNavbar = () => {
 
 			<div className="flex px-15 text-2xl gap-6">
 				<Show when="signed-out">
-					<SignInButton >
+					<SignInButton>
 						<button
 							type="button"
 							className="rounded-xl px-4 py-2 hover:bg-gray-100"
@@ -33,7 +33,7 @@ const HeroNavbar = () => {
 						</button>
 					</SignInButton>
 
-					<SignUpButton >
+					<SignUpButton>
 						<button type="button" className="bg-primary rounded-xl px-4 py-2">
 							Start Free
 						</button>
