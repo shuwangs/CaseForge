@@ -1,15 +1,39 @@
-import { ClerkProvider } from "@clerk/react";
 import { StrictMode } from "react";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import { createRoot } from "react-dom/client";
+import { ClerkProvider } from "@clerk/react";
+
 import "./index.css";
 import App from "./App.jsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-createRoot(document.getElementById("root")).render(
-	<StrictMode>
-		<ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+const ClerkWithRouter = () => {
+	const navigate = useNavigate();
+
+	return (
+		<ClerkProvider
+			publishableKey={PUBLISHABLE_KEY}
+			routerPush={(to) => navigate(to)}
+			routerReplace={(to) => navigate(to, { replace: true })}
+			signInUrl="/sign-in"
+			signUpUrl="/sign-up"
+			signInFallbackRedirectUrl="/"
+			signUpFallbackRedirectUrl="/"
+			signUpForceRedirectUrl="/projects"
+			signInForceRedirectUrl="/projects"
+
+		>
 			<App />
 		</ClerkProvider>
-	</StrictMode>,
+	);
+
+};
+createRoot(document.getElementById("root")).render(
+
+	< StrictMode >
+		<BrowserRouter>
+			<ClerkWithRouter />
+		</BrowserRouter>
+	</StrictMode >,
 );

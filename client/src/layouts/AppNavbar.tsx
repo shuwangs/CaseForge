@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import { Show, UserButton, } from "@clerk/react";
 const AppNavbar = () => {
 	const navigate = useNavigate();
 	return (
@@ -11,9 +11,12 @@ const AppNavbar = () => {
 			>
 				CaseForge
 			</button>
-			<div className="flex items-center gap-4">
+			{/* <div className="flex items-center gap-4">
 				<span className="text-2xl text-gray-600">Bobo W.</span>
-			</div>
+			</div> */}
+			<Show when="signed-in">
+				<UserButton />
+			</Show>
 		</nav>
 	);
 };
