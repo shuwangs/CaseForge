@@ -1,36 +1,52 @@
-import { verifyWebhook } from "@clerk/backend/webhooks";
-
+import { Webhook } from "svix";
 import {
-    deleteUserByClerkId,
-    upsertUserFromClerk,
+	deleteUserByClerkId,
+	upsertUserFromClerk,
 } from "../services/clerkWebhook.service.js";
 
 export const handleClerkWebhook = async (req, res) => {
-    console.log("🔥 webhook hit");
+	console.log("🔥 webhook hit");
+	const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
+	if (!WEBHOOK_SECRET) {
+		throw new Error("Missing webhook signing secret.");
+	}
+	const headers = req.headers;
+	console.log("headers are: ", headers);
 
-    try {
-        const evt = await verifyWebhook(req);
-        const eventType = evt.type;
-        const user = evt.data;
-        console.log("✅ event type:", evt.type);
-        console.log("✅ user id:", evt.data.id);
-        if (eventType === "user.created" || eventType === "user.updated") {
-            const email = user.email_addresses?.[0]?.email_address ?? null;
+	const payload = req.body;
+	console.log("payload are: ", payload);
 
-            await upsertUserFromClerk(user.id, email);
-        }
+	const wh = new Webhook(WEBHOOK_SECRET);
+	let evt;
 
-        if (eventType === "user.deleted") {
-            if (user.id) {
-                await deleteUserByClerkId(user.id);
-            }
-        }
+	try {
+		evt = wh.verify(payload, headers);
 
-        return res
-            .status(200)
-            .json({ success: true, message: "Webhook processed" });
-    } catch (err) {
-        console.error("Webhook failed:", err);
-        return res.status(400).json({ error: "Invalid webhook" });
-    }
+		console.log("what is evt: ", evt);
+
+		// Handle the webhook
+		const user = evt.data;
+		const eventType = evt.type;
+
+		console.log(`User ${user} was ${eventType}`);
+
+		if (eventType === "user.created" || eventType === "user.updated") {
+			const email = user.email_addresses?.[0]?.email_address ?? null;
+
+			await upsertUserFromClerk(user.id, email);
+		}
+
+		if (eventType === "user.deleted") {
+			if (user.id) {
+				await deleteUserByClerkId(user.id);
+			}
+		}
+
+		return res
+			.status(200)
+			.json({ success: true, message: "Webhook processed" });
+	} catch (err) {
+		console.error("Webhook failed:", err);
+		return res.status(400).json({ error: "Invalid webhook" });
+	}
 };
