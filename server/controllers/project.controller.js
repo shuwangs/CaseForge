@@ -1,6 +1,6 @@
-import AppError from "../errors/AppError.js";
 import { getAuth } from "@clerk/express";
-import { getProjectsByUserId, getProjectsByClerkId } from "../services/project.service.js";
+import AppError from "../errors/AppError.js";
+import { getProjectsByClerkId } from "../services/project.service.js";
 
 export const getProjects = async (req, res, next) => {
 	try {
