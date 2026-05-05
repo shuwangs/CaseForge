@@ -5,16 +5,14 @@ import {
 } from "../services/clerkWebhook.service.js";
 
 export const handleClerkWebhook = async (req, res) => {
-	console.log("🔥 webhook hit");
+
 	const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
 	if (!WEBHOOK_SECRET) {
 		throw new Error("Missing webhook signing secret.");
 	}
 	const headers = req.headers;
-	console.log("headers are: ", headers);
 
 	const payload = req.body;
-	console.log("payload are: ", payload);
 
 	const wh = new Webhook(WEBHOOK_SECRET);
 	let evt;
