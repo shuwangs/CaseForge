@@ -1,9 +1,12 @@
+import { useAuth } from "@clerk/react-router";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { fetchAllProjects } from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
+	const { getToken, isSignedIn, isLoaded } = useAuth();
+
 	const user_id = 1;
 	const [projects, setProjects] = useState([]);
 	const [currProjectId, setCurrProjectId] = useState(1);
@@ -15,8 +18,10 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setLoading(true);
 			setError("");
-			const userId = Number(user_id);
-			const data = await fetchAllProjects(userId);
+			// const userId = Number(user_id);
+			const token = await getToken();
+
+			const data = await fetchAllProjects(token);
 			console.log("In context getallprojects: ", data);
 			setProjects(data);
 		} catch (err) {
@@ -25,7 +30,9 @@ export const ProjectProvider = ({ children }) => {
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [getToken]);
+
+
 
 	const onFetchPublication = async (orcidId) => {
 		try {
@@ -59,8 +66,11 @@ export const ProjectProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getAllProjects(user_id);
-	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
+		if (!isLoaded || !isSignedIn) return;
+
+		getAllProjects();
+	}, [isLoaded, isSignedIn, getAllProjects]);
+
 
 	const values = {
 		user_id,

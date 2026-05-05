@@ -1,15 +1,17 @@
 import AppError from "../errors/AppError.js";
-import { getProjectsByUserId } from "../services/project.service.js";
-import { userIdValidate } from "../utitls/userIdValidate.js";
+import { getAuth } from "@clerk/express";
+import { getProjectsByUserId, getProjectsByClerkId } from "../services/project.service.js";
+
 export const getProjects = async (req, res, next) => {
 	try {
-		const userId = Number(req.params.userId);
+		const { userId: clerkId } = getAuth(req);
+		console.log("clerkId from Clerk:", clerkId);
 
-		if (!userIdValidate(userId)) {
-			throw new AppError("Invalid userId", 400);
+		if (!clerkId) {
+			throw new AppError("Unauthorized", 401);
 		}
 
-		const result = await getProjectsByUserId(userId);
+		const result = await getProjectsByClerkId(clerkId);
 
 		res.status(200).json({
 			success: true,

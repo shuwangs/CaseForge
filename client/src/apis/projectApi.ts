@@ -17,8 +17,12 @@ const mapProject = (data: ProjectDTO): Project => ({
 	createdAt: data.created_at,
 });
 
-export const fetchAllProjects = async (userId: number): Promise<Project[]> => {
-	const result = await fetch(`${API_BASE_URL}/api/projects/user/${userId}`);
+export const fetchAllProjects = async (token: string): Promise<Project[]> => {
+	const result = await fetch(`${API_BASE_URL}/api/projects`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		}
+	});
 	if (!result.ok) {
 		throw new Error("Fetch projects failed");
 	}

@@ -5,6 +5,6 @@ import { savePublications } from "../controllers/project.publication.controller.
 const router = Router();
 
 router.post("/:projectId/publications", savePublications);
-router.get("/user/:userId", getProjects);
+router.get("/", getProjects);
 
 export default router;
