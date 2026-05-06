@@ -123,7 +123,6 @@ export const ProjectProvider = ({ children }) => {
 		getAllProjects(user_id);
 	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
 
-
 	const values = {
 		user_id,
 		projects,
@@ -138,7 +137,7 @@ export const ProjectProvider = ({ children }) => {
 		onFetchPublication,
 		onUpdateProject,
 		savePublications,
-		setPublications
+		setPublications,
 	};
 
 	return (
