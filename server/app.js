@@ -14,9 +14,10 @@ app.use(cors());
 // The data passed by clerkWebhook is raw
 app.use("/api/webhook", clerkWebhook);
 
+app.use(clerkMiddleware());
+
 app.use(express.json());
 
-app.use(clerkMiddleware());
 app.use("/api/user", userRoute);
 app.use("/api/publications", publicationRoute);
 app.use("/api/projects", projectPublicationRoute);
