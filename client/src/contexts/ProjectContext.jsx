@@ -1,13 +1,17 @@
 import { createContext, useCallback, useEffect, useState } from "react";
-import { fetchAllProjects } from "../apis/projectApi.ts";
+import {
+	addNewProject,
+	deleteProject,
+	fetchAllProjects,
+	updateProject,
+} from "../apis/projectApi.ts";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 export const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
 	const user_id = 1;
 	const [projects, setProjects] = useState([]);
-	const [currProjectId, setCurrProjectId] = useState(1);
-	const [publications, setPubulications] = useState([]);
+	const [publications, setPublications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
@@ -27,13 +31,49 @@ export const ProjectProvider = ({ children }) => {
 		}
 	}, []);
 
+	const createProject = async (payload) => {
+		try {
+			setLoading(true);
+			setError("");
+			const data = await addNewProject(payload);
+			console.log("In context createProject result: ", data);
+			setProjects((prev) => [...prev, data]);
+
+			await fetchAllProjects(user_id);
+		} catch (err) {
+			setError(err.message || "Failed to fetch publications");
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const onDeleteProject = async (projecId) => {
+		try {
+			setLoading(true);
+			setError("");
+
+			const data = await deleteProject(projecId);
+			console.log("In context deleteProject result: ", data);
+			setProjects((prev) =>
+				prev.filter((p) => Number(p.id) !== Number(projecId)),
+			);
+			return data;
+		} catch (err) {
+			setError(err.message || "Failed to fetch publications");
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const onFetchPublication = async (orcidId) => {
 		try {
 			setLoading(true);
 			setError("");
 
 			const data = await fetchPublications(orcidId);
-			setPubulications(data);
+			setPublications(data);
 
 			return data;
 		} catch (err) {
@@ -58,6 +98,27 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
+	const onUpdateProject = async (projectId, payload) => {
+		try {
+			setError("");
+			setLoading(true);
+			console.log("update project in the provider :", payload);
+			const data = await updateProject(projectId, payload);
+			getAllProjects(user_id);
+			setProjects((prev) =>
+				prev.map((project) =>
+					Number(project.id) === Number(projectId) ? data : project,
+				),
+			);
+
+			return data;
+		} catch (err) {
+			setError(err.message || "Failed to save publications");
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		getAllProjects(user_id);
 	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
@@ -65,15 +126,18 @@ export const ProjectProvider = ({ children }) => {
 	const values = {
 		user_id,
 		projects,
-		currProjectId,
 		publications,
 		loading,
 		error,
+		onDeleteProject,
+		setError,
 		getAllProjects,
-		setPubulications,
-		setCurrProjectId,
+		createProject,
+		postPublications,
 		onFetchPublication,
+		onUpdateProject,
 		savePublications,
+		setPublications,
 	};
 
 	return (
