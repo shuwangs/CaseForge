@@ -45,11 +45,13 @@ const ProjectsPage = () => {
 			) : (
 				<div>
 					{projects.map((project: Project) => (
-						<ProjectCard
-							project={project}
-							key={project.id}
-							href={`/projects/${project.id}`}
-						/>
+						<div key={project.id}>
+							<ProjectCard
+								project={project}
+								key={project.id}
+								href={`/projects/${project.id}`}
+							/>
+						</div>
 					))}
 				</div>
 			)}

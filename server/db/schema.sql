@@ -22,7 +22,7 @@ CREATE TABLE users (
 -- Table institutions
 CREATE TABLE institutions (
   id SERIAL PRIMARY KEY,
-  institution_name TEXT NOT NULL,
+  institution_name TEXT UNIQUE NOT NULL,
   country VARCHAR(255),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,91 +1,61 @@
 import { IoArrowBack } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import NewBtn from "../components/ui/NewBtn.tsx";
-import useForm from "../hooks/useForm.js";
+import { Link, useNavigate } from "react-router-dom";
+import NewProjectForm from "../components/forms/NewProjectForm.tsx";
+import useProject from "../contexts/useProject.js";
+import { validateOrcidId } from "../utils/validateOrcidId.js";
 
 const NewProjectPage = () => {
+	const { user_id, createProject, setError, setPublications } = useProject();
 	const navigate = useNavigate();
-	const initialForm = {
+
+	const initialValues: ProjectFormValues = {
+		userId: user_id,
 		projectName: "",
 		firstName: "",
 		lastName: "",
 		institution: "",
 		researchArea: "",
 		orcid: "",
+		careerStage: "",
 		target: "EB1A",
 	};
-	const { formData, _handleChange } = useForm(initialForm);
 
-	const _handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(formData);
-		// POST /api/projects
+	const handleSubmit = async (values: ProjectFormValues) => {
+		console.log(values);
+		if (!validateOrcidId(values.orcid)) {
+			setError("Invalid ORCID ID");
+			return;
+		}
+
+		try {
+			setError("");
+			await createProject(values);
+			setPublications([]);
+			navigate("/projects");
+		} catch (err) {
+			setError(err.message || "Failed to create project");
+		}
 	};
-
 	return (
-		<div className="mx-auto px-16 space-y-6 mt-8">
-			<button
-				type="button"
-				onClick={() => navigate("/projects")}
-				className="flex text-2xl justify-center items-center gap-2"
-			>
-				<IoArrowBack />
-				<span>Back to Projects</span>
-			</button>
-			<form className="flex flex-col text-xl justify-center">
-				<div>New Project</div>
-				<div>
-					<label htmlFor="projectName">Project Name </label>
-					<input
-						id="projectName"
-						name="projectName"
-						placeholder="Enter Project Name"
-					/>
-				</div>
-				<div>
-					<label htmlFor="firstName">First Name</label>
-					<input id="firstName" name="firstName" placeholder="Bobo" />
+		<div className="flex flex-col mx-auto px-16 justify-center space-y-6 mt-8 max-w-5xl">
+			<div>
+				<Link
+					to="/projects"
+					className="flex text-xl justify-center gap-2 text-gray-500 text-semibold"
+				>
+					<IoArrowBack />
+					<span>Back to Projects</span>
+				</Link>
+			</div>
 
-					<label htmlFor="lastName">Last Name</label>
-					<input id="lastName" name="lastName" placeholder="Wang" />
-				</div>
-				<div>
-					<label htmlFor="institution">Institution / Organization</label>
-					<input
-						id="institution"
-						name="institution"
-						placeholder="HomeStay University"
-					/>
-				</div>
-
-				<div>
-					<label htmlFor="researchArea">Research Field </label>
-					<input
-						id="institution"
-						name="institution"
-						placeholder="HomeStay University"
-					/>
-				</div>
-				<div>
-					<label htmlFor="careerStage">Career Stage</label>
-					<input id="careerStage" name="careerStage" placeholder="Advisor" />
-				</div>
-				<div>
-					<label htmlFor="orcid">Orcid ID</label>
-					<input id="orcid" name="orcid" placeholder="0000-0002-2164-6551" />
-				</div>
-
-				<div>
-					<label htmlFor="target">Petition Type </label>
-					<select id="target" name="target">
-						<option>EB-1A Extraordinary Ability</option>
-						<option>NIW National Interest Waiver</option>
-						<option>O1 </option>
-					</select>
-				</div>
-
-				<NewBtn>Submit</NewBtn>
-			</form>
+			<div className="flex flex-col justify-center items-center rounded-lg border-2 border-[var(--color-accent)] px-6 py-6">
+				<h1 className="text-2xl text-bold mb-2">Add a New Project</h1>
+				<NewProjectForm
+					mode="create"
+					initialValues={initialValues}
+					onSubmit={handleSubmit}
+				/>
+			</div>
 		</div>
 	);
 };
