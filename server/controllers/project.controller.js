@@ -1,4 +1,3 @@
-import { getAuth } from "@clerk/express";
 import AppError from "../errors/AppError.js";
 import {
 	addProject,
@@ -12,12 +11,7 @@ import { idValidate } from "../utitls/idValidate.js";
 
 export const getProjects = async (req, res, next) => {
 	try {
-		const { userId: clerkId } = getAuth(req);
-		console.log("clerkId from Clerk:", clerkId);
-
-		if (!clerkId) {
-			throw new AppError("Unauthorized", 401);
-		}
+		const clerkId = req.clerkId;
 
 		const result = await getProjectsByClerkId(clerkId);
 
@@ -32,11 +26,7 @@ export const getProjects = async (req, res, next) => {
 
 export const createProject = async (req, res, next) => {
 	try {
-		const { userId: clerkId } = getAuth(req);
-
-		if (!clerkId) {
-			throw new AppError("Unauthorized", 401);
-		}
+		const clerkId = req.clerkId;
 
 		const dbUser = await getUserByClerkId(clerkId);
 		if (!dbUser) {
@@ -63,13 +53,8 @@ export const createProject = async (req, res, next) => {
 
 export const deleteProject = async (req, res, next) => {
 	try {
-		const { userId: clerkId } = getAuth(req);
+		const clerkId = req.clerkId;
 
-		if (!clerkId) {
-			throw new AppError("Unauthorized", 401);
-		}
-
-		console.log("request params: ", req.params);
 		const projectId = req.params.id;
 		console.log("in controller the tobe delelte projectID is ", projectId);
 		if (!idValidate(projectId)) {
@@ -89,21 +74,9 @@ export const deleteProject = async (req, res, next) => {
 
 export const putProject = async (req, res, next) => {
 	try {
-		const { userId: clerkId } = getAuth(req);
-		console.log(
-			"in putProject controller request getAuth(req): ",
-			getAuth(req),
-		);
-
-		if (!clerkId) {
-			throw new AppError("Unauthorized", 401);
-		}
-
-		console.log("in putProject controller request params: ", req.params);
+		const clerkId = req.clerkId;
 
 		const projectId = req.params.id;
-
-		console.log("in controller the tobe updated projectID is ", projectId);
 
 		const payload = req.body;
 		console.log("in controller the tobe updated project field ", payload);

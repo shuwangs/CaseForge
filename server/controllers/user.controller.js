@@ -1,10 +1,8 @@
 import AppError from "../errors/AppError.js";
 export const getCurrentUser = async (req, res, next) => {
 	try {
-		const clerkId = req.auth.userId;
-		if (!clerkId) {
-			throw new AppError("Missing Clerk user ID", 401);
-		}
+		const clerkId = req.clerkId;
+
 		const user = await getUserByClerkId(clerkId);
 
 		if (!user) {
