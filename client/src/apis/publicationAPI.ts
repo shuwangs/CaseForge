@@ -21,6 +21,7 @@ export interface Publication {
 
 export const fetchPublications = async (
 	orcidId: string,
+	token: string,
 ): Promise<Publication[]> => {
 	console.log("In apis, resqing orcid is:", orcidId);
 	const result = await fetch(`${API_BASE_URL}/api/publications/search`, {

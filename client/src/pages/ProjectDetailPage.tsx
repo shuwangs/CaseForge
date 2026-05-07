@@ -2,12 +2,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
 import useProject from "../contexts/useProject";
+import usePublication from "../contexts/usePublication.ts";
 
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, publications, onDeleteProject, onFetchPublication } =
-		useProject();
+	const { projects, onDeleteProject } = useProject();
+	const { publications, onFetchPublication } = usePublication();
+
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
 	);
