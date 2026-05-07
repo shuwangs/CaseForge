@@ -10,7 +10,8 @@
 		"lint": "eslint .",
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
-		"test": "vitest"
+		"test": "vitest",
+		"worker:citation": "node workers/citation.worker.js"
 	},
 	"keywords": [],
 	"author": "",

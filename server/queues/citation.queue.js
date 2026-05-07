@@ -1,10 +1,30 @@
-import { Queue } from 'bullmq';
+import { Queue } from "bullmq";
+import { redisConnection } from "./redis.connection.js";
 
-const citationsQueue = new Queue('foo');
+const citationsQueue = new Queue("citation", { connection: redisConnection });
 
-async function addJobs() {
-    await citationsQueue.add('myJobName', { foo: 'bar' });
-    await citationsQueue.add('myJobName', { qux: 'baz' });
-}
+// Enqueue
+const enqueueCitation = async ({
+	userId,
+	projectId,
+	publicationOpenAlexId,
+}) => {
+	const job = await citationsQueue.add(
+		"fetch-citation",
+		{
+			userId,
+			projectId,
+			publicationOpenAlexId,
+		},
+		{
+			attempts: 5,
+			backoff: { type: "exponential", delay: 1000 },
+			removeOnComplete: 500,
+			removeOnFail: 500,
+			jobId: `jobId-${userId}-${projectId}-${publicationOpenAlexId}`,
+		},
+	);
+	return job;
+};
 
-await addJobs();
+export default enqueueCitation;

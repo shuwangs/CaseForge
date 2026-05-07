@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/express";
-import AppError from "../errors/AppError";
+import AppError from "../errors/AppError.js";
 
 export const authMiddleware = (req, _res, next) => {
 	try {
