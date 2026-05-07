@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PublicationContext } from "./PublicationContext.jsx";
+import { PublicationContext } from "./PublicationContext.tsx";
 
 const usePublication = () => {
 	const context = useContext(PublicationContext);

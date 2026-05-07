@@ -10,18 +10,20 @@ describe("publicationApi", () => {
 			data: [{ title: "Example publication" }],
 		};
 
+		const token = "test-token";
 		const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue({
 			ok: true,
 			json: async () => mockResponse,
 		} as Response);
 
-		const result = await fetchPublications("0000-0002-2164-6551");
+		const result = await fetchPublications("0000-0002-2164-6551", token);
 		expect(fetchMock).toHaveBeenCalledWith(
 			`${API_BASE_URL}/api/publications/search`,
 			{
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify({
 					orcid: "0000-0002-2164-6551",
