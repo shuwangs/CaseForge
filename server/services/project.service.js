@@ -83,20 +83,21 @@ export const addProject = async (project) => {
 	return projectRes.rows[0];
 };
 
-export const deleteProjectById = async (projectId) => {
+export const deleteProjectById = async (projectId, clerkId) => {
 	const results = await pool.query(
 		` 
 		DELETE FROM caseforge.projects
 		WHERE id = $1
+		AND user_id = (SELECT id FROM caseforge.users WHERE clerk_id = $2)
 		RETURNING *
 		`,
-		[projectId],
+		[projectId, clerkId],
 	);
 	console.log("in project Sevice, deleteProject...", results.rows);
 	return results.rows[0];
 };
 
-export const updateProjectById = async (projectId, payload) => {
+export const updateProjectById = async (projectId, payload, clerkId) => {
 	const {
 		projectName,
 		firstName,
@@ -138,7 +139,8 @@ export const updateProjectById = async (projectId, payload) => {
 				orcid = $6,
 				career_stage  = $7,
 				target = $8
-			WHERE id = $9
+			WHERE id = $9 
+			AND user_id = (SELECT id FROM caseforge.users WHERE clerk_id = $10)
 			RETURNING *
         	`,
 		[
@@ -151,6 +153,7 @@ export const updateProjectById = async (projectId, payload) => {
 			careerStage,
 			target,
 			projectId,
+			clerkId,
 		],
 	);
 	console.log("in service updated is: ", projectRes.rows);

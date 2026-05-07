@@ -48,9 +48,7 @@ export const createProject = async (req, res, next) => {
 			userId: dbUser.id,
 		};
 
-
 		console.log("in controller the passed in project is ", project);
-
 
 		const result = await addProject(project);
 
@@ -65,6 +63,12 @@ export const createProject = async (req, res, next) => {
 
 export const deleteProject = async (req, res, next) => {
 	try {
+		const { userId: clerkId } = getAuth(req);
+
+		if (!clerkId) {
+			throw new AppError("Unauthorized", 401);
+		}
+
 		console.log("request params: ", req.params);
 		const projectId = req.params.id;
 		console.log("in controller the tobe delelte projectID is ", projectId);
@@ -72,7 +76,7 @@ export const deleteProject = async (req, res, next) => {
 			throw new AppError("Invalid Project", 400);
 		}
 
-		const result = await deleteProjectById(projectId);
+		const result = await deleteProjectById(projectId, clerkId);
 
 		res.status(200).json({
 			success: true,
@@ -85,8 +89,20 @@ export const deleteProject = async (req, res, next) => {
 
 export const putProject = async (req, res, next) => {
 	try {
+		const { userId: clerkId } = getAuth(req);
+		console.log(
+			"in putProject controller request getAuth(req): ",
+			getAuth(req),
+		);
+
+		if (!clerkId) {
+			throw new AppError("Unauthorized", 401);
+		}
+
 		console.log("in putProject controller request params: ", req.params);
+
 		const projectId = req.params.id;
+
 		console.log("in controller the tobe updated projectID is ", projectId);
 
 		const payload = req.body;
@@ -96,7 +112,7 @@ export const putProject = async (req, res, next) => {
 			throw new AppError("Invalid Project", 400);
 		}
 
-		const result = await updateProjectById(projectId, payload);
+		const result = await updateProjectById(projectId, payload, clerkId);
 
 		res.status(200).json({
 			success: true,

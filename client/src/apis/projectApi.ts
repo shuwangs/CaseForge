@@ -36,7 +36,8 @@ export const fetchAllProjects = async (token: string): Promise<Project[]> => {
 };
 
 export const addNewProject = async (
-	payload: NewProjectPayload, token: string
+	payload: NewProjectPayload,
+	token: string,
 ): Promise<Project> => {
 	console.log("in projectApi, the passed in payload is: ", payload);
 
@@ -44,7 +45,7 @@ export const addNewProject = async (
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			"Authorization": `Bearer ${token}`,
+			Authorization: `Bearer ${token}`,
 		},
 		body: JSON.stringify(payload),
 	});
@@ -59,10 +60,13 @@ export const addNewProject = async (
 	return mapProject(data.data);
 };
 
-export const deleteProject = async (projectId: number) => {
+export const deleteProject = async (projectId: number, token: string) => {
 	console.log("in projectApi, the project to be deteletd is: ", projectId);
 	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
 		method: "DELETE",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
 	});
 	if (!result.ok) {
 		throw new Error("Delete Project failed");
@@ -74,11 +78,15 @@ export const deleteProject = async (projectId: number) => {
 export const updateProject = async (
 	projectId: number,
 	payload: NewProjectPayload,
+	token: string,
 ) => {
 	console.log("calling updateProject API:", projectId, payload);
 	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
 		method: "PUT",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
 		body: JSON.stringify(payload),
 	});
 	if (!result.ok) {

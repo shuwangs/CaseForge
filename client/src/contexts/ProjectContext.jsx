@@ -21,7 +21,6 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setLoading(true);
 			setError("");
-			// const userId = Number(user_id);
 			const token = await getToken();
 
 			const data = await fetchAllProjects(token);
@@ -62,8 +61,9 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setLoading(true);
 			setError("");
+			const token = await getToken();
 
-			const data = await deleteProject(projecId);
+			const data = await deleteProject(projecId, token);
 			console.log("In context deleteProject result: ", data);
 			setProjects((prev) =>
 				prev.filter((p) => Number(p.id) !== Number(projecId)),
@@ -81,6 +81,7 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setLoading(true);
 			setError("");
+			const token = await getToken();
 
 			const data = await fetchPublications(orcidId);
 			setPublications(data);
@@ -98,6 +99,9 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setError("");
 			setLoading(true);
+
+			const token = await getToken();
+
 			console.log("savePublications in the provider :", payload);
 			const data = await postPublications(projectId, payload);
 			return data;
@@ -113,7 +117,10 @@ export const ProjectProvider = ({ children }) => {
 			setError("");
 			setLoading(true);
 			console.log("update project in the provider :", payload);
-			const data = await updateProject(projectId, payload);
+
+			const token = await getToken();
+
+			const data = await updateProject(projectId, payload, token);
 			getAllProjects(user_id);
 			setProjects((prev) =>
 				prev.map((project) =>
