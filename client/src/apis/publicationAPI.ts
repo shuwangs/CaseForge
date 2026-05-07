@@ -28,6 +28,7 @@ export const fetchPublications = async (
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
 		},
 		body: JSON.stringify({
 			orcid: orcidId,
@@ -45,6 +46,7 @@ export const fetchPublications = async (
 export const postPublications = async (
 	projectId: number,
 	payload: Publication[],
+	token: string,
 ) => {
 	console.log("In apis,  posting publications to db:", payload);
 	const result = await fetch(
@@ -53,6 +55,7 @@ export const postPublications = async (
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				publications: payload,

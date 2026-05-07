@@ -5,7 +5,7 @@ import {
 	getProjects,
 	putProject,
 } from "../controllers/project.controller.js";
-import { savePublications } from "../controllers/project.publication.controller.js";
+import { savePublications } from "../controllers/publication.controller.js";
 
 const router = Router();
 

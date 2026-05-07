@@ -1,12 +1,11 @@
 import { useAuth } from "@clerk/react-router";
 import { createContext, useState } from "react";
-
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
 
 export const PublicationContext = createContext();
 
 export const PublicationProvider = ({ children }) => {
-	const { getToken, isSignedIn, isLoaded } = useAuth();
+	const { getToken } = useAuth();
 
 	const [publications, setPublications] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -35,10 +34,13 @@ export const PublicationProvider = ({ children }) => {
 			setError("");
 			setLoading(true);
 
-			const token = await getToken();
+			console.log("savePublications in the provider:", payload);
+			console.log("before getToken");
 
-			console.log("savePublications in the provider :", payload);
-			const data = await postPublications(projectId, payload);
+			const token = await getToken();
+			console.log("TOKEN:", token);
+
+			const data = await postPublications(projectId, payload, token);
 			return data;
 		} catch (err) {
 			setError(err.message || "Failed to save publications");
@@ -49,6 +51,8 @@ export const PublicationProvider = ({ children }) => {
 
 	const values = {
 		publications,
+		loading,
+		error,
 		onFetchPublication,
 		savePublications,
 	};
