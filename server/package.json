@@ -19,6 +19,7 @@
 	"dependencies": {
 		"@clerk/backend": "^3.4.4",
 		"@clerk/express": "^2.1.12",
+		"bullmq": "^5.76.6",
 		"cors": "^2.8.6",
 		"dotenv": "^17.4.2",
 		"express": "^5.2.1",
