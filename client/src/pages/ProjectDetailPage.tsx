@@ -3,12 +3,14 @@ import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
+import useCitation from "../contexts/useCitation.ts";
 
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
 	const { projects, onDeleteProject } = useProject();
 	const { publications, onFetchPublication } = usePublication();
+	const { handleFetchCitations } = useCitation();
 
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
@@ -131,6 +133,9 @@ const ProjectDetailPage = () => {
 
 						<div className="mt-4 flex gap-3">
 							<button type="button">Manage Publications</button>
+							<button type="button" onClick={() => handleFetchCitations(project.id)}>
+								Fetch Citations
+							</button>
 						</div>
 					</div>
 				)}
@@ -146,6 +151,7 @@ const ProjectDetailPage = () => {
 					)}
 				</div>
 			</section>
+
 		</div>
 	);
 };

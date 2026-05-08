@@ -5,14 +5,16 @@ const citationsQueue = new Queue("citation", { connection: redisConnection });
 
 // Enqueue
 const enqueueCitation = async ({
-	userId,
+	clerkId,
 	projectId,
 	publicationOpenAlexId,
 }) => {
+
 	const job = await citationsQueue.add(
+
 		"fetch-citation",
 		{
-			userId,
+			clerkId,
 			projectId,
 			publicationOpenAlexId,
 		},
@@ -21,7 +23,7 @@ const enqueueCitation = async ({
 			backoff: { type: "exponential", delay: 1000 },
 			removeOnComplete: 500,
 			removeOnFail: 500,
-			jobId: `jobId-${userId}-${projectId}-${publicationOpenAlexId}`,
+			jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
 		},
 	);
 	return job;
