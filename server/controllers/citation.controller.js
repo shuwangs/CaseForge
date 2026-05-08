@@ -46,3 +46,21 @@ export const enqueueCitationJobs = async (req, res, next) => {
         next(err);
     }
 }
+
+export const fetchCitation = aync(workId) => {
+    const OPENALEX_URL = process.env.OPENALEX_URL;
+    try {
+        const response = await fetch(`${OPENALEX_URL}${workId}`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch citations");
+        }
+
+        const data = await response.json();
+
+        console.log("citation results:", data.results);
+
+    } catch (err) {
+        next(err)
+    }
+
+}
