@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import pool from "../db/db.js";
 import AppError from "../errors/AppError.js";
+import { getUserByClerkId } from "./user.service.js";
 
 dotenv.config();
 
@@ -19,7 +20,6 @@ export const fetchCitation = async (workId) => {
 
 		const data = await response.json();
 		const results = data.results;
-		// console.log("in citation server, the top3 citations are ", results[3]);
 		return results;
 	} catch (err) {
 		throw new AppError(err.message || "citation fetch failed", 500);
@@ -132,10 +132,58 @@ export const saveCitation = async (
 };
 
 
-export const getCitationMapData = ()
+export const getCitationMapData = async (projectId, clerkId) => {
+
+}
 
 
-export const getCitationCountsByYear = ()
+export const getCitationCountsByYear = async (projectId, clerkId) => {
+	const quey = `
+	SELECT cr.citing_year, COUNT(cr.id) as citation_count
+	FROM caseforge.citation_records cr
+	JOIN caseforge.publications pub 
+		ON cr.publication_id = pub.id
+	JOIN caseforge.projects pr 
+		ON pub.project_id = pr.id
+	JOIN caseforge.users u
+		ON pr.user_id = u.id
+	
+	WHERE pub.project_id = $1
+			AND u.clerkId = $2
+
+	GROUP BY cr.citing_year
+	ORDER BY cr.citing_year
+	`
+	const { rows } = await db.query(
+		query,
+		[projectId, clerkId]
+	);
+
+	return rows;
+}
 
 
-export const getCitationsByProjectId = ()
+export const getCitationsByProjectId = async (projectId, clerkId) => {
+	const query = `
+		SELECT pub.id, pub.title, pub.publication_date, pub.journal_name,
+			COUNT (cr.id) as citation_count
+
+		FROM caseforge.publications pub 
+
+		JOIN caseforge.projects pr
+			ON pub.project_id = pr.id
+		JOIN caseforge.users u
+			ON pr.use_id = u.id
+
+		LEFT JOIN caseforge.citation_records  cr
+			ON pub.id = cr.publication_id
+		
+		WHERE pub.project_id = $1
+			AND u.clerkId = $2
+		GROUP BY  pub.id, pub.title, pub.publication_date,  pub.journal_name
+		ORDER BY citation_count DESC
+	`
+
+	const { rows } = await pool.query(query, [projectId, clerkId]);
+
+}
