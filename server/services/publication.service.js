@@ -99,5 +99,4 @@ export const getPublicationsByProjectId = async (clerkId, projectId) => {
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
 	return rows;
-
-}
+};

@@ -11,7 +11,6 @@ import { idValidate } from "../utitls/idValidate.js";
 
 export const getProjects = async (req, res, next) => {
 	try {
-
 		const clerkId = req.clerkId;
 
 		const result = await getProjectsByClerkId(clerkId);

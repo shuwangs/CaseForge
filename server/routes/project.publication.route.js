@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { enqueueCitationJobs } from "../controllers/citation.controller.js";
 import {
 	createProject,
 	deleteProject,
@@ -6,7 +7,6 @@ import {
 	putProject,
 } from "../controllers/project.controller.js";
 import { savePublications } from "../controllers/publication.controller.js";
-import { enqueueCitationJobs } from "../controllers/citation.controller.js";
 
 const router = Router();
 

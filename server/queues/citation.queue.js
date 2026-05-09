@@ -9,24 +9,23 @@ const enqueueCitation = async ({
 	projectId,
 	publicationOpenAlexId,
 }) => {
-
 	const job = await citationsQueue.add(
-
 		"fetch-citation",
 		{
 			clerkId,
 			projectId,
 			publicationOpenAlexId,
-		}, {
-		attempts: 5,
-		backoff: { type: "exponential", delay: 1000 },
-		// removeOnComplete: 500,
-		removeOnComplete: true,
+		},
+		{
+			attempts: 5,
+			backoff: { type: "exponential", delay: 1000 },
+			// removeOnComplete: 500,
+			removeOnComplete: true,
 
-		// removeOnFail: 500,
-		removeOnFail: true,
-		jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
-	},
+			// removeOnFail: 500,
+			removeOnFail: true,
+			jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
+		},
 	);
 	return job;
 };

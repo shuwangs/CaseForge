@@ -24,6 +24,7 @@ CREATE TABLE institutions (
   id SERIAL PRIMARY KEY,
   institution_name TEXT NOT NULL,
   country VARCHAR(255),
+  institution_type VARCHAR(255),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT unique_institution_country
     UNIQUE (institution_name, country)
