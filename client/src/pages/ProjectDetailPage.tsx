@@ -1,9 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
+import useCitation from "../contexts/useCitation.ts";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
-import useCitation from "../contexts/useCitation.ts";
 
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
@@ -133,7 +133,10 @@ const ProjectDetailPage = () => {
 
 						<div className="mt-4 flex gap-3">
 							<button type="button">Manage Publications</button>
-							<button type="button" onClick={() => handleFetchCitations(project.id)}>
+							<button
+								type="button"
+								onClick={() => handleFetchCitations(project.id)}
+							>
 								Fetch Citations
 							</button>
 						</div>
@@ -151,7 +154,6 @@ const ProjectDetailPage = () => {
 					)}
 				</div>
 			</section>
-
 		</div>
 	);
 };

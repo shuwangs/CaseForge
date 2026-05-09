@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
+import { CitationProvider } from "./contexts/CitationContext.js";
 import { ProjectProvider } from "./contexts/ProjectContext.jsx";
 import { PublicationProvider } from "./contexts/PublicationContext.js";
-import { CitationProvider } from "./contexts/CitationContext.js";
 import ProtectedLayout from "./layouts/ProtectedLayout.js";
 import EditProjectPage from "./pages/EditProjectPage.tsx";
 import LandingPage from "./pages/LandingPage.jsx";
