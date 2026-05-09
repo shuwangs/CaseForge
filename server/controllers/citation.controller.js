@@ -1,6 +1,7 @@
 import AppError from "../errors/AppError.js";
 import enqueueCitation from "../queues/citation.queue.js";
 import { getPublicationsByProjectId } from "../services/publication.service.js";
+import { getCitationMapData, getCitationCountsByYear, getCitationsByProjectId } from "../services/citation.service.js";
 import { idValidate } from "../utitls/idValidate.js";
 
 export const enqueueCitationJobs = async (req, res, next) => {
@@ -8,6 +9,7 @@ export const enqueueCitationJobs = async (req, res, next) => {
 		console.log("In citation controller...");
 
 		const clerkId = req.clerkId;
+
 		const { projectId } = req.params;
 		if (!idValidate(projectId)) {
 			throw new AppError("Invalid project Id", 400);
@@ -45,3 +47,57 @@ export const enqueueCitationJobs = async (req, res, next) => {
 		next(err);
 	}
 };
+
+export const getCitationsMap = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const mapData = await getCitationMapData(projectId, clerkId);
+
+		res.status(200).json({
+			success: true,
+			data: mapData,
+		});
+
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const getCitationsYearlyCounts = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const yearlyCounts = await getCitationCountsByYear(projectId, clerkId);
+
+		res.status(200).json({
+			success: true,
+			data: yearlyCounts,
+		});
+
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const getProjectCitations = async (req, resq, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const citations = await getCitationsByProjectId(
+			projectId,
+			clerkId,
+		);
+
+		res.status(200).json({
+			success: true,
+			data: citations,
+		});
+
+	} catch (err) {
+		next(err);
+	}
+}

@@ -130,3 +130,12 @@ export const saveCitation = async (
 		client.release();
 	}
 };
+
+
+export const getCitationMapData = ()
+
+
+export const getCitationCountsByYear = ()
+
+
+export const getCitationsByProjectId = ()
