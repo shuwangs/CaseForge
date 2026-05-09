@@ -11,7 +11,7 @@
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
 		"test": "vitest",
-		"worker:citation": "node workers/citation.worker.js"
+		"worker:citation": "nodemon workers/citation.worker.js"
 	},
 	"keywords": [],
 	"author": "",

@@ -77,10 +77,16 @@ CREATE TABLE citation_records (
   citing_authors TEXT,
   citing_journal TEXT,
   citing_year INT,
+
+  citing_type VARCHAR(255),
   doi VARCHAR(255),
   openalex_id VARCHAR(255),
   pmid VARCHAR(50),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  raw_data JSONB,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT unique_publication_citation_openalex 
+    UNIQUE (publication_id, openalex_id)
 );
 
 -- Table summaries

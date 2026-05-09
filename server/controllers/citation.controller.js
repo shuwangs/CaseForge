@@ -34,7 +34,7 @@ export const enqueueCitationJobs = async (req, res, next) => {
                 publicationOpenAlexId: pub.openalex_id,
             })
 
-            console.log("after enqueueCitation");
+            console.log("after enqueueCitation id: ", pub.openalex_id);
         }
 
         res.status(200).json({
@@ -47,20 +47,3 @@ export const enqueueCitationJobs = async (req, res, next) => {
     }
 }
 
-export const fetchCitation = aync(workId) => {
-    const OPENALEX_URL = process.env.OPENALEX_URL;
-    try {
-        const response = await fetch(`${OPENALEX_URL}${workId}`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch citations");
-        }
-
-        const data = await response.json();
-
-        console.log("citation results:", data.results);
-
-    } catch (err) {
-        next(err)
-    }
-
-}

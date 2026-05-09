@@ -17,14 +17,16 @@ const enqueueCitation = async ({
 			clerkId,
 			projectId,
 			publicationOpenAlexId,
-		},
-		{
-			attempts: 5,
-			backoff: { type: "exponential", delay: 1000 },
-			removeOnComplete: 500,
-			removeOnFail: 500,
-			jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
-		},
+		}, {
+		attempts: 5,
+		backoff: { type: "exponential", delay: 1000 },
+		// removeOnComplete: 500,
+		removeOnComplete: true,
+
+		// removeOnFail: 500,
+		removeOnFail: true,
+		jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
+	},
 	);
 	return job;
 };
