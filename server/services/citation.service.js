@@ -156,7 +156,6 @@ export const getCitationMapData = async (projectId, clerkId) => {
 		AND i.country IS NOT NULL
 	GROUP BY i.country
 	ORDER BY citation_count DESC
-
 	`
 }
 
