@@ -61,7 +61,6 @@ export const addProject = async (project) => {
 		institutionId = institutionResult.rows[0].id;
 	}
 
-	console.log("the institution id is :", institutionId);
 	// add to DB
 	const projectRes = await pool.query(
 		`INSERT INTO caseforge.projects (user_id, project_name, institution_id , first_name, last_name, research_area , orcid , career_stage ,target)
@@ -93,7 +92,7 @@ export const deleteProjectById = async (projectId, clerkId) => {
 		`,
 		[projectId, clerkId],
 	);
-	console.log("in project Sevice, deleteProject...", results.rows);
+
 	return results.rows[0];
 };
 
@@ -126,7 +125,7 @@ export const updateProjectById = async (projectId, payload, clerkId) => {
 			institutionId = institutionResult.rows[0].id;
 		}
 	}
-	console.log("the institution id is updating :", institutionId);
+
 	// add to DB
 	const projectRes = await pool.query(
 		`UPDATE caseforge.projects 
@@ -156,6 +155,5 @@ export const updateProjectById = async (projectId, payload, clerkId) => {
 			clerkId,
 		],
 	);
-	console.log("in service updated is: ", projectRes.rows);
 	return projectRes.rows;
 };

@@ -70,6 +70,7 @@ const normalizeDate = (dateString) => {
 
 	return null;
 };
+
 export const normalizePublication = (rawPublication) => {
 	const ids = extractIds(rawPublication.id);
 	const journal = parseJournal(rawPublication.venue);

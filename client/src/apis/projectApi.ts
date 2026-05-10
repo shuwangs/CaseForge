@@ -55,7 +55,7 @@ export const addNewProject = async (
 };
 
 export const deleteProject = async (projectId: number, token: string) => {
-	console.log("in projectApi, the project to be deteletd is: ", projectId);
+
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/projects/${projectId}`,
@@ -76,7 +76,6 @@ export const updateProject = async (
 	payload: NewProjectPayload,
 	token: string,
 ) => {
-	console.log("calling updateProject API:", projectId, payload);
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/projects/${projectId}`,

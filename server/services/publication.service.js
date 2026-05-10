@@ -68,7 +68,7 @@ export const insertPublication = async (projectId, publication) => {
 	];
 
 	const { rows } = await pool.query(query, values);
-	console.log("in service insertPublication: ", rows);
+
 	return rows[0];
 };
 

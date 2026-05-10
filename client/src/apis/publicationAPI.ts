@@ -24,7 +24,7 @@ export const fetchPublications = async (
 	orcidId: string,
 	token: string,
 ): Promise<Publication[]> => {
-	console.log("In apis, resqing orcid is:", orcidId);
+
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/publications/search`,
@@ -52,7 +52,7 @@ export const postPublications = async (
 	payload: Publication[],
 	token: string,
 ) => {
-	console.log("In apis,  posting publications to db:", payload);
+
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/projects/${projectId}/publications`,

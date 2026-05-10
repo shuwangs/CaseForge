@@ -12,9 +12,7 @@ const AppNavbar = () => {
 			>
 				CaseForge
 			</button>
-			{/* <div className="flex items-center gap-4">
-				<span className="text-2xl text-gray-600">Bobo W.</span>
-			</div> */}
+
 			<Show when="signed-in">
 				<UserButton />
 			</Show>

@@ -19,13 +19,10 @@ export const handleClerkWebhook = async (req, res) => {
 	try {
 		evt = wh.verify(payload, headers);
 
-		console.log("what is evt: ", evt);
-
 		// Handle the webhook
 		const user = evt.data;
 		const eventType = evt.type;
 
-		console.log(`User ${user} was ${eventType}`);
 
 		if (eventType === "user.created" || eventType === "user.updated") {
 			const email = user.email_addresses?.[0]?.email_address ?? null;

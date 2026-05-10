@@ -30,15 +30,13 @@ export const createProject = async (req, res, next) => {
 
 		const dbUser = await getUserByClerkId(clerkId);
 		if (!dbUser) {
-			throw new AppError("User not found", 404);
+			throw new AppError("User not found", 401);
 		}
 
 		const project = {
 			...req.body,
 			userId: dbUser.id,
 		};
-
-		console.log("in controller the passed in project is ", project);
 
 		const result = await addProject(project);
 
@@ -56,7 +54,7 @@ export const deleteProject = async (req, res, next) => {
 		const clerkId = req.clerkId;
 
 		const projectId = req.params.id;
-		console.log("in controller the tobe delelte projectID is ", projectId);
+
 		if (!idValidate(projectId)) {
 			throw new AppError("Invalid Project", 400);
 		}
@@ -79,7 +77,6 @@ export const putProject = async (req, res, next) => {
 		const projectId = req.params.id;
 
 		const payload = req.body;
-		console.log("in controller the tobe updated project field ", payload);
 
 		if (!idValidate(projectId)) {
 			throw new AppError("Invalid Project", 400);
