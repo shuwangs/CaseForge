@@ -24,7 +24,6 @@ export const fetchPublications = async (
 	orcidId: string,
 	token: string,
 ): Promise<Publication[]> => {
-
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/publications/search`,
@@ -52,7 +51,6 @@ export const postPublications = async (
 	payload: Publication[],
 	token: string,
 ) => {
-
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/projects/${projectId}/publications`,

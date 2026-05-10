@@ -55,7 +55,6 @@ export const addNewProject = async (
 };
 
 export const deleteProject = async (projectId: number, token: string) => {
-
 	const result = await fetchWithAuth(
 		token,
 		`${API_BASE_URL}/api/projects/${projectId}`,
