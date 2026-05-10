@@ -19,16 +19,12 @@ describe("publicationApi", () => {
 		const result = await fetchPublications("0000-0002-2164-6551", token);
 		expect(fetchMock).toHaveBeenCalledWith(
 			`${API_BASE_URL}/api/publications/search`,
-			{
+			expect.objectContaining({
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
 				body: JSON.stringify({
 					orcid: "0000-0002-2164-6551",
 				}),
-			},
+			}),
 		);
 
 		expect(result).toEqual(mockResponse.data);

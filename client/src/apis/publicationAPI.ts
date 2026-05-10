@@ -1,4 +1,5 @@
 import type { ApiResponse } from "../types/ApiResponse.ts";
+import fetchWithAuth from "./fetchWithAuth.js";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -24,16 +25,19 @@ export const fetchPublications = async (
 	token: string,
 ): Promise<Publication[]> => {
 	console.log("In apis, resqing orcid is:", orcidId);
-	const result = await fetch(`${API_BASE_URL}/api/publications/search`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/publications/search`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				orcid: orcidId,
+			}),
 		},
-		body: JSON.stringify({
-			orcid: orcidId,
-		}),
-	});
+	);
 
 	if (!result.ok) {
 		throw new Error("Fetch publications failed");
@@ -49,13 +53,13 @@ export const postPublications = async (
 	token: string,
 ) => {
 	console.log("In apis,  posting publications to db:", payload);
-	const result = await fetch(
+	const result = await fetchWithAuth(
+		token,
 		`${API_BASE_URL}/api/projects/${projectId}/publications`,
 		{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				publications: payload,
