@@ -133,12 +133,36 @@ export const saveCitation = async (
 
 
 export const getCitationMapData = async (projectId, clerkId) => {
+	const query = `
+	SELECT i.country, COUNT(cr.id) as citation_count
+	FROM caseforge.citation_records cr
+	JOIN caseforge.publications pub
+		ON cr.publication_id = pub.id
+	JOIN caseforge.projects pr
+		ON pub.project_id = pr.id
 
+	JOIN caseforge.users u
+		ON pr.user_id = u.id		
+
+	JOIN caseforge.citation_record_institutions cri
+		ON cr.id = cri.citation_record_id
+
+	JOIN caseforge.institutions i
+		ON cri.institution_id = i.id
+
+	WHERE
+		pub.project_id = $1
+		AND u.clerk_id = $2
+		AND i.country IS NOT NULL
+	GROUP BY i.country
+	ORDER BY citation_count DESC
+
+	`
 }
 
 
 export const getCitationCountsByYear = async (projectId, clerkId) => {
-	const quey = `
+	const query = `
 	SELECT cr.citing_year, COUNT(cr.id) as citation_count
 	FROM caseforge.citation_records cr
 	JOIN caseforge.publications pub 
@@ -153,7 +177,7 @@ export const getCitationCountsByYear = async (projectId, clerkId) => {
 
 	GROUP BY cr.citing_year
 	ORDER BY cr.citing_year
-	`
+		`
 	const { rows } = await db.query(
 		query,
 		[projectId, clerkId]
@@ -163,10 +187,10 @@ export const getCitationCountsByYear = async (projectId, clerkId) => {
 }
 
 
-export const getCitationsByProjectId = async (projectId, clerkId) => {
+export const getCitationsCountByProjectId = async (projectId, clerkId) => {
 	const query = `
 		SELECT pub.id, pub.title, pub.publication_date, pub.journal_name,
-			COUNT (cr.id) as citation_count
+		COUNT(cr.id) as citation_count
 
 		FROM caseforge.publications pub 
 
@@ -180,9 +204,9 @@ export const getCitationsByProjectId = async (projectId, clerkId) => {
 		
 		WHERE pub.project_id = $1
 			AND u.clerkId = $2
-		GROUP BY  pub.id, pub.title, pub.publication_date,  pub.journal_name
+		GROUP BY  pub.id, pub.title, pub.publication_date, pub.journal_name
 		ORDER BY citation_count DESC
-	`
+		`
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
 

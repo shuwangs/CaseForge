@@ -1,7 +1,7 @@
 import AppError from "../errors/AppError.js";
 import enqueueCitation from "../queues/citation.queue.js";
 import { getPublicationsByProjectId } from "../services/publication.service.js";
-import { getCitationMapData, getCitationCountsByYear, getCitationsByProjectId } from "../services/citation.service.js";
+import { getCitationMapData, getCitationCountsByYear, getCitationsCountByProjectId } from "../services/citation.service.js";
 import { idValidate } from "../utitls/idValidate.js";
 
 export const enqueueCitationJobs = async (req, res, next) => {
@@ -87,7 +87,7 @@ export const getProjectCitations = async (req, resq, next) => {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
 
-		const citations = await getCitationsByProjectId(
+		const citations = await getCitationsCountByProjectId(
 			projectId,
 			clerkId,
 		);
