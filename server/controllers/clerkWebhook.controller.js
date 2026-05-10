@@ -23,7 +23,6 @@ export const handleClerkWebhook = async (req, res) => {
 		const user = evt.data;
 		const eventType = evt.type;
 
-
 		if (eventType === "user.created" || eventType === "user.updated") {
 			const email = user.email_addresses?.[0]?.email_address ?? null;
 
