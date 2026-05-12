@@ -1,4 +1,4 @@
-import enqueueCitation from "./citation.queue.js";
+import { enqueueCitation } from "./citation.queue.js";
 
 await enqueueCitation({
 	userId: 1,

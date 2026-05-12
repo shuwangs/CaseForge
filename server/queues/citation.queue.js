@@ -1,10 +1,10 @@
 import { Queue } from "bullmq";
 import { redisConnection } from "./redis.connection.js";
 
-const citationsQueue = new Queue("citation", { connection: redisConnection });
+export const citationsQueue = new Queue("citation", { connection: redisConnection });
 
 // Enqueue
-const enqueueCitation = async ({
+export const enqueueCitation = async ({
 	clerkId,
 	projectId,
 	publicationOpenAlexId,
@@ -30,4 +30,3 @@ const enqueueCitation = async ({
 	return job;
 };
 
-export default enqueueCitation;

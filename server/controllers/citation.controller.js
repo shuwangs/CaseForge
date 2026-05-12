@@ -1,5 +1,5 @@
 import AppError from "../errors/AppError.js";
-import enqueueCitation from "../queues/citation.queue.js";
+import { citationsQueue, enqueueCitation } from "../queues/citation.queue.js";
 import { getPublicationsByProjectId } from "../services/publication.service.js";
 import { getCitationMapData, getCitationCountsByYear, getCitationsCountByProjectId } from "../services/citation.service.js";
 import { idValidate } from "../utitls/idValidate.js";
@@ -97,6 +97,24 @@ export const getProjectCitations = async (req, resq, next) => {
 			data: citations,
 		});
 
+	} catch (err) {
+		next(err);
+	}
+}
+
+export const getCitationStatus = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const citationStatus = await citationsQueue.getJobCounts('active', 'wait', 'completed', 'failed');
+
+		res.status(200).json({
+			success: true,
+			projectId,
+			clerkId,
+			data: citationStatus,
+		});
 	} catch (err) {
 		next(err);
 	}
