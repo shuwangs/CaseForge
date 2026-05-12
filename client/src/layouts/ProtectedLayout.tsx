@@ -7,10 +7,10 @@ const ProtectedLayout = () => {
 			<Show when="signed-in">
 				<AppLayout />
 			</Show>
-
+			{/* 
 			<Show when="signed-out">
 				<RedirectToSignIn />
-			</Show>
+			</Show> */}
 		</>
 	);
 };
