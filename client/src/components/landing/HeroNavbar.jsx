@@ -2,27 +2,27 @@ import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 
 const HeroNavbar = () => {
 	return (
-		<nav className="flex justify-between py-4 bg-olive">
+		<nav className="flex h-20 items-center justify-between">
 			<div>
-				<h1 className="text-2xl font-bold text-forest">
+				<h1 className="text-2xl font-semibold">
 					Case
-					<span className="text-primary">Forge</span>
+					<span className="text-[var(--color-accent)]">Forge</span>
 				</h1>
 			</div>
 
-			<div className="flex gap-8 items-center text-xl ">
-				<a href="#features" className="hover:text-primary">
+			<div className="hidden items-center gap-8 text-sm font-medium text-gray-600 md:flex">
+				<a href="#features" className="hover:text-[var(--color-accent)]">
 					Features
 				</a>
-				<a href="#workflow" className="hover:text-primary">
+				<a href="#workflow" className="hover:text-[var(--color-accent)]">
 					How it Works
 				</a>
-				<a href="#pricing" className="hover:text-primary">
+				<a href="#pricing" className="hover:text-[var(--color-accent)]">
 					Pricing
 				</a>
 			</div>
 
-			<div className="flex px-15 text-2xl gap-6">
+			<div className="flex items-center gap-3">
 				<Show when="signed-out">
 					<SignInButton>
 						<button
