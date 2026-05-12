@@ -10,7 +10,7 @@ export const CitationProvider = ({ children }) => {
 	const { getToken, _isSignedIn, _isLoaded } = useAuth();
 	const [citationStatus, setCitationStatus] = useState(null);
 	const [isPolling, setIsPolling] = useState(false);
-	const [citationCount, setCitationCount] = useState(null);
+	const [citationCounts, setCitationCounts] = useState(null);
 	const [citationYearlyCount, setCitationYearlyCount] = useState(null);
 	const [citationMap, setCitationMap] = useState(null);
 
@@ -45,8 +45,8 @@ export const CitationProvider = ({ children }) => {
 		try {
 			const token = await getToken();
 			const result = await fetchCitationCount(projectId, token);
-			setCitationCount(result);
-			console.log("citation context, citation counts: ", citationCount)
+			setCitationCounts(result);
+			console.log("citation context, citation counts: ", citationCounts)
 		} catch (err) {
 			setError(err.message)
 		}
@@ -85,7 +85,7 @@ export const CitationProvider = ({ children }) => {
 	const startPollingCitationStatus = async (projectId) => {
 
 		setIsPolling(true);
-		const citationIntervalId = setInterval(() => {
+		const citationIntervalId = setInterval(async () => {
 
 			try {
 				const token = await getToken();
@@ -118,7 +118,7 @@ export const CitationProvider = ({ children }) => {
 	}
 
 	const values = {
-		citationCount,
+		citationCounts,
 		citationMap,
 		citationYearlyCount,
 		citationStatus,

@@ -10,7 +10,7 @@ import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
-
+import ProjectDashboard from "./pages/ProjectDashboard.tsx";
 const App = () => {
 	return (
 		<Routes>
@@ -33,6 +33,8 @@ const App = () => {
 				<Route path="/projects/:projectId" element={<ProjectDetailPage />} />
 				<Route path="/projects/new" element={<NewProjectPage />} />
 				<Route path="/projects/:projectId/edit" element={<EditProjectPage />} />
+				<Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
+
 			</Route>
 		</Routes>
 	);

@@ -1,7 +1,7 @@
 const CitationStatusBanner = () => {
     return (
         <div>
-            Dashboard
+            CitationStatusBanner
         </div>
     )
 }
