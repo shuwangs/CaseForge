@@ -82,7 +82,7 @@ export const getCitationsYearlyCounts = async (req, res, next) => {
 	}
 }
 
-export const getProjectCitations = async (req, resq, next) => {
+export const getProjectCitations = async (req, res, next) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;

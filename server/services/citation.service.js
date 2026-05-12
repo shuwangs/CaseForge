@@ -157,6 +157,9 @@ export const getCitationMapData = async (projectId, clerkId) => {
 	GROUP BY i.country
 	ORDER BY citation_count DESC
 	`
+
+	const { rows } = await pool.query(query, [projectId, clerkId]);
+	return rows;
 }
 
 
@@ -172,12 +175,12 @@ export const getCitationCountsByYear = async (projectId, clerkId) => {
 		ON pr.user_id = u.id
 	
 	WHERE pub.project_id = $1
-			AND u.clerkId = $2
+			AND u.clerk_id = $2
 
 	GROUP BY cr.citing_year
 	ORDER BY cr.citing_year
 		`
-	const { rows } = await db.query(
+	const { rows } = await pool.query(
 		query,
 		[projectId, clerkId]
 	);
@@ -196,17 +199,17 @@ export const getCitationsCountByProjectId = async (projectId, clerkId) => {
 		JOIN caseforge.projects pr
 			ON pub.project_id = pr.id
 		JOIN caseforge.users u
-			ON pr.use_id = u.id
+			ON pr.user_id = u.id
 
 		LEFT JOIN caseforge.citation_records  cr
 			ON pub.id = cr.publication_id
 		
 		WHERE pub.project_id = $1
-			AND u.clerkId = $2
+			AND u.clerk_id = $2
 		GROUP BY  pub.id, pub.title, pub.publication_date, pub.journal_name
 		ORDER BY citation_count DESC
 		`
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
-
+	return rows;
 }

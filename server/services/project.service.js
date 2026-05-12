@@ -52,7 +52,7 @@ export const addProject = async (project) => {
 			`
             INSERT INTO caseforge.institutions (institution_name)
             VALUES(LOWER($1))
-            ON CONFLICT(institution_name)
+            ON CONFLICT(institution_name, country)
 			DO UPDATE SET institution_name = EXCLUDED.institution_name
             RETURNING id;
         `,
