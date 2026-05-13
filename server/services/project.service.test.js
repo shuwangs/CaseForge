@@ -54,7 +54,7 @@ describe("Project.service. testing", () => {
 				],
 			});
 
-		const result = await addProject({
+		const _result = await addProject({
 			userId: 1,
 			projectName: "CaseForge Test",
 			firstName: "Shu",
