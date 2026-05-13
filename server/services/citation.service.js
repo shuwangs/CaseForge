@@ -159,7 +159,11 @@ export const getCitationMapData = async (projectId, clerkId) => {
 	`
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
-	return rows;
+
+	return rows.map((row) => ({
+		country: row.country,
+		value: Number(row.citation_count),
+	}));
 }
 
 

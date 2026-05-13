@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CitationCountsTable from "../components/dashboard/CitationCountsTable.tsx";
 import CitationYearChart from "../components/dashboard/CitationYearChart.tsx";
+import CitationMap from "../components/dashboard/CitationMap.tsx";
 const ProjectDashboard = () => {
     const [activeTab, setActiveTab] = useState("publications");
 
@@ -18,7 +19,7 @@ const ProjectDashboard = () => {
                     Yearly Citation Trend
                 </button>
                 <button
-                    onClick={() => setActiveTab("geography")}>
+                    onClick={() => setActiveTab("map")}>
                     Citation Map
                 </button>
             </div>
@@ -33,7 +34,7 @@ const ProjectDashboard = () => {
                 )}
 
                 {activeTab === "map" && (
-                    <div>Citation map</div>
+                    <CitationMap />
                 )}
             </div>
         </div>
