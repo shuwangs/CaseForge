@@ -8,9 +8,7 @@ const FeatureCard = ({ title, description, className }) => {
 			</h3>
 			<p className="mt-3 text-sm leading-6 text-gray-600">{description}</p>
 		</div>
-
-	)
-
+	);
 };
 
 export default FeatureCard;

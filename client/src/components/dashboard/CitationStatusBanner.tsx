@@ -1,9 +1,5 @@
 const CitationStatusBanner = () => {
-    return (
-        <div>
-            CitationStatusBanner
-        </div>
-    )
-}
+	return <div>CitationStatusBanner</div>;
+};
 
 export default CitationStatusBanner;

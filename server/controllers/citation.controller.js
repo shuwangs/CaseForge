@@ -1,7 +1,11 @@
 import AppError from "../errors/AppError.js";
 import { citationsQueue, enqueueCitation } from "../queues/citation.queue.js";
+import {
+	getCitationCountsByYear,
+	getCitationMapData,
+	getCitationsCountByProjectId,
+} from "../services/citation.service.js";
 import { getPublicationsByProjectId } from "../services/publication.service.js";
-import { getCitationMapData, getCitationCountsByYear, getCitationsCountByProjectId } from "../services/citation.service.js";
 import { idValidate } from "../utitls/idValidate.js";
 
 export const enqueueCitationJobs = async (req, res, next) => {
@@ -59,11 +63,10 @@ export const getCitationsMap = async (req, res, next) => {
 			success: true,
 			data: mapData,
 		});
-
 	} catch (err) {
 		next(err);
 	}
-}
+};
 
 export const getCitationsYearlyCounts = async (req, res, next) => {
 	try {
@@ -76,38 +79,38 @@ export const getCitationsYearlyCounts = async (req, res, next) => {
 			success: true,
 			data: yearlyCounts,
 		});
-
 	} catch (err) {
 		next(err);
 	}
-}
+};
 
 export const getProjectCitations = async (req, res, next) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
 
-		const citations = await getCitationsCountByProjectId(
-			projectId,
-			clerkId,
-		);
+		const citations = await getCitationsCountByProjectId(projectId, clerkId);
 
 		res.status(200).json({
 			success: true,
 			data: citations,
 		});
-
 	} catch (err) {
 		next(err);
 	}
-}
+};
 
 export const getCitationStatus = async (req, res, next) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
 
-		const citationStatus = await citationsQueue.getJobCounts('active', 'wait', 'completed', 'failed');
+		const citationStatus = await citationsQueue.getJobCounts(
+			"active",
+			"wait",
+			"completed",
+			"failed",
+		);
 
 		res.status(200).json({
 			success: true,
@@ -118,4 +121,4 @@ export const getCitationStatus = async (req, res, next) => {
 	} catch (err) {
 		next(err);
 	}
-}
+};

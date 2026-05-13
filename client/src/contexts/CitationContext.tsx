@@ -1,7 +1,13 @@
 import { useAuth } from "@clerk/react-router";
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import { useNavigate } from "react-router";
-import { getCitations, fetchCitationCount, fetchCitationYearlyCounts, fetchCitationMapData, fetchCitationStatus } from "../apis/citationApi.ts";
+import {
+	fetchCitationCount,
+	fetchCitationMapData,
+	fetchCitationStatus,
+	fetchCitationYearlyCounts,
+	getCitations,
+} from "../apis/citationApi.ts";
 
 export const CitationContext = createContext();
 
@@ -29,7 +35,6 @@ export const CitationProvider = ({ children }) => {
 
 			// navigate to dashboard
 			navigate(`/projects/${projectId}/dashboard`);
-
 		} catch (err) {
 			setError(err.message);
 			throw new Error("Fetch citations failed.");
@@ -38,55 +43,9 @@ export const CitationProvider = ({ children }) => {
 		}
 	};
 
-	const getCitationTable = async (projectId) => {
-		console.log("fetchCitation")
-		setLoading(true);
-		setError("");
-		try {
-			const token = await getToken();
-			const result = await fetchCitationCount(projectId, token);
-			setCitationCounts(result);
-			console.log("citation context, citation counts: ", citationCounts)
-		} catch (err) {
-			setError(err.message)
-		}
-	}
-
-	const getCitationYearlyCounts = async (projectId) => {
-		console.log("getCitationYearlyCounts")
-		setLoading(true);
-		setError("");
-		try {
-			const token = await getToken();
-			const result = await fetchCitationYearlyCounts(projectId, token);
-			setCitationYearlyCount(result);
-			console.log("citation context, citationYearlyCount: ", citationYearlyCount)
-
-		} catch (err) {
-			setError(err.message)
-		}
-	}
-	const getCitationMapData = async (projectId) => {
-		console.log("getCitationMapData")
-		setLoading(true);
-		setError("");
-		try {
-			const token = await getToken();
-			const result = await fetchCitationMapData(projectId, token);
-			setCitationMap(result);
-
-			console.log("citation context, citationMap: ", citationMap)
-
-		} catch (err) {
-			setError(err.message)
-		}
-	}
-
 	const startPollingCitationStatus = async (projectId) => {
-
 		setIsPolling(true);
 		const citationIntervalId = setInterval(async () => {
-
 			try {
 				const token = await getToken();
 				const result = await fetchCitationStatus(projectId, token);
@@ -104,41 +63,42 @@ export const CitationProvider = ({ children }) => {
 
 					await loadCitationResults(projectId);
 				}
-
 			} catch (err) {
 				console.error(error);
 				clearInterval(citationIntervalId);
 				setIsPolling(false);
 				setError(err.message);
-
 			}
-		}, 2000)
-
-	}
-
-	const loadCitationResults = async (projectId) => {
-		setLoading(true);
-		setError("");
-
-		try {
-			const token = await getToken();
-
-			const [tableData, yearlyData, mapData] = await Promise.all([
-				fetchCitationCount(projectId, token),
-				fetchCitationYearlyCounts(projectId, token),
-				fetchCitationMapData(projectId, token),
-			]);
-
-			setCitationCounts(tableData);
-			setCitationYearlyCount(yearlyData);
-			setCitationMap(mapData);
-		} catch (err) {
-			setError(err.message);
-			throw err;
-		} finally {
-			setLoading(false);
-		}
+		}, 2000);
 	};
+
+	const loadCitationResults = useCallback(
+		async (projectId) => {
+			setLoading(true);
+			setError("");
+
+			try {
+				const token = await getToken();
+
+				const [tableData, yearlyData, mapData] = await Promise.all([
+					fetchCitationCount(projectId, token),
+					fetchCitationYearlyCounts(projectId, token),
+					fetchCitationMapData(projectId, token),
+				]);
+
+				setCitationCounts(tableData);
+				setCitationYearlyCount(yearlyData);
+				setCitationMap(mapData);
+			} catch (err) {
+				setError(err.message);
+				throw err;
+			} finally {
+				setLoading(false);
+			}
+		},
+		[getToken],
+	);
+
 	const values = {
 		citationCounts,
 		citationMap,
@@ -149,7 +109,7 @@ export const CitationProvider = ({ children }) => {
 		loading,
 		handleFetchCitations,
 		loadCitationResults,
-		startPollingCitationStatus
+		startPollingCitationStatus,
 	};
 	return (
 		<CitationContext.Provider value={values}>

@@ -11,16 +11,14 @@ const HeroFeatures = () => {
 					How CaseForge Works
 				</h2>
 				<p className="max-w-2xl text-lg leading-8 text-[var(--color-accent)]/80">
-					Three simple steps to transform your research record
-					into compelling immigration evidence.
+					Three simple steps to transform your research record into compelling
+					immigration evidence.
 				</p>
 			</div>
 			<div className="mt-16 grid gap-6 md:grid-cols-3">
 				<FeatureCard
 					title="Import Publications"
 					description="Connect your ORCID profile or upload publication data to create a structured research portfolio."
-
-
 				/>
 				<FeatureCard
 					title="Fetch Citation Data"
@@ -30,9 +28,8 @@ const HeroFeatures = () => {
 					title="Generate Evidence Insights"
 					description="Explore publication impact through citation analytics, geographic influence maps, and yearly research trends."
 				/>
-
-			</div >
-		</div >
+			</div>
+		</div>
 	);
 };
 

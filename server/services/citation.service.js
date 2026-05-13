@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import pool from "../db/db.js";
 import AppError from "../errors/AppError.js";
-import { getUserByClerkId } from "./user.service.js";
 
 dotenv.config();
 
@@ -131,7 +130,6 @@ export const saveCitation = async (
 	}
 };
 
-
 export const getCitationMapData = async (projectId, clerkId) => {
 	const query = `
 	SELECT i.country, COUNT(cr.id) as citation_count
@@ -156,7 +154,7 @@ export const getCitationMapData = async (projectId, clerkId) => {
 		AND i.country IS NOT NULL
 	GROUP BY i.country
 	ORDER BY citation_count DESC
-	`
+	`;
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
 
@@ -164,8 +162,7 @@ export const getCitationMapData = async (projectId, clerkId) => {
 		country: row.country,
 		value: Number(row.citation_count),
 	}));
-}
-
+};
 
 export const getCitationCountsByYear = async (projectId, clerkId) => {
 	const query = `
@@ -183,15 +180,11 @@ export const getCitationCountsByYear = async (projectId, clerkId) => {
 
 	GROUP BY cr.citing_year
 	ORDER BY cr.citing_year
-		`
-	const { rows } = await pool.query(
-		query,
-		[projectId, clerkId]
-	);
+		`;
+	const { rows } = await pool.query(query, [projectId, clerkId]);
 
 	return rows;
-}
-
+};
 
 export const getCitationsCountByProjectId = async (projectId, clerkId) => {
 	const query = `
@@ -212,8 +205,8 @@ export const getCitationsCountByProjectId = async (projectId, clerkId) => {
 			AND u.clerk_id = $2
 		GROUP BY  pub.id, pub.title, pub.publication_date, pub.journal_name
 		ORDER BY citation_count DESC
-		`
+		`;
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
 	return rows;
-}
+};

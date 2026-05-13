@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { enqueueCitationJobs, getCitationsMap, getCitationsYearlyCounts, getProjectCitations, getCitationStatus } from "../controllers/citation.controller.js";
+import {
+	enqueueCitationJobs,
+	getCitationStatus,
+	getCitationsMap,
+	getCitationsYearlyCounts,
+	getProjectCitations,
+} from "../controllers/citation.controller.js";
 import {
 	createProject,
 	deleteProject,

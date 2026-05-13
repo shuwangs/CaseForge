@@ -12,10 +12,9 @@ const HeroContent = () => {
 
 				<p className="max-w-2xl text-lg leading-8 text-gray-600">
 					CaseForge retrieves publication records, maps citation activity, and
-					organizes research impact into structured evidence for EB-1A and NIW case
-					preparation.
+					organizes research impact into structured evidence for EB-1A and NIW
+					case preparation.
 				</p>
-
 			</div>
 			<div>
 				<button className="" type="button">
@@ -26,7 +25,7 @@ const HeroContent = () => {
 					View Demo
 				</button>
 			</div>
-		</div >
+		</div>
 	);
 };
 

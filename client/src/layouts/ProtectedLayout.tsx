@@ -1,4 +1,4 @@
-import { RedirectToSignIn, Show } from "@clerk/react";
+import { Show } from "@clerk/react";
 import AppLayout from "./AppLayout.js";
 
 const ProtectedLayout = () => {
