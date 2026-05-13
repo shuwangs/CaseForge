@@ -101,9 +101,8 @@ export const CitationProvider = ({ children }) => {
 					setIsPolling(false);
 
 					// jobs finished, refresh dashboard data
-					await getCitationTable(projectId);
-					await getCitationYearlyCounts(projectId);
-					await getCitationMapData(projectId);
+
+					await loadCitationResults(projectId);
 				}
 
 			} catch (err) {
@@ -117,6 +116,29 @@ export const CitationProvider = ({ children }) => {
 
 	}
 
+	const loadCitationResults = async (projectId) => {
+		setLoading(true);
+		setError("");
+
+		try {
+			const token = await getToken();
+
+			const [tableData, yearlyData, mapData] = await Promise.all([
+				fetchCitationCount(projectId, token),
+				fetchCitationYearlyCounts(projectId, token),
+				fetchCitationMapData(projectId, token),
+			]);
+
+			setCitationCounts(tableData);
+			setCitationYearlyCount(yearlyData);
+			setCitationMap(mapData);
+		} catch (err) {
+			setError(err.message);
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	};
 	const values = {
 		citationCounts,
 		citationMap,
@@ -125,8 +147,8 @@ export const CitationProvider = ({ children }) => {
 		error,
 		isPolling,
 		loading,
-
 		handleFetchCitations,
+		loadCitationResults,
 		startPollingCitationStatus
 	};
 	return (

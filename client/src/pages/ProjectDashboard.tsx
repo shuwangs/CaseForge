@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import CitationCountsTable from "../components/dashboard/CitationCountsTable.tsx";
 import CitationYearChart from "../components/dashboard/CitationYearChart.tsx";
 import CitationMap from "../components/dashboard/CitationMap.tsx";
+import useCitation from "../contexts/useCitation.ts";
+
 const ProjectDashboard = () => {
+    const { projectId } = useParams();
     const [activeTab, setActiveTab] = useState("publications");
+    const { loadCitationResults } = useCitation();
+
+    useEffect(() => {
+        if (!projectId) return;
+        loadCitationResults(projectId);
+    }, [projectId]);
 
     return (
         <div>
