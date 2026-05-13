@@ -105,3 +105,31 @@ export const getPublicationsByProjectId = async (clerkId, projectId) => {
 	const { rows } = await pool.query(query, [projectId, clerkId]);
 	return rows;
 };
+
+export const importPublicationsByOrcid = async (clerkId, projectId, orcid) => {
+	const projectQuery = `
+		SELECT pr.id
+		FROM caseforge.projects pr
+		JOIN caseforge.users u ON pr.user_id = u.id
+		WHERE pr.id = $1
+		  AND u.clerk_id = $2
+	`;
+
+	const { rows } = await pool.query(projectQuery, [projectId, clerkId]);
+
+	if (rows.length === 0) {
+		throw new AppError("Project not found or unauthorized", 404);
+	}
+
+	const publications = await searchPublicationsByOrcid(orcid);
+
+	if (!publications || publications.length === 0) {
+		throw new AppError("No publications found", 404);
+	}
+	const savedPublications = await saveProjectPublication(
+		projectId,
+		publications,
+	);
+
+	return savedPublications;
+};
