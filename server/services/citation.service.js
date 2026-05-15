@@ -26,10 +26,7 @@ export const fetchCitation = async (workId) => {
 		return results;
 	} catch (err) {
 		if (err.name === "TimeoutError" || err.name === "AbortError") {
-			throw new AppError(
-				"Timeout: OpenAlex citation request timed out!",
-				504,
-			);
+			throw new AppError("Timeout: OpenAlex citation request timed out!", 504);
 		} else {
 			throw new AppError(err.message || "citation fetch failed", 500);
 		}
