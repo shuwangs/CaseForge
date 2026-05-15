@@ -5,14 +5,28 @@ import useCitation from "../../contexts/useCitation.js";
 Chart.register(LinearScale);
 
 const CitationYearChart = () => {
-	const { citationYearlyCount } = useCitation();
+	const { citationYearlyCount, loading, error } = useCitation();
+
+	const yearlyData = citationYearlyCount ?? [];
+
+	if (loading) {
+		return <p>Loading citation trend data...</p>;
+	}
+
+	if (error) {
+		return <p>{error}</p>;
+	}
+
+	if (!yearlyData.length) {
+		return <p>No citation trend data available yet.</p>;
+	}
 
 	const data = {
-		labels: citationYearlyCount.map((data) => data.citing_year),
+		labels: yearlyData.map((data) => data.citing_year),
 		datasets: [
 			{
 				label: "Citation Trend Over the Years",
-				data: citationYearlyCount.map((data) => data.citation_count),
+				data: yearlyData.map((data) => data.citation_count),
 				borderColor: "rgb(53, 162, 235)",
 				backgroundColor: "rgba(53, 162, 235, 0.5)",
 			},

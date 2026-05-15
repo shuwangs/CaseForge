@@ -9,11 +9,26 @@ const citationColumns = [
 ];
 
 const CitationCountsTable = () => {
-	const { citationCounts } = useCitation();
+	const { citationCounts, loading, error } = useCitation();
+
+	const rowData = citationCounts ?? [];
+
+	if (loading) {
+		return <p>Loading citation counts...</p>;
+	}
+
+	if (error) {
+		return <p>{error}</p>;
+	}
+
+	if (!rowData.length) {
+		return <p>No citation counts available yet.</p>;
+	}
+
 	return (
 		<div>
 			Citation Counts Table
-			<BaseDataGrid rowData={citationCounts} columnDefs={citationColumns} />
+			<BaseDataGrid rowData={rowData} columnDefs={citationColumns} />
 		</div>
 	);
 };
