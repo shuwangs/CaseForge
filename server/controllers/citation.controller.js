@@ -105,12 +105,35 @@ export const getCitationStatus = async (req, res, next) => {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
 
-		const citationStatus = await citationsQueue.getJobCounts(
+		if (!idValidate(projectId)) {
+			throw new AppError("Invalid project Id", 400);
+		}
+
+		const jobs = await citationsQueue.getJobs([
 			"active",
 			"wait",
 			"completed",
 			"failed",
+		]);
+
+		const projectJobs = jobs.filter(
+			(job) => job.data.projectId === projectId && job.data.clerkId === clerkId,
 		);
+
+		const citationStatus = {
+			active: 0,
+			wait: 0,
+			completed: 0,
+			failed: 0,
+			total: projectJobs.length,
+		};
+
+		for (const job of projectJobs) {
+			const status = await job.getState();
+			if (citationStatus[status] !== undefined) {
+				citationStatus[status]++;
+			}
+		}
 
 		res.status(200).json({
 			success: true,
