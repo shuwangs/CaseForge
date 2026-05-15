@@ -1,7 +1,7 @@
 import pool from "../db/db.js";
 
 export const getProjectsByUserId = async (userId) => {
-	const result = await pool.query(
+	const { rows } = await pool.query(
 		`
             SELECT *
             FROM caseforge.projects
@@ -11,11 +11,25 @@ export const getProjectsByUserId = async (userId) => {
 		[userId],
 	);
 
-	return result.rows;
+	return rows;
+};
+
+export const getProjectsByClerkId = async (clerkId) => {
+	const query = `
+		SELECT p.*
+		FROM caseforge.projects p
+		JOIN caseforge.users u
+			ON p.user_id = u.id
+		WHERE u.clerk_id = $1
+		ORDER BY p.created_at DESC;
+	`;
+
+	const { rows } = await pool.query(query, [clerkId]);
+	return rows;
 };
 
 export const addProject = async (project) => {
-	console.log("adding project in the sevice...");
+	console.log("adding project in the sevice...", project);
 	const {
 		userId,
 		projectName,
@@ -29,7 +43,6 @@ export const addProject = async (project) => {
 	} = project;
 
 	// Retrieve Insitution Id if exits if not add new institution
-	console.log("the institution name is :", institution);
 
 	let institutionId = null;
 	if (institution.trim()) {
@@ -39,7 +52,7 @@ export const addProject = async (project) => {
 			`
             INSERT INTO caseforge.institutions (institution_name)
             VALUES(LOWER($1))
-            ON CONFLICT(institution_name)
+            ON CONFLICT(institution_name, country)
 			DO UPDATE SET institution_name = EXCLUDED.institution_name
             RETURNING id;
         `,
@@ -48,7 +61,6 @@ export const addProject = async (project) => {
 		institutionId = institutionResult.rows[0].id;
 	}
 
-	console.log("the institution id is :", institutionId);
 	// add to DB
 	const projectRes = await pool.query(
 		`INSERT INTO caseforge.projects (user_id, project_name, institution_id , first_name, last_name, research_area , orcid , career_stage ,target)
@@ -70,20 +82,21 @@ export const addProject = async (project) => {
 	return projectRes.rows[0];
 };
 
-export const deleteProjectById = async (projectId) => {
+export const deleteProjectById = async (projectId, clerkId) => {
 	const results = await pool.query(
 		` 
 		DELETE FROM caseforge.projects
 		WHERE id = $1
+		AND user_id = (SELECT id FROM caseforge.users WHERE clerk_id = $2)
 		RETURNING *
 		`,
-		[projectId],
+		[projectId, clerkId],
 	);
-	console.log("in project Sevice, deleteProject...", results.rows);
+
 	return results.rows[0];
 };
 
-export const updateProjectById = async (projectId, payload) => {
+export const updateProjectById = async (projectId, payload, clerkId) => {
 	const {
 		projectName,
 		firstName,
@@ -112,7 +125,7 @@ export const updateProjectById = async (projectId, payload) => {
 			institutionId = institutionResult.rows[0].id;
 		}
 	}
-	console.log("the institution id is updating :", institutionId);
+
 	// add to DB
 	const projectRes = await pool.query(
 		`UPDATE caseforge.projects 
@@ -125,7 +138,8 @@ export const updateProjectById = async (projectId, payload) => {
 				orcid = $6,
 				career_stage  = $7,
 				target = $8
-			WHERE id = $9
+			WHERE id = $9 
+			AND user_id = (SELECT id FROM caseforge.users WHERE clerk_id = $10)
 			RETURNING *
         	`,
 		[
@@ -138,8 +152,8 @@ export const updateProjectById = async (projectId, payload) => {
 			careerStage,
 			target,
 			projectId,
+			clerkId,
 		],
 	);
-	console.log("in service updated is: ", projectRes.rows);
 	return projectRes.rows;
 };

@@ -2,19 +2,18 @@ import AppError from "../errors/AppError.js";
 import {
 	addProject,
 	deleteProjectById,
-	getProjectsByUserId,
+	getProjectsByClerkId,
 	updateProjectById,
 } from "../services/project.service.js";
+import { getUserByClerkId } from "../services/user.service.js";
+
 import { idValidate } from "../utitls/idValidate.js";
+
 export const getProjects = async (req, res, next) => {
 	try {
-		const userId = Number(req.params.userId);
+		const clerkId = req.clerkId;
 
-		if (!idValidate(userId)) {
-			throw new AppError("Invalid userId", 400);
-		}
-
-		const result = await getProjectsByUserId(userId);
+		const result = await getProjectsByClerkId(clerkId);
 
 		res.status(200).json({
 			success: true,
@@ -27,11 +26,17 @@ export const getProjects = async (req, res, next) => {
 
 export const createProject = async (req, res, next) => {
 	try {
-		const project = req.body;
-		console.log("in controller the passed in project is ", project);
-		if (!idValidate(project.userId)) {
-			throw new AppError("Invalid userId", 400);
+		const clerkId = req.clerkId;
+
+		const dbUser = await getUserByClerkId(clerkId);
+		if (!dbUser) {
+			throw new AppError("User not found", 401);
 		}
+
+		const project = {
+			...req.body,
+			userId: dbUser.id,
+		};
 
 		const result = await addProject(project);
 
@@ -46,14 +51,15 @@ export const createProject = async (req, res, next) => {
 
 export const deleteProject = async (req, res, next) => {
 	try {
-		console.log("request params: ", req.params);
+		const clerkId = req.clerkId;
+
 		const projectId = req.params.id;
-		console.log("in controller the tobe delelte projectID is ", projectId);
+
 		if (!idValidate(projectId)) {
 			throw new AppError("Invalid Project", 400);
 		}
 
-		const result = await deleteProjectById(projectId);
+		const result = await deleteProjectById(projectId, clerkId);
 
 		res.status(200).json({
 			success: true,
@@ -66,18 +72,17 @@ export const deleteProject = async (req, res, next) => {
 
 export const putProject = async (req, res, next) => {
 	try {
-		console.log("in putProject controller request params: ", req.params);
+		const clerkId = req.clerkId;
+
 		const projectId = req.params.id;
-		console.log("in controller the tobe updated projectID is ", projectId);
 
 		const payload = req.body;
-		console.log("in controller the tobe updated project field ", payload);
 
 		if (!idValidate(projectId)) {
 			throw new AppError("Invalid Project", 400);
 		}
 
-		const result = await updateProjectById(projectId, payload);
+		const result = await updateProjectById(projectId, payload, clerkId);
 
 		res.status(200).json({
 			success: true,

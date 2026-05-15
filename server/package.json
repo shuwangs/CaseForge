@@ -10,17 +10,22 @@
 		"lint": "eslint .",
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
-		"test": "vitest"
+		"test": "vitest",
+		"worker:citation": "nodemon --env-file=.env.local workers/citation.worker.js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"type": "module",
 	"dependencies": {
+		"@clerk/backend": "^3.4.4",
+		"@clerk/express": "^2.1.12",
+		"bullmq": "^5.76.6",
 		"cors": "^2.8.6",
 		"dotenv": "^17.4.2",
 		"express": "^5.2.1",
-		"pg": "^8.20.0"
+		"pg": "^8.20.0",
+		"svix": "^1.92.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.12",

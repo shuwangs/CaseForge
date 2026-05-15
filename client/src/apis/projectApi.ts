@@ -4,6 +4,7 @@ import type {
 	Project,
 	ProjectDTO,
 } from "../types/project.ts";
+import fetchWithAuth from "./fetchWithAuth.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -21,8 +22,8 @@ const mapProject = (data: ProjectDTO): Project => ({
 	createdAt: data.created_at,
 });
 
-export const fetchAllProjects = async (userId: number): Promise<Project[]> => {
-	const result = await fetch(`${API_BASE_URL}/api/projects/user/${userId}`);
+export const fetchAllProjects = async (token: string): Promise<Project[]> => {
+	const result = await fetchWithAuth(token, `${API_BASE_URL}/api/projects`);
 	if (!result.ok) {
 		throw new Error("Fetch projects failed");
 	}
@@ -33,10 +34,9 @@ export const fetchAllProjects = async (userId: number): Promise<Project[]> => {
 
 export const addNewProject = async (
 	payload: NewProjectPayload,
+	token: string,
 ): Promise<Project> => {
-	console.log("in projectApi, the passed in payload is: ", payload);
-
-	const result = await fetch(`${API_BASE_URL}/api/projects`, {
+	const result = await fetchWithAuth(token, `${API_BASE_URL}/api/projects`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -54,11 +54,15 @@ export const addNewProject = async (
 	return mapProject(data.data);
 };
 
-export const deleteProject = async (projectId: number) => {
-	console.log("in projectApi, the project to be deteletd is: ", projectId);
-	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
-		method: "DELETE",
-	});
+export const deleteProject = async (projectId: number, token: string) => {
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}`,
+		{
+			method: "DELETE",
+		},
+	);
+
 	if (!result.ok) {
 		throw new Error("Delete Project failed");
 	}
@@ -69,13 +73,19 @@ export const deleteProject = async (projectId: number) => {
 export const updateProject = async (
 	projectId: number,
 	payload: NewProjectPayload,
+	token: string,
 ) => {
-	console.log("calling updateProject API:", projectId, payload);
-	const result = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
-		method: "PUT",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(payload),
-	});
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}`,
+		{
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(payload),
+		},
+	);
 	if (!result.ok) {
 		throw new Error("Update Project failed");
 	}

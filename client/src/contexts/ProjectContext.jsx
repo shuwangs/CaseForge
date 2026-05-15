@@ -1,3 +1,4 @@
+import { useAuth } from "@clerk/react-router";
 import { createContext, useCallback, useEffect, useState } from "react";
 import {
 	addNewProject,
@@ -5,22 +6,23 @@ import {
 	fetchAllProjects,
 	updateProject,
 } from "../apis/projectApi.ts";
-import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
+
 export const ProjectContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
-	const user_id = 1;
+	const { getToken, isSignedIn, isLoaded } = useAuth();
+
 	const [projects, setProjects] = useState([]);
-	const [publications, setPublications] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	const getAllProjects = useCallback(async (user_id) => {
+	const getAllProjects = useCallback(async () => {
 		try {
 			setLoading(true);
 			setError("");
-			const userId = Number(user_id);
-			const data = await fetchAllProjects(userId);
+			const token = await getToken();
+
+			const data = await fetchAllProjects(token);
 			console.log("In context getallprojects: ", data);
 			setProjects(data);
 		} catch (err) {
@@ -29,13 +31,19 @@ export const ProjectProvider = ({ children }) => {
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [getToken]);
 
 	const createProject = async (payload) => {
 		try {
 			setLoading(true);
 			setError("");
-			const data = await addNewProject(payload);
+			const token = await getToken();
+
+			if (!token) {
+				throw new Error("Missing Clerk token");
+			}
+
+			const data = await addNewProject(payload, token);
 			console.log("In context createProject result: ", data);
 			setProjects((prev) => [...prev, data]);
 
@@ -52,8 +60,9 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setLoading(true);
 			setError("");
+			const token = await getToken();
 
-			const data = await deleteProject(projecId);
+			const data = await deleteProject(projecId, token);
 			console.log("In context deleteProject result: ", data);
 			setProjects((prev) =>
 				prev.filter((p) => Number(p.id) !== Number(projecId)),
@@ -67,43 +76,15 @@ export const ProjectProvider = ({ children }) => {
 		}
 	};
 
-	const onFetchPublication = async (orcidId) => {
-		try {
-			setLoading(true);
-			setError("");
-
-			const data = await fetchPublications(orcidId);
-			setPublications(data);
-
-			return data;
-		} catch (err) {
-			setError(err.message || "Failed to fetch publications");
-			throw err;
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	const savePublications = async (projectId, payload) => {
-		try {
-			setError("");
-			setLoading(true);
-			console.log("savePublications in the provider :", payload);
-			const data = await postPublications(projectId, payload);
-			return data;
-		} catch (err) {
-			setError(err.message || "Failed to save publications");
-		} finally {
-			setLoading(false);
-		}
-	};
-
 	const onUpdateProject = async (projectId, payload) => {
 		try {
 			setError("");
 			setLoading(true);
 			console.log("update project in the provider :", payload);
-			const data = await updateProject(projectId, payload);
+
+			const token = await getToken();
+
+			const data = await updateProject(projectId, payload, token);
 			getAllProjects(user_id);
 			setProjects((prev) =>
 				prev.map((project) =>
@@ -120,24 +101,20 @@ export const ProjectProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		getAllProjects(user_id);
-	}, [getAllProjects]); // Later add user_id into it when user_id is not a constant
+		if (!isLoaded || !isSignedIn) return;
+
+		getAllProjects();
+	}, [isLoaded, isSignedIn, getAllProjects]);
 
 	const values = {
-		user_id,
 		projects,
-		publications,
 		loading,
 		error,
 		onDeleteProject,
 		setError,
 		getAllProjects,
 		createProject,
-		postPublications,
-		onFetchPublication,
 		onUpdateProject,
-		savePublications,
-		setPublications,
 	};
 
 	return (
