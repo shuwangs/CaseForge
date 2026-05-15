@@ -8,12 +8,8 @@ const citationWorker = new Worker(
 
 	async (job) => {
 		console.log("Processing citation job:", job.id);
-		// console.log("Job data:", job.data);
-		const { _clerkId, projectId, publicationOpenAlexId } = job.data;
 
-		// console.log("clerkId is:", clerkId);
-		// console.log("projectId is:", projectId);
-		// console.log("publicationOpenAlexId is:", publicationOpenAlexId);
+		const { _clerkId, projectId, publicationOpenAlexId } = job.data;
 
 		// 1. fetch citation from OpenAlex
 		const citations = await fetchCitation(publicationOpenAlexId);

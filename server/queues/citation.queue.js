@@ -21,6 +21,7 @@ export const enqueueCitation = async ({
 		{
 			attempts: 5,
 			backoff: { type: "exponential", delay: 1000 },
+			timeout: 60000,
 			removeOnComplete: 500,
 			removeOnFail: 500,
 			jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
