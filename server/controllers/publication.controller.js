@@ -4,7 +4,10 @@ import {
 	saveProjectPublication,
 	searchPublicationsByOrcid,
 } from "../services/publication.service.js";
-import { validateOrcid } from "../utitls/publication.helper.js";
+import {
+	mapPublicationDTO,
+	validateOrcid,
+} from "../utitls/publication.helper.js";
 
 export const searchPublications = async (req, res, next) => {
 	try {
@@ -43,21 +46,30 @@ export const savePublications = async (req, res, next) => {
 	}
 };
 
-export const importProjectPublication = async (req, res, next) => {
+export const importProjectPublications = async (req, res, next) => {
 	try {
 		const { projectId } = req.params;
 		const { orcid } = req.body;
 		const clerkId = req.clerkId;
+
+		console.log("in publication controller projectId is :", projectId);
+		console.log("in publication controller orcid is :", orcid);
 
 		const publications = await importPublicationsByOrcid(
 			clerkId,
 			projectId,
 			orcid,
 		);
+		console.log(
+			"in publication controller after called is mportPublicationsByOrcid datais :",
+			publications,
+		);
+
+		const mappedPublications = publications.map(mapPublicationDTO);
 		res.status(201).json({
 			message: "Publications imported successfully",
 			count: publications.length,
-			publications,
+			data: mappedPublications,
 		});
 	} catch (error) {
 		next(error);

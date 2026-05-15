@@ -106,3 +106,29 @@ export const normalizePublications = (publicationList) => {
 		return normalizePublication(publication);
 	});
 };
+
+export const mapPublicationDTO = (publication) => ({
+	id: publication.id,
+	title: publication.title,
+	authors: publication.authors,
+	doi: publication.doi,
+
+	publicationDate: publication.publication_date,
+	publicationType: publication.publication_type,
+	publicationYear: publication.publication_year,
+
+	journalName: publication.journal_name,
+	journalIssns: publication.journal_issns,
+	journalOpenalexId: publication.journal_openalex_id,
+
+	publisherName: publication.publisher_name,
+	publisherCrossrefId: publication.publisher_crossref_id,
+
+	openalexId: publication.openalex_id,
+	pmid: publication.pmid,
+
+	projectId: publication.project_id,
+	createdAt: publication.created_at,
+
+	rawData: publication.raw_data,
+});

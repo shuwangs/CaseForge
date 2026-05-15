@@ -1,7 +1,6 @@
 import { useAuth } from "@clerk/react-router";
 import { createContext, useState } from "react";
 import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
-
 export const PublicationContext = createContext();
 
 export const PublicationProvider = ({ children }) => {
@@ -11,13 +10,15 @@ export const PublicationProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	const onFetchPublication = async (orcidId) => {
+	const onFetchPublication = async (orcidId, projectId) => {
+		console.log("in publication context");
 		try {
 			setLoading(true);
 			setError("");
 			const token = await getToken();
 
-			const data = await fetchPublications(orcidId, token);
+			const data = await fetchPublications(orcidId, token, projectId);
+			console.log("in publication context fetch data:", data);
 			setPublications(data);
 
 			return data;

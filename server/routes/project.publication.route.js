@@ -11,9 +11,11 @@ import {
 	deleteProject,
 	getProjects,
 	putProject,
-	importProjectPublications
 } from "../controllers/project.controller.js";
-import { savePublications } from "../controllers/publication.controller.js";
+import {
+	importProjectPublications,
+	savePublications,
+} from "../controllers/publication.controller.js";
 
 const router = Router();
 

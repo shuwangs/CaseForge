@@ -18,7 +18,13 @@ const ProjectDetailPage = () => {
 	const hasPublication = publications.length > 0;
 
 	const handleSubmit = async () => {
-		await onFetchPublication(project.orcid);
+		console.log("clicked fetch publications");
+		console.log("project:", project);
+		console.log("projectId:", projectId);
+
+		if (!project?.orcid) return;
+
+		await onFetchPublication(project.orcid, projectId);
 		navigate(`/projects/${projectId}`);
 	};
 
@@ -133,13 +139,6 @@ const ProjectDetailPage = () => {
 
 						<div className="mt-4 flex gap-3">
 							<button type="button">Manage Publications</button>
-							<button
-								className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
-								type="button"
-								onClick={() => handleFetchCitations(project.id)}
-							>
-								Fetch Citations
-							</button>
 						</div>
 					</div>
 				)}
@@ -154,6 +153,22 @@ const ProjectDetailPage = () => {
 						/>
 					)}
 				</div>
+
+				{publications.length > 0 && (
+					<div>
+						<button
+							className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+							type="button"
+							onClick={() => handleFetchCitations(projectId)}
+						>
+							Fetch Citations
+						</button>
+
+						<Link to="/projects">
+							<button type="button">Back</button>
+						</Link>
+					</div>
+				)}
 			</section>
 		</div>
 	);

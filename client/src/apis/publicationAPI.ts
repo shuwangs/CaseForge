@@ -23,10 +23,11 @@ export interface Publication {
 export const fetchPublications = async (
 	orcidId: string,
 	token: string,
+	projectId: number | string,
 ): Promise<Publication[]> => {
 	const result = await fetchWithAuth(
 		token,
-		`${API_BASE_URL}/api/publications/search`,
+		`${API_BASE_URL}/api/projects/${projectId}/publications/import`,
 		{
 			method: "POST",
 			headers: {
