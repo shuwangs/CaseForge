@@ -1,10 +1,12 @@
 import { Queue } from "bullmq";
 import { redisConnection } from "./redis.connection.js";
 
-const citationsQueue = new Queue("citation", { connection: redisConnection });
+export const citationsQueue = new Queue("citation", {
+	connection: redisConnection,
+});
 
 // Enqueue
-const enqueueCitation = async ({
+export const enqueueCitation = async ({
 	clerkId,
 	projectId,
 	publicationOpenAlexId,
@@ -19,15 +21,10 @@ const enqueueCitation = async ({
 		{
 			attempts: 5,
 			backoff: { type: "exponential", delay: 1000 },
-			// removeOnComplete: 500,
-			removeOnComplete: true,
-
-			// removeOnFail: 500,
-			removeOnFail: true,
+			removeOnComplete: 500,
+			removeOnFail: 500,
 			jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,
 		},
 	);
 	return job;
 };
-
-export default enqueueCitation;

@@ -15,6 +15,11 @@ export const searchPublicationsByOrcid = async (orcid) => {
 	}
 
 	const data = await res.json();
+
+	if (!data || data.length === 0) {
+		return [];
+	}
+
 	const normalizedData = normalizePublications(data);
 
 	return normalizedData;

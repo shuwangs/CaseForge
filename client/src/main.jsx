@@ -22,6 +22,7 @@ const ClerkWithRouter = () => {
 			signUpFallbackRedirectUrl="/"
 			signUpForceRedirectUrl="/projects"
 			signInForceRedirectUrl="/projects"
+			afterSignOutUrl="/"
 		>
 			<App />
 		</ClerkProvider>
