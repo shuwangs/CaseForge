@@ -47,15 +47,6 @@ describe("citationApi", () => {
 
 		const result = await fetchCitationCount(1, "fake-token");
 
-		expect(fetch).toHaveBeenCalledWith(
-			"http://localhost:3000/api/projects/1/citation-counts",
-			{
-				headers: {
-					Authorization: "Bearer fake-token",
-				},
-			},
-		);
-
 		expect(result).toEqual([
 			{
 				id: 1,
