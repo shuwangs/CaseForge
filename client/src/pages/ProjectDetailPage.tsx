@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
+import useCitation from "../contexts/useCitation.ts";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
 
@@ -9,6 +10,7 @@ const ProjectDetailPage = () => {
 	const navigate = useNavigate();
 	const { projects, onDeleteProject } = useProject();
 	const { publications, onFetchPublication } = usePublication();
+	const { handleFetchCitations } = useCitation();
 
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
@@ -131,6 +133,13 @@ const ProjectDetailPage = () => {
 
 						<div className="mt-4 flex gap-3">
 							<button type="button">Manage Publications</button>
+							<button
+								className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+								type="button"
+								onClick={() => handleFetchCitations(project.id)}
+							>
+								Fetch Citations
+							</button>
 						</div>
 					</div>
 				)}

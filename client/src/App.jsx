@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
+import { CitationProvider } from "./contexts/CitationContext.js";
 import { ProjectProvider } from "./contexts/ProjectContext.jsx";
 import { PublicationProvider } from "./contexts/PublicationContext.js";
 import ProtectedLayout from "./layouts/ProtectedLayout.js";
 import EditProjectPage from "./pages/EditProjectPage.tsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import NewProjectPage from "./pages/NewProjectPage.tsx";
+import ProjectDashboard from "./pages/ProjectDashboard.tsx";
 import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
@@ -21,7 +23,9 @@ const App = () => {
 				element={
 					<ProjectProvider>
 						<PublicationProvider>
-							<ProtectedLayout />
+							<CitationProvider>
+								<ProtectedLayout />
+							</CitationProvider>
 						</PublicationProvider>
 					</ProjectProvider>
 				}
@@ -30,6 +34,10 @@ const App = () => {
 				<Route path="/projects/:projectId" element={<ProjectDetailPage />} />
 				<Route path="/projects/new" element={<NewProjectPage />} />
 				<Route path="/projects/:projectId/edit" element={<EditProjectPage />} />
+				<Route
+					path="/projects/:projectId/dashboard"
+					element={<ProjectDashboard />}
+				/>
 			</Route>
 		</Routes>
 	);

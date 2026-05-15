@@ -22,9 +22,12 @@ CREATE TABLE users (
 -- Table institutions
 CREATE TABLE institutions (
   id SERIAL PRIMARY KEY,
-  institution_name TEXT UNIQUE NOT NULL,
+  institution_name TEXT NOT NULL,
   country VARCHAR(255),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  institution_type VARCHAR(255),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_institution_country
+    UNIQUE (institution_name, country)
 );
 
 
@@ -77,10 +80,16 @@ CREATE TABLE citation_records (
   citing_authors TEXT,
   citing_journal TEXT,
   citing_year INT,
+
+  citing_type VARCHAR(255),
   doi VARCHAR(255),
   openalex_id VARCHAR(255),
   pmid VARCHAR(50),
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  raw_data JSONB,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT unique_publication_citation_openalex 
+    UNIQUE (publication_id, openalex_id)
 );
 
 -- Table summaries

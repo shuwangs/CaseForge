@@ -15,6 +15,11 @@ export const searchPublicationsByOrcid = async (orcid) => {
 	}
 
 	const data = await res.json();
+
+	if (!data || data.length === 0) {
+		return [];
+	}
+
 	const normalizedData = normalizePublications(data);
 
 	return normalizedData;
@@ -83,4 +88,20 @@ export const saveProjectPublication = async (projectId, publications) => {
 		savedPublications.push(saved);
 	}
 	return savedPublications;
+};
+
+export const getPublicationsByProjectId = async (clerkId, projectId) => {
+	const query = `
+        SELECT pub.*
+        FROM caseforge.publications pub
+        JOIN caseforge.projects pr
+          ON pub.project_id = pr.id
+        JOIN caseforge.users u
+          ON pr.user_id = u.id
+        WHERE pr.id = $1
+          AND u.clerk_id = $2
+    `;
+
+	const { rows } = await pool.query(query, [projectId, clerkId]);
+	return rows;
 };

@@ -9,10 +9,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ project, href }: ProjectCardProps) => {
 	return (
 		<Link to={href}>
-			<div
-				className="bg-[var(--color-surface)] rounded-xl border border-[var(--color-primary)]
-            	shadow-md p-5 hover:shadow-md "
-			>
+			<div className="border border-gray-200 shadow-sm hover:border-[var(--color-accent)] hover:shadow-md">
 				<h2 className="text-lg font-semibold text-[var(--color-primary)]">
 					{project.projectName || "No Name Specified"}
 				</h2>
