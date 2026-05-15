@@ -9,19 +9,30 @@ export const fetchCitation = async (workId) => {
 		const OPENALEX_URL =
 			process.env.OPENALEX_URL ||
 			"https://api.openalex.org/works?filter=cites:";
-		console.log("citation Service fetching url: ", `${OPENALEX_URL}${workId}`);
 
-		const response = await fetch(`${OPENALEX_URL}${workId}`);
+		const response = await fetch(`${OPENALEX_URL}${workId}`, {
+			signal: AbortSignal.timeout(30000),
+		});
 
 		if (!response.ok) {
-			throw new Error("Failed to fetch citations");
+			throw new AppError(
+				"Failed to fetch citations",
+				response.status >= 500 ? 502 : response.status,
+			);
 		}
 
 		const data = await response.json();
 		const results = data.results;
 		return results;
 	} catch (err) {
-		throw new AppError(err.message || "citation fetch failed", 500);
+		if (err.name === "TimeoutError" || err.name === "AbortError") {
+			throw new AppError(
+				"Timeout: OpenAlex citation request timed out!",
+				504,
+			);
+		} else {
+			throw new AppError(err.message || "citation fetch failed", 500);
+		}
 	}
 };
 
