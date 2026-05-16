@@ -48,6 +48,12 @@ export const insertPublication = async (projectId, publication) => {
     )
     VALUES(
         $1, $2, $3, $4, $5, $6, $7, $8,  $9, $10, $11, $12, $13, $14)
+	ON CONFLICT(project_id, openalex_id)
+	DO UPDATE SET
+	  	title = EXCLUDED.title,
+		authors = EXCLUDED.authors,
+		doi = EXCLUDED.doi,
+		raw_data = EXCLUDED.raw_data
      
     RETURNING *;
     `;
