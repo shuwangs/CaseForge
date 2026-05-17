@@ -23,6 +23,17 @@ services:
     env_file:
       - ./server/.env.docker
 
+  caseforge-citation-worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    command: npm run worker:citation
+    env_file:
+      - ./server/.env.docker
+    depends_on:
+      - redis
+      - caseforge-server
+
   redis:
     image: redis:8.6-alpine
     ports:
