@@ -1,17 +1,17 @@
-const DeleteBtn = ({ onClick, children = "New", className = "", ...rest }) => {
+const EditBtn = ({ onClick, children = "New", className = "", ...rest }) => {
 	return (
 		<button
 			onClick={onClick}
 			className={`
                 bg-gray-300
-				border border-red-200
+				border border-[var(--color-secondary)]
 				bg-white
 				px-3 py-2
+                text-[var(--color-secondary)]
                 rounded-lg 
                 text-md font-medium
-				text-red-600
-				hover:bg-red-50
-				hover:border-red-300
+				hover:bg-lime-200
+				hover:text-[var(--color-accent)]
                 transition 
                 ${className}`}
 			{...rest}
@@ -21,4 +21,4 @@ const DeleteBtn = ({ onClick, children = "New", className = "", ...rest }) => {
 	);
 };
 
-export default DeleteBtn;
+export default EditBtn;
