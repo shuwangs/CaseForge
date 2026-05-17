@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ProjectOverview from "../components/project/ProjectOverview.tsx";
+import ProjectProgress from "../components/project/ProjectProgress.tsx";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
 import useCitation from "../contexts/useCitation.ts";
@@ -19,7 +20,8 @@ const ProjectDetailPage = () => {
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
 	);
-	const hasPublication = publications.length > 0;
+	const hasPublications = publications.length > 0;
+	const hasCitations = false;
 
 	const handleSubmit = async () => {
 		console.log("clicked fetch publications");
@@ -68,6 +70,11 @@ const ProjectDetailPage = () => {
 				<ProjectOverview project={project} />
 			</section>
 
+			<ProjectProgress
+				hasPublications={hasPublications}
+				hasCitations={hasCitations}
+			/>
+
 			<section className="rounded-xl border border-[var(--color-primary)] bg-[var(--color-surface)] p-6 shadow-sm">
 				<h2 className="text-lg font-semibold text-[var(--color-primary)]">
 					Next Step
@@ -77,7 +84,7 @@ const ProjectDetailPage = () => {
 					Fetch publications using the ORCID saved in this project.
 				</p>
 
-				{!hasPublication ? (
+				{!hasPublications ? (
 					<div className="mt-5 flex gap-3">
 						<Link to={`/projects/${project.id}/edit`}>
 							<button type="button">Edit Project</button>
