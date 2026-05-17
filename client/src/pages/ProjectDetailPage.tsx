@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import ProjectOverview from "../components/project/ProjectOverview.tsx";
 import ProjectProgress from "../components/project/ProjectProgress.tsx";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
-import DeleteBtn from "../components/ui/DeleteBtn.tsx";
+import EditBtn from "../components/ui/EditBtn.js";
 import useCitation from "../contexts/useCitation.ts";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
@@ -11,7 +11,7 @@ import usePublication from "../contexts/usePublication.ts";
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, onDeleteProject } = useProject();
+	const { projects } = useProject();
 
 	const { publications, onFetchPublication, loadProjectPublications } =
 		usePublication();
@@ -22,6 +22,11 @@ const ProjectDetailPage = () => {
 	);
 	const hasPublications = publications.length > 0;
 	const hasCitations = false;
+	const stage = !hasPublications
+		? "NEEDS_PUBLICATIONS"
+		: !hasCitations
+			? "NEEDS_CITATIONS"
+			: "READY";
 
 	const handleSubmit = async () => {
 		console.log("clicked fetch publications");
@@ -80,11 +85,7 @@ const ProjectDetailPage = () => {
 					Next Step
 				</h2>
 
-				<p className="mt-2 text-sm text-gray-500">
-					Fetch publications using the ORCID saved in this project.
-				</p>
-
-				{!hasPublications ? (
+				{stage === "NEEDS_PUBLICATIONS" && (
 					<div className="mt-5 flex gap-3">
 						<Link to={`/projects/${project.id}/edit`}>
 							<button type="button">Edit Project</button>
@@ -96,17 +97,47 @@ const ProjectDetailPage = () => {
 							Fetch Publications
 						</button>
 					</div>
-				) : (
+				)}
+
+				{stage === "NEEDS_CITATIONS" && (
+					<div className="mt-5 flex gap-3">
+						<Link to={`/projects/${project.id}/edit`}>
+							<EditBtn type="button">Edit Project</EditBtn>
+						</Link>
+
+						{/* <DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn> */}
+
+						<button
+							className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+							type="button"
+							onClick={() => handleFetchCitations(projectId)}
+						>
+							Fetch Citations
+						</button>
+					</div>
+				)}
+
+				{stage === "READY" && (
 					<div>
 						<p className="mt-2 text-sm text-gray-500">
-							{publications.length} publications saved
+							Citation analysis is ready. View your dashboard.
 						</p>
 
-						<div className="mt-4 flex gap-3">
-							<button type="button">Manage Publications</button>
+						<div className="mt-5">
+							<button type="button">View Dashboard</button>
 						</div>
 					</div>
 				)}
+
+				{/* <div>
+					<p className="mt-2 text-sm text-gray-500">
+						{publications.length} publications saved
+					</p>
+
+					<div className="mt-4 flex gap-3">
+						<button type="button">Manage Publications</button>
+					</div>
+				</div> */}
 			</section>
 
 			<section>

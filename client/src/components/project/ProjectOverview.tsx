@@ -69,10 +69,6 @@ const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 				<DeleteBtn type="button" onClick={handleDelete}>
 					<RiDeleteBinFill />
 				</DeleteBtn>
-				{/* 
-                    <button type="button" onClick={handleSubmit}>
-                        Fetch Publications
-                    </button> */}
 			</div>
 		</section>
 	);
