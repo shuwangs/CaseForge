@@ -1,4 +1,4 @@
-import useCitation from "../../contexts/useCitation.js";
+import useCitation from "../../contexts/useCitation.ts";
 import BaseDataGrid from "../ui/BaseDataGrid.jsx";
 
 const citationColumns = [

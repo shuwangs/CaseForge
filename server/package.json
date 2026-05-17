@@ -20,11 +20,14 @@
 	"dependencies": {
 		"@clerk/backend": "^3.4.4",
 		"@clerk/express": "^2.1.12",
+		"@types/jest": "^30.0.0",
+		"@types/supertest": "^7.2.0",
 		"bullmq": "^5.76.6",
 		"cors": "^2.8.6",
 		"dotenv": "^17.4.2",
 		"express": "^5.2.1",
 		"pg": "^8.20.0",
+		"supertest": "^7.2.2",
 		"svix": "^1.92.2"
 	},
 	"devDependencies": {
