@@ -13,6 +13,7 @@ import {
 	putProject,
 } from "../controllers/project.controller.js";
 import {
+	getProjectPublications,
 	importProjectPublications,
 	savePublications,
 } from "../controllers/publication.controller.js";
@@ -32,4 +33,5 @@ router.get("/:projectId/citations/status", getCitationStatus);
 
 // Save publications after fetch publications
 router.post("/:projectId/publications/import", importProjectPublications);
+router.get("/:projectId/publications", getProjectPublications);
 export default router;

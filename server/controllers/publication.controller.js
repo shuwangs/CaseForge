@@ -1,5 +1,6 @@
 import AppError from "../errors/AppError.js";
 import {
+	getPublicationsByProjectId,
 	importPublicationsByOrcid,
 	saveProjectPublication,
 	searchPublicationsByOrcid,
@@ -69,6 +70,27 @@ export const importProjectPublications = async (req, res, next) => {
 		res.status(201).json({
 			message: "Publications imported successfully",
 			count: publications.length,
+			data: mappedPublications,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const getProjectPublications = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const publications = await getPublicationsByProjectId(clerkId, projectId);
+		console.log(
+			"in publication controller  get publications by projct ID: ",
+			publications,
+		);
+
+		const mappedPublications = publications.map(mapPublicationDTO);
+		res.status(200).json({
+			success: true,
 			data: mappedPublications,
 		});
 	} catch (error) {

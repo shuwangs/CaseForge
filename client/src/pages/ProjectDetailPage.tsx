@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import DeleteBtn from "../components/ui/DeleteBtn.tsx";
@@ -9,7 +10,8 @@ const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
 	const { projects, onDeleteProject } = useProject();
-	const { publications, onFetchPublication } = usePublication();
+	const { publications, onFetchPublication, loadProjectPublications } =
+		usePublication();
 	const { handleFetchCitations } = useCitation();
 
 	const project = projects.find(
@@ -32,6 +34,11 @@ const ProjectDetailPage = () => {
 		await onDeleteProject(project.id);
 		navigate(`/projects/`);
 	};
+
+	useEffect(() => {
+		if (!projectId) return;
+		loadProjectPublications(projectId);
+	}, [projectId]);
 
 	if (!project) {
 		return (

@@ -73,3 +73,17 @@ export const postPublications = async (
 
 	return data.data;
 };
+
+export const loadPublications = async (projectId: string, token: string) => {
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}/publications`,
+	);
+
+	if (!result.ok) {
+		throw new Error("Load Publications error");
+	}
+	const data: ApiResponse<Publication[]> = await result.json();
+
+	return data.data ?? [];
+};
