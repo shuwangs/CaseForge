@@ -1,5 +1,5 @@
 import { useAuth } from "@clerk/react-router";
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import {
 	fetchPublications,
 	loadPublications,
@@ -53,7 +53,7 @@ export const PublicationProvider = ({ children }) => {
 		}
 	};
 
-	const loadProjectPublications = async (projectId) => {
+	const loadProjectPublications = useCallback(() => async (projectId) => {
 		try {
 			setLoading(true);
 			setError("");
@@ -69,7 +69,7 @@ export const PublicationProvider = ({ children }) => {
 		} finally {
 			setLoading(false);
 		}
-	};
+	});
 	const values = {
 		publications,
 		loading,

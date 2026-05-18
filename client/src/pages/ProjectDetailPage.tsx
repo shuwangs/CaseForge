@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ProjectOverview from "../components/project/ProjectOverview.tsx";
 import ProjectProgress from "../components/project/ProjectProgress.tsx";
-import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
-import EditBtn from "../components/ui/EditBtn.js";
+import BaseBtn from "../components/ui/BaseBtn.js";
+import PageDescription from "../components/ui/PageDescription.js";
+import PageTitle from "../components/ui/PageTitle.js";
 import useCitation from "../contexts/useCitation.ts";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
-import PageTitle from "../components/ui/PageTitle.js";
-import PageDescription from "../components/ui/PageDescription.js";
 
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
@@ -44,7 +43,7 @@ const ProjectDetailPage = () => {
 	useEffect(() => {
 		if (!projectId) return;
 		loadProjectPublications(projectId);
-	}, [projectId]);
+	}, [projectId, loadProjectPublications]);
 
 	if (!project) {
 		return (
@@ -64,11 +63,9 @@ const ProjectDetailPage = () => {
 					← Back to Projects
 				</button>
 
-				<PageTitle>
-					{project.projectName || "Untitled Project"}
-				</PageTitle>
+				<PageTitle>{project.projectName || "Untitled Project"}</PageTitle>
 
-				<PageDescription >
+				<PageDescription>
 					Review project details before fetching publications.
 				</PageDescription>
 			</div>
@@ -90,32 +87,30 @@ const ProjectDetailPage = () => {
 				{stage === "NEEDS_PUBLICATIONS" && (
 					<div className="mt-5 flex gap-3">
 						<Link to={`/projects/${project.id}/edit`}>
-							<button type="button">Edit Project</button>
+							<BaseBtn type="button">Edit Project</BaseBtn>
 						</Link>
 
 						{/* <DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn> */}
 
-						<button type="button" onClick={handleSubmit}>
+						<BaseBtn type="button" onClick={handleSubmit}>
 							Fetch Publications
-						</button>
+						</BaseBtn>
 					</div>
 				)}
 
 				{stage === "NEEDS_CITATIONS" && (
 					<div className="mt-5 flex gap-3">
 						<Link to={`/projects/${project.id}/edit`}>
-							<EditBtn type="button">Edit Project</EditBtn>
+							<BaseBtn variant="secondary" type="button">
+								Edit Project
+							</BaseBtn>
 						</Link>
 
 						{/* <DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn> */}
 
-						<button
-							className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
-							type="button"
-							onClick={() => handleFetchCitations(projectId)}
-						>
+						<BaseBtn onClick={() => handleFetchCitations(projectId)}>
 							Fetch Citations
-						</button>
+						</BaseBtn>
 					</div>
 				)}
 
@@ -130,29 +125,19 @@ const ProjectDetailPage = () => {
 						</div>
 					</div>
 				)}
-
-				{/* <div>
-					<p className="mt-2 text-sm text-gray-500">
-						{publications.length} publications saved
-					</p>
-
-					<div className="mt-4 flex gap-3">
-						<button type="button">Manage Publications</button>
-					</div>
-				</div> */}
 			</section>
 
 			<section>
-				<div className="flex flex-col items-center">
+				{/* <div className="flex flex-col items-center">
 					{publications.length > 0 && (
 						<PublicationsGrid
 							projectId={projectId}
 							publications={publications}
 						/>
 					)}
-				</div>
+				</div> */}
 
-				{publications.length > 0 && (
+				{/* {publications.length > 0 && (
 					<div>
 						<button
 							className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
@@ -166,7 +151,7 @@ const ProjectDetailPage = () => {
 							<button type="button">Back</button>
 						</Link>
 					</div>
-				)}
+				)} */}
 			</section>
 		</div>
 	);

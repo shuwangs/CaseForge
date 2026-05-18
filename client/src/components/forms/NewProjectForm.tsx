@@ -1,8 +1,8 @@
 import useProject from "../../contexts/useProject.js";
 import useForm from "../../hooks/useForm.js";
 import type { Project, ProjectFormValues } from "../../types/project.ts";
+import BaseBtn from "../ui/BaseBtn.tsx";
 import FormInputField from "../ui/FormInputField.tsx";
-import NewBtn from "../ui/NewBtn.tsx";
 
 interface ProjectFormProps {
 	initialValues: ProjectFormValues;
@@ -111,9 +111,9 @@ const NewProjectForm = ({
 				</select>
 			</div>
 			<div className="flex gap-10 justify-center">
-				<NewBtn type="submit">
+				<BaseBtn type="submit">
 					{mode === "edit" ? "Save Changes" : "Create Project"}
-				</NewBtn>
+				</BaseBtn>
 				<button type="button" onClick={handleClear}>
 					Clear
 				</button>

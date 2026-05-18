@@ -1,10 +1,8 @@
 import { RiDeleteBinFill, RiEdit2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-// import DeleteBtn from "../ui/DeleteBtn.tsx";
 import useProject from "../../contexts/useProject.js";
 import type { Project } from "../../types/project.js";
-import DeleteBtn from "../ui/DeleteBtn.js";
-import EditBtn from "../ui/EditBtn.tsx";
+import BaseBtn from "../ui/BaseBtn.js";
 import ProjectHeader from "../ui/ProjectHeader.tsx";
 
 type ProjectOverviewProps = {
@@ -13,7 +11,7 @@ type ProjectOverviewProps = {
 
 const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 	const navigate = useNavigate();
-	const { projects, onDeleteProject } = useProject();
+	const { onDeleteProject } = useProject();
 
 	const handleDelete = async () => {
 		await onDeleteProject(project.id);
@@ -61,14 +59,14 @@ const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 			</div>
 			<div className="ml-8 flex flex-col items-end gap-3">
 				<Link to={`/projects/${project.id}/edit`}>
-					<EditBtn type="button">
+					<BaseBtn variant="secondary">
 						<RiEdit2Line size={16} />
-					</EditBtn>
+					</BaseBtn>
 				</Link>
 
-				<DeleteBtn type="button" onClick={handleDelete}>
+				<BaseBtn variant="danger" onClick={handleDelete}>
 					<RiDeleteBinFill />
-				</DeleteBtn>
+				</BaseBtn>
 			</div>
 		</section>
 	);

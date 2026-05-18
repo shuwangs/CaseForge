@@ -1,6 +1,6 @@
 import { useUser } from "@clerk/react";
 import { Link } from "react-router-dom";
-import NewBtn from "../components/ui/NewBtn.tsx";
+import BaseBtn from "../components/ui/BaseBtn.js";
 import ProjectCard from "../components/ui/ProjectCard.tsx";
 import useProject from "../contexts/useProject.js";
 import type { Project } from "../types/project.js";
@@ -28,7 +28,7 @@ const ProjectsPage = () => {
 				</div>
 
 				<Link to="/projects/new">
-					<NewBtn>+ New Project</NewBtn>
+					<BaseBtn>+ New Project</BaseBtn>
 				</Link>
 			</div>
 			{projects.length === 0 ? (
