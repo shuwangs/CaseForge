@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import { fetchPublications } from "./publicationAPI.ts";
+import { loadPublications } from "./publicationAPI.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 describe("publicationApi", () => {
-	it("fetchPublications sends a POST request with ORCID ID", async () => {
+	it("loads publications for a project", async () => {
 		const mockResponse = {
 			success: true,
 			data: [{ title: "Example publication" }],
@@ -16,15 +16,11 @@ describe("publicationApi", () => {
 			json: async () => mockResponse,
 		} as Response);
 
-		const result = await fetchPublications("0000-0002-2164-6551", token);
+		const result = await loadPublications("123", "fake-token");
+
 		expect(fetchMock).toHaveBeenCalledWith(
-			`${API_BASE_URL}/api/publications/search`,
-			expect.objectContaining({
-				method: "POST",
-				body: JSON.stringify({
-					orcid: "0000-0002-2164-6551",
-				}),
-			}),
+			`${API_BASE_URL}/api/projects/123/publications`,
+			expect.any(Object),
 		);
 
 		expect(result).toEqual(mockResponse.data);
