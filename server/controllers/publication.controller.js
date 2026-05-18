@@ -1,9 +1,14 @@
 import AppError from "../errors/AppError.js";
 import {
+	getPublicationsByProjectId,
+	importPublicationsByOrcid,
 	saveProjectPublication,
 	searchPublicationsByOrcid,
 } from "../services/publication.service.js";
-import { validateOrcid } from "../utitls/publication.helper.js";
+import {
+	mapPublicationDTO,
+	validateOrcid,
+} from "../utitls/publication.helper.js";
 
 export const searchPublications = async (req, res, next) => {
 	try {
@@ -36,6 +41,57 @@ export const savePublications = async (req, res, next) => {
 		res.status(201).json({
 			success: true,
 			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const importProjectPublications = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const { orcid } = req.body;
+		const clerkId = req.clerkId;
+
+		console.log("in publication controller projectId is :", projectId);
+		console.log("in publication controller orcid is :", orcid);
+
+		const publications = await importPublicationsByOrcid(
+			clerkId,
+			projectId,
+			orcid,
+		);
+		console.log(
+			"in publication controller after called is mportPublicationsByOrcid datais :",
+			publications,
+		);
+
+		const mappedPublications = publications.map(mapPublicationDTO);
+		res.status(201).json({
+			message: "Publications imported successfully",
+			count: publications.length,
+			data: mappedPublications,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const getProjectPublications = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const publications = await getPublicationsByProjectId(clerkId, projectId);
+		console.log(
+			"in publication controller  get publications by projct ID: ",
+			publications,
+		);
+
+		const mappedPublications = publications.map(mapPublicationDTO);
+		res.status(200).json({
+			success: true,
+			data: mappedPublications,
 		});
 	} catch (error) {
 		next(error);

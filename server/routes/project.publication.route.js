@@ -12,7 +12,11 @@ import {
 	getProjects,
 	putProject,
 } from "../controllers/project.controller.js";
-import { savePublications } from "../controllers/publication.controller.js";
+import {
+	getProjectPublications,
+	importProjectPublications,
+	savePublications,
+} from "../controllers/publication.controller.js";
 
 const router = Router();
 
@@ -27,4 +31,7 @@ router.get("/:projectId/yearly-counts", getCitationsYearlyCounts);
 router.get("/:projectId/map", getCitationsMap);
 router.get("/:projectId/citations/status", getCitationStatus);
 
+// Save publications after fetch publications
+router.post("/:projectId/publications/import", importProjectPublications);
+router.get("/:projectId/publications", getProjectPublications);
 export default router;

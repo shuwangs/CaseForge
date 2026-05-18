@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
-import DeleteBtn from "../components/ui/DeleteBtn.tsx";
+import ProjectOverview from "../components/project/ProjectOverview.tsx";
+import ProjectProgress from "../components/project/ProjectProgress.tsx";
+import BaseBtn from "../components/ui/BaseBtn.js";
+import PageDescription from "../components/ui/PageDescription.js";
+import PageTitle from "../components/ui/PageTitle.js";
 import useCitation from "../contexts/useCitation.ts";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
@@ -8,24 +12,38 @@ import usePublication from "../contexts/usePublication.ts";
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects, onDeleteProject } = useProject();
-	const { publications, onFetchPublication } = usePublication();
+	const { projects } = useProject();
+
+	const { publications, onFetchPublication, loadProjectPublications } =
+		usePublication();
 	const { handleFetchCitations } = useCitation();
 
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
 	);
-	const hasPublication = publications.length > 0;
+	const hasPublications = publications.length > 0;
+	const hasCitations = false;
+	const stage = !hasPublications
+		? "NEEDS_PUBLICATIONS"
+		: !hasCitations
+			? "NEEDS_CITATIONS"
+			: "READY";
 
 	const handleSubmit = async () => {
-		await onFetchPublication(project.orcid);
+		console.log("clicked fetch publications");
+		console.log("project:", project);
+		console.log("projectId:", projectId);
+
+		if (!project?.orcid) return;
+
+		await onFetchPublication(project.orcid, projectId);
 		navigate(`/projects/${projectId}`);
 	};
 
-	const handleDelete = async () => {
-		await onDeleteProject(project.id);
-		navigate(`/projects/`);
-	};
+	useEffect(() => {
+		if (!projectId) return;
+		loadProjectPublications(projectId);
+	}, [projectId, loadProjectPublications]);
 
 	if (!project) {
 		return (
@@ -45,115 +63,95 @@ const ProjectDetailPage = () => {
 					← Back to Projects
 				</button>
 
-				<h1 className="text-2xl font-semibold text-[var(--color-primary)]">
-					{project.projectName || "Untitled Project"}
-				</h1>
+				<PageTitle>{project.projectName || "Untitled Project"}</PageTitle>
 
-				<p className="mt-1 text-sm text-gray-500">
+				<PageDescription>
 					Review project details before fetching publications.
-				</p>
+				</PageDescription>
 			</div>
 
-			<section className="rounded-xl border border-gray-100 bg-[var(--color-surface)] p-6 shadow-sm">
-				<h2 className="text-lg font-semibold text-[var(--color-primary)]">
-					Project Information
-				</h2>
-
-				<div className="mt-5 grid grid-cols-2 gap-5 text-sm">
-					<div>
-						<p className="text-gray-400">Applicant</p>
-						<p className="font-medium text-[var(--color-primary)]">
-							{project.firstName} {project.lastName}
-						</p>
-					</div>
-
-					<div>
-						<p className="text-gray-400">ORCID</p>
-						<p className="font-medium text-[var(--color-primary)]">
-							{project.orcid || "—"}
-						</p>
-					</div>
-
-					<div>
-						<p className="text-gray-400">Research Area</p>
-						<p className="font-medium text-[var(--color-primary)]">
-							{project.researchArea || "—"}
-						</p>
-					</div>
-					<div>
-						<p className="text-gray-400">Institution /Organization</p>
-						<p className="font-medium text-[var(--color-primary)]">
-							{project.institution || "Not specified"}
-						</p>
-					</div>
-					<div>
-						<p className="text-gray-400">Petition Type</p>
-						<p className="font-medium text-[var(--color-primary)]">
-							{project.target || "—"}
-						</p>
-					</div>
-
-					<div>
-						<p className="text-gray-400">Created</p>
-						<p className="font-medium text-[var(--color-primary)]">
-							{project.createdAt
-								? new Date(project.createdAt).toLocaleDateString()
-								: "—"}
-						</p>
-					</div>
-				</div>
+			<section>
+				<ProjectOverview project={project} />
 			</section>
+
+			<ProjectProgress
+				hasPublications={hasPublications}
+				hasCitations={hasCitations}
+			/>
 
 			<section className="rounded-xl border border-[var(--color-primary)] bg-[var(--color-surface)] p-6 shadow-sm">
 				<h2 className="text-lg font-semibold text-[var(--color-primary)]">
 					Next Step
 				</h2>
 
-				<p className="mt-2 text-sm text-gray-500">
-					Fetch publications using the ORCID saved in this project.
-				</p>
-
-				{!hasPublication ? (
+				{stage === "NEEDS_PUBLICATIONS" && (
 					<div className="mt-5 flex gap-3">
 						<Link to={`/projects/${project.id}/edit`}>
-							<button type="button">Edit Project</button>
+							<BaseBtn type="button">Edit Project</BaseBtn>
 						</Link>
 
-						<DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn>
+						{/* <DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn> */}
 
-						<button type="button" onClick={handleSubmit}>
+						<BaseBtn type="button" onClick={handleSubmit}>
 							Fetch Publications
-						</button>
+						</BaseBtn>
 					</div>
-				) : (
+				)}
+
+				{stage === "NEEDS_CITATIONS" && (
+					<div className="mt-5 flex gap-3">
+						<Link to={`/projects/${project.id}/edit`}>
+							<BaseBtn variant="secondary" type="button">
+								Edit Project
+							</BaseBtn>
+						</Link>
+
+						{/* <DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn> */}
+
+						<BaseBtn onClick={() => handleFetchCitations(projectId)}>
+							Fetch Citations
+						</BaseBtn>
+					</div>
+				)}
+
+				{stage === "READY" && (
 					<div>
 						<p className="mt-2 text-sm text-gray-500">
-							{publications.length} publications saved
+							Citation analysis is ready. View your dashboard.
 						</p>
 
-						<div className="mt-4 flex gap-3">
-							<button type="button">Manage Publications</button>
-							<button
-								className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
-								type="button"
-								onClick={() => handleFetchCitations(project.id)}
-							>
-								Fetch Citations
-							</button>
+						<div className="mt-5">
+							<button type="button">View Dashboard</button>
 						</div>
 					</div>
 				)}
 			</section>
 
 			<section>
-				<div className="flex flex-col items-center">
+				{/* <div className="flex flex-col items-center">
 					{publications.length > 0 && (
 						<PublicationsGrid
 							projectId={projectId}
 							publications={publications}
 						/>
 					)}
-				</div>
+				</div> */}
+
+				{/* {publications.length > 0 && (
+					<div>
+						<button
+							className="rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+							type="button"
+							onClick={() => handleFetchCitations(projectId)}
+						>
+							Fetch Citations
+						</button>
+
+						<Link to="/projects">
+							<button type="button">Back</button>
+						</Link>
+					</div>
+				)} */}
 			</section>
 		</div>
 	);

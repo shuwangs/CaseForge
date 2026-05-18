@@ -1,7 +1,10 @@
 import { useAuth } from "@clerk/react-router";
-import { createContext, useState } from "react";
-import { fetchPublications, postPublications } from "../apis/publicationAPI.js";
-
+import { createContext, useCallback, useState } from "react";
+import {
+	fetchPublications,
+	loadPublications,
+	postPublications,
+} from "../apis/publicationAPI.js";
 export const PublicationContext = createContext();
 
 export const PublicationProvider = ({ children }) => {
@@ -11,13 +14,15 @@ export const PublicationProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	const onFetchPublication = async (orcidId) => {
+	const onFetchPublication = async (orcidId, projectId) => {
+		console.log("in publication context");
 		try {
 			setLoading(true);
 			setError("");
 			const token = await getToken();
 
-			const data = await fetchPublications(orcidId, token);
+			const data = await fetchPublications(orcidId, token, projectId);
+			console.log("in publication context fetch data:", data);
 			setPublications(data);
 
 			return data;
@@ -38,7 +43,6 @@ export const PublicationProvider = ({ children }) => {
 			console.log("before getToken");
 
 			const token = await getToken();
-			console.log("TOKEN:", token);
 
 			const data = await postPublications(projectId, payload, token);
 			return data;
@@ -49,10 +53,28 @@ export const PublicationProvider = ({ children }) => {
 		}
 	};
 
+	const loadProjectPublications = useCallback(() => async (projectId) => {
+		try {
+			setLoading(true);
+			setError("");
+
+			const token = await getToken();
+			const data = await loadPublications(projectId, token);
+
+			setPublications(data);
+			return data;
+		} catch (err) {
+			setError(err.message || "Failed to load publications");
+			throw err;
+		} finally {
+			setLoading(false);
+		}
+	});
 	const values = {
 		publications,
 		loading,
 		error,
+		loadProjectPublications,
 		onFetchPublication,
 		savePublications,
 	};
