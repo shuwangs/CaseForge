@@ -7,6 +7,8 @@ import EditBtn from "../components/ui/EditBtn.js";
 import useCitation from "../contexts/useCitation.ts";
 import useProject from "../contexts/useProject";
 import usePublication from "../contexts/usePublication.ts";
+import PageTitle from "../components/ui/PageTitle.js";
+import PageDescription from "../components/ui/PageDescription.js";
 
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
@@ -62,13 +64,13 @@ const ProjectDetailPage = () => {
 					← Back to Projects
 				</button>
 
-				<h1 className="text-2xl font-semibold text-[var(--color-primary)]">
+				<PageTitle>
 					{project.projectName || "Untitled Project"}
-				</h1>
+				</PageTitle>
 
-				<p className="mt-1 text-sm text-gray-500">
+				<PageDescription >
 					Review project details before fetching publications.
-				</p>
+				</PageDescription>
 			</div>
 
 			<section>

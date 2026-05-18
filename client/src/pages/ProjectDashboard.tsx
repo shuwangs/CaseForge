@@ -4,6 +4,8 @@ import CitationCountsTable from "../components/dashboard/CitationCountsTable.tsx
 import CitationMap from "../components/dashboard/CitationMap.tsx";
 import CitationYearChart from "../components/dashboard/CitationYearChart.tsx";
 import useCitation from "../contexts/useCitation.ts";
+import PageTitle from "../components/ui/PageTitle.js";
+import PageDescription from "../components/ui/PageDescription.js";
 
 const ProjectDashboard = () => {
 	const { projectId } = useParams();
@@ -17,7 +19,7 @@ const ProjectDashboard = () => {
 
 	return (
 		<div>
-			<h1>Project Dashboard</h1>
+			<PageTitle>Project Dashboard</PageTitle>
 
 			<div>
 				<button type="button" onClick={() => setActiveTab("publications")}>
