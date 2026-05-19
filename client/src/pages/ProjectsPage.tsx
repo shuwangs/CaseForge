@@ -1,13 +1,13 @@
 import { useUser } from "@clerk/react";
 import { Link } from "react-router-dom";
-import NewBtn from "../components/ui/NewBtn.tsx";
+import BaseBtn from "../components/ui/BaseBtn.js";
 import ProjectCard from "../components/ui/ProjectCard.tsx";
 import useProject from "../contexts/useProject.js";
 import type { Project } from "../types/project.js";
 
 const ProjectsPage = () => {
 	const { projects } = useProject();
-	const { isSignedIn, user, isLoaded } = useUser();
+	const { isSignedIn, _user, isLoaded } = useUser();
 
 	if (!isLoaded) return <div>Loading...</div>;
 
@@ -21,14 +21,14 @@ const ProjectsPage = () => {
 					<h1 className="text-2xl font-semibold text-[var(--color-primary)]">
 						Projects
 					</h1>
-					<div>Hello {user.id}!</div>
+
 					<p className="text-md text-gray-500 mt-1">
 						Manage your citation analysis projects
 					</p>
 				</div>
 
 				<Link to="/projects/new">
-					<NewBtn>+ New Project</NewBtn>
+					<BaseBtn>+ New Project</BaseBtn>
 				</Link>
 			</div>
 			{projects.length === 0 ? (

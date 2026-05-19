@@ -9,6 +9,7 @@ import NewProjectPage from "./pages/NewProjectPage.tsx";
 import ProjectDashboard from "./pages/ProjectDashboard.tsx";
 import ProjectDetailPage from "./pages/ProjectDetailPage.tsx";
 import ProjectsPage from "./pages/ProjectsPage.tsx";
+import PublicationPage from "./pages/PublicationPage.js";
 import SignInPage from "./pages/SignInPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
 
@@ -37,6 +38,10 @@ const App = () => {
 				<Route
 					path="/projects/:projectId/dashboard"
 					element={<ProjectDashboard />}
+				/>
+				<Route
+					path="/projects/:projectId/publication"
+					element={<PublicationPage />}
 				/>
 			</Route>
 		</Routes>

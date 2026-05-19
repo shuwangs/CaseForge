@@ -47,7 +47,7 @@ export const ProjectProvider = ({ children }) => {
 			console.log("In context createProject result: ", data);
 			setProjects((prev) => [...prev, data]);
 
-			await fetchAllProjects(user_id);
+			await fetchAllProjects(token);
 		} catch (err) {
 			setError(err.message || "Failed to fetch publications");
 			throw err;
