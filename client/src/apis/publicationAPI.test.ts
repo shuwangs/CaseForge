@@ -10,7 +10,7 @@ describe("publicationApi", () => {
 			data: [{ title: "Example publication" }],
 		};
 
-		const token = "test-token";
+		const _token = "test-token";
 		const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue({
 			ok: true,
 			json: async () => mockResponse,
