@@ -29,6 +29,17 @@ const AppSidebar = () => {
 						Results
 					</NavLink>
 				)}
+
+				{projectId && (
+					<NavLink
+						to={`/projects/${projectId}/publication`}
+						className={({ isActive }) =>
+							`${baseLink} ${isActive ? activeLink : ""}`
+						}
+					>
+						Publication
+					</NavLink>
+				)}
 			</nav>
 		</aside>
 	);

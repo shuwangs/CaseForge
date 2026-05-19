@@ -48,6 +48,12 @@ export const insertPublication = async (projectId, publication) => {
     )
     VALUES(
         $1, $2, $3, $4, $5, $6, $7, $8,  $9, $10, $11, $12, $13, $14)
+	ON CONFLICT(project_id, openalex_id)
+	DO UPDATE SET
+	  	title = EXCLUDED.title,
+		authors = EXCLUDED.authors,
+		doi = EXCLUDED.doi,
+		raw_data = EXCLUDED.raw_data
      
     RETURNING *;
     `;
@@ -104,4 +110,32 @@ export const getPublicationsByProjectId = async (clerkId, projectId) => {
 
 	const { rows } = await pool.query(query, [projectId, clerkId]);
 	return rows;
+};
+
+export const importPublicationsByOrcid = async (clerkId, projectId, orcid) => {
+	const projectQuery = `
+		SELECT pr.id
+		FROM caseforge.projects pr
+		JOIN caseforge.users u ON pr.user_id = u.id
+		WHERE pr.id = $1
+		  AND u.clerk_id = $2
+	`;
+
+	const { rows } = await pool.query(projectQuery, [projectId, clerkId]);
+
+	if (rows.length === 0) {
+		throw new AppError("Project not found or unauthorized", 404);
+	}
+
+	const publications = await searchPublicationsByOrcid(orcid);
+
+	if (!publications || publications.length === 0) {
+		throw new AppError("No publications found", 404);
+	}
+	const savedPublications = await saveProjectPublication(
+		projectId,
+		publications,
+	);
+
+	return savedPublications;
 };

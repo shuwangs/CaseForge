@@ -23,10 +23,11 @@ export interface Publication {
 export const fetchPublications = async (
 	orcidId: string,
 	token: string,
+	projectId: number | string,
 ): Promise<Publication[]> => {
 	const result = await fetchWithAuth(
 		token,
-		`${API_BASE_URL}/api/publications/search`,
+		`${API_BASE_URL}/api/projects/${projectId}/publications/import`,
 		{
 			method: "POST",
 			headers: {
@@ -71,4 +72,18 @@ export const postPublications = async (
 	const data: ApiResponse<Publication[]> = await result.json();
 
 	return data.data;
+};
+
+export const loadPublications = async (projectId: string, token: string) => {
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}/publications`,
+	);
+
+	if (!result.ok) {
+		throw new Error("Load Publications error");
+	}
+	const data: ApiResponse<Publication[]> = await result.json();
+
+	return data.data ?? [];
 };
