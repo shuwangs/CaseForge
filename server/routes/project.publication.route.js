@@ -1,5 +1,9 @@
 import { Router } from "express";
 import {
+	generateMapSummary,
+	generateTrendSummary,
+} from "../controllers/ai.summary.controller.js";
+import {
 	enqueueCitationJobs,
 	getCitationStatus,
 	getCitationsMap,
@@ -34,4 +38,9 @@ router.get("/:projectId/citations/status", getCitationStatus);
 // Save publications after fetch publications
 router.post("/:projectId/publications/import", importProjectPublications);
 router.get("/:projectId/publications", getProjectPublications);
+
+// ai summary relate routes
+router.post("/:projectId/ai/trend-summary", generateTrendSummary);
+router.post("/:projectId/ai/map-summary", generateMapSummary);
+
 export default router;
