@@ -3,11 +3,11 @@ import FeatureCard from "../ui/FeatureCard.jsx";
 const HeroFeatures = () => {
 	return (
 		<div>
-			<div className="flex flex-col gap-4 align-center items-center py-6">
+			<div className="flex flex-col gap-4 align-center items-center">
 				<p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-secondary)]">
 					Simple Process
 				</p>
-				<h2 className="text-4xl font-bold tracking-tight text-[var(--color-primary)]">
+				<h2 className="text-3xl font-bold tracking-tight text-[var(--color-primary)]">
 					How CaseForge Works
 				</h2>
 				<p className="max-w-2xl text-lg leading-8 text-[var(--color-accent)]/80">
@@ -15,7 +15,7 @@ const HeroFeatures = () => {
 					immigration evidence.
 				</p>
 			</div>
-			<div className="mt-16 grid gap-6 md:grid-cols-3">
+			<div className="mt-4 grid gap-6 md:grid-cols-3">
 				<FeatureCard
 					title="Import Publications"
 					description="Connect your ORCID profile or upload publication data to create a structured research portfolio."
