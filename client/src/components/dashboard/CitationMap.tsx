@@ -57,14 +57,14 @@ const CitationMap = () => {
 	}
 	return (
 		<div>
-			<div className="flex justify-between items-center mb-2">
+			<div className="max-w-4xl flex justify-between items-center mb-2">
 				<h2>Citaion Map</h2>
 				<BaseBtn variant="secondary" onClick={downloadMap}>
 					Download Map
 				</BaseBtn>
 			</div>
 
-			<div ref={mapRef}>
+			<div ref={mapRef} className="max-w-4xl  flex justify-center">
 				<WorldMap
 					color="#028ca6"
 					backgroundColor="white"

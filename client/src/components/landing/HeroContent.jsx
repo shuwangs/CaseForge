@@ -1,4 +1,5 @@
 import BaseBtn from "../ui/BaseBtn.js";
+
 const HeroContent = () => {
 	return (
 		<div className="flex flex-col justify-center">
@@ -18,13 +19,9 @@ const HeroContent = () => {
 				</p>
 			</div>
 			<div className="flex gap-2 mt-2">
-				<BaseBtn>
-					Start Free Analysis
-				</BaseBtn>
+				<BaseBtn>Start Free Analysis</BaseBtn>
 
-				<BaseBtn variant="secondary">
-					View Demo
-				</BaseBtn>
+				<BaseBtn variant="secondary">View Demo</BaseBtn>
 			</div>
 		</div>
 	);
