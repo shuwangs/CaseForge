@@ -1,3 +1,5 @@
+import { generateMapSummaryService, generateTrendSummaryService } from "../services/ai.service.js";
+
 export const generateMapSummary = async (req, res, next) => {
 	try {
 		const { projectId } = req.params;

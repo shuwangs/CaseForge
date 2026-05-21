@@ -119,7 +119,6 @@ export const saveCitation = async (
 				ins.institution_type,
 			]);
 			const insId = insRes.rows[0].id;
-			// console.log("Inserted institutions id is:", insId);
 
 			// insert citation_record_institutions
 			const _citeRecInsRes = await client.query(insertCiteRecInsQuery, [
