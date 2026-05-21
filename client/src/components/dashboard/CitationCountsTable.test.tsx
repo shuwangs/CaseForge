@@ -26,11 +26,27 @@ vi.mock("../ui/BaseDataGrid.jsx", () => ({
 	),
 }));
 
+import { SummaryContext } from "../../contexts/SummaryContext.js";
 import CitationCountsTable from "./CitationCountsTable.tsx";
+
+const mockSummaryContext = {
+	loading: false,
+	error: "",
+	trendSummary: "",
+	mapSummary: "",
+	journalImpactSummary: "",
+	handleGenerateTrendSummary: vi.fn(),
+	handleGenerateMapSummary: vi.fn(),
+	handleGenerateJournalImpactSummary: vi.fn(),
+};
 
 describe("CitationCountsTable", () => {
 	it("render citation rows", () => {
-		render(<CitationCountsTable />);
+		render(
+			<SummaryContext.Provider value={mockSummaryContext}>
+				<CitationCountsTable />
+			</SummaryContext.Provider>,
+		);
 
 		expect(screen.getByText("Paper 1")).toBeInTheDocument();
 	});
