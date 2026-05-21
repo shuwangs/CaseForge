@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+	generateJournalImpactSummary,
 	generateMapSummary,
 	generateTrendSummary,
 } from "../controllers/ai.summary.controller.js";
@@ -42,5 +43,9 @@ router.get("/:projectId/publications", getProjectPublications);
 // ai summary relate routes
 router.post("/:projectId/ai/trend-summary", generateTrendSummary);
 router.post("/:projectId/ai/map-summary", generateMapSummary);
+router.post(
+	"/:projectId/ai/journal-impact-summary",
+	generateJournalImpactSummary,
+);
 
 export default router;

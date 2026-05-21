@@ -4,8 +4,10 @@ import {
 	type GridReadyEvent,
 	ModuleRegistry,
 } from "ag-grid-community";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useParams } from "react-router-dom";
 import useCitation from "../../contexts/useCitation.ts";
+import useSummary from "../../contexts/useSummary.js";
 import AICard from "../ui/AICard.js";
 import BaseBtn from "../ui/BaseBtn.js";
 import BaseDataGrid from "../ui/BaseDataGrid.jsx";
@@ -20,8 +22,10 @@ ModuleRegistry.registerModules([CsvExportModule]);
 
 const CitationCountsTable = () => {
 	const gridApiRef = useRef<GridApi | null>(null);
+	const { projectId } = useParams();
+	const { handleGenerateJournalTableSummary, journalTableSummary } =
+		useSummary();
 	const { citationCounts, loading, error } = useCitation();
-	const [summary, _setSummary] = useState("");
 	const rowData = citationCounts ?? [];
 
 	function onGridReady(params: GridReadyEvent) {
@@ -36,10 +40,6 @@ const CitationCountsTable = () => {
 			console.warn("Agrid Api is not ready！");
 		}
 	}
-
-	const handleGenerate = () => {
-		console.log("hanlde Genenrating AI summaries");
-	};
 
 	if (loading) {
 		return <p>Loading citation counts...</p>;
@@ -71,12 +71,15 @@ const CitationCountsTable = () => {
 					Download CSV
 				</BaseBtn>
 
-				<BaseBtn onClick={handleGenerate} variant="secondary">
+				<BaseBtn
+					onClick={() => handleGenerateJournalTableSummary(projectId)}
+					variant="secondary"
+				>
 					Generate Summary
 				</BaseBtn>
 			</div>
 
-			<AICard loading={loading} summary={summary} />
+			<AICard loading={loading} summary={journalTableSummary} />
 		</div>
 	);
 };
