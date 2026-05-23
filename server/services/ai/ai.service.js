@@ -1,8 +1,9 @@
 import {
 	getCitationCountsByYear,
 	getCitationMapData,
-} from "./citation.service.js";
-import { getJournalPublicationData } from "./publication.service.js";
+} from "../citation.service.js";
+import { getJournalPublicationData } from "../publication.service.js";
+import { generateSummaryProvider } from "./gemini.provider.js";
 
 export const generateJournalImpactSummaryService = async (
 	projectId,
@@ -35,17 +36,16 @@ export const generateTrendSummaryService = async (projectId, clerkId) => {
 	const analytics = await getCitationCountsByYear(projectId, clerkId);
 
 	// 2. preprocess the sights
-	const totalCitations = analytics.reduce((sum, row) => sum + Number(row.citation_count), 0)
+	const totalCitations = analytics.reduce(
+		(sum, row) => sum + Number(row.citation_count),
+		0,
+	);
 
 	const peak = analytics.reduce((max, row) => {
-		return Number(row.citation_count) > Number(max.citation_count)
-			? row
-			: max;
+		return Number(row.citation_count) > Number(max.citation_count) ? row : max;
 	}, analytics[0]);
 
-
 	// 3. build insights
-
 	const insights = {
 		totalCitations,
 		peakYear: peak?.citing_year ?? null,
@@ -62,20 +62,21 @@ export const generateTrendSummaryService = async (projectId, clerkId) => {
 		- Emphasize scholarly recognition and research impact when supported by the data.
 		- Do not make legal conclusions or guarantee immigration outcomes.
 		- Write 2-4 sentences.
-		`
+		`;
 
 	const user_message = `
 	Generate a citation trend summary.
+	
 	Total citations: ${insights.totalCitations}
 	Peak citation year: ${insights.peakYear}
 	Peak citation count: ${insights.peakCitationCount}
-	`
+	`;
 	// 5. summary = call AI
 
+	const summary = await generateSummaryProvider(system_message, user_message);
+
 	return {
-		summary: "Mock AI trend summary",
+		summary,
 		analytics,
 	};
-
-	// return { summary, insights }
 };

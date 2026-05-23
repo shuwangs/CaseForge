@@ -2,7 +2,7 @@ import {
 	generateJournalImpactSummaryService,
 	generateMapSummaryService,
 	generateTrendSummaryService,
-} from "../services/ai.service.js";
+} from "../services/ai/ai.service.js";
 
 export const generateJournalImpactSummary = async (req, res, next) => {
 	try {
