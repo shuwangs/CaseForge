@@ -89,30 +89,33 @@ export const SummaryProvider = ({ children }) => {
 		}
 	};
 
-	const loadProjectSummary = useCallback(async (projectId) => {
-		try {
-			setLoading(true);
-			setError("");
+	const loadProjectSummary = useCallback(
+		async (projectId) => {
+			try {
+				setLoading(true);
+				setError("");
 
-			const token = await getToken();
+				const token = await getToken();
 
-			if (!token) {
-				throw new Error("Missing auth token");
+				if (!token) {
+					throw new Error("Missing auth token");
+				}
+				const result = await fetchProjectSummary(projectId, token);
+				setJournalTableSummary(result?.ai_overview || "");
+				setTrendSummary(result?.ai_trend || "");
+				setMapSummary(result?.ai_geographic || "");
+				return result;
+			} catch (error) {
+				setError(
+					error instanceof Error ? error.message : "Failed to load summary",
+				);
+				throw error;
+			} finally {
+				setLoading(false);
 			}
-			const result = await fetchProjectSummary(projectId, token);
-			setJournalTableSummary(result?.ai_overview || "");
-			setTrendSummary(result?.ai_trend || "");
-			setMapSummary(result?.ai_geographic || "");
-			return result;
-		} catch (error) {
-			setError(
-				error instanceof Error ? error.message : "Failed to load summary",
-			);
-			throw error;
-		} finally {
-			setLoading(false);
-		}
-	}, [getToken]);
+		},
+		[getToken],
+	);
 
 	const values = {
 		error,
