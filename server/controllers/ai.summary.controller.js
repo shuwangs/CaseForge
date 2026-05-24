@@ -3,6 +3,7 @@ import {
 	generateMapSummaryService,
 	generateTrendSummaryService,
 } from "../services/ai/ai.service.js";
+import { getSummaryByProjectId } from "../services/summary.service.js";
 
 export const generateJournalImpactSummary = async (req, res, next) => {
 	try {
@@ -45,6 +46,22 @@ export const generateTrendSummary = async (req, res, next) => {
 		const clerkId = req.clerkId;
 
 		const summary = await generateTrendSummaryService(projectId, clerkId);
+
+		res.status(200).json({
+			success: true,
+			data: summary,
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getProjectSummary = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const summary = await getSummaryByProjectId(projectId, clerkId);
 
 		res.status(200).json({
 			success: true,

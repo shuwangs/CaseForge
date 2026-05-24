@@ -5,11 +5,14 @@ import CitationMap from "../components/dashboard/CitationMap.tsx";
 import CitationYearChart from "../components/dashboard/CitationYearChart.tsx";
 import PageTitle from "../components/ui/PageTitle.js";
 import useCitation from "../contexts/useCitation.ts";
+import useSummary from "../contexts/useSummary.js";
 
 const ProjectDashboard = () => {
 	const { projectId } = useParams();
 	const [activeTab, setActiveTab] = useState("publications");
 	const { loadCitationResults } = useCitation();
+	const { loadProjectSummary } = useSummary();
+
 	const tabs = [
 		{
 			id: "publications",
@@ -28,7 +31,8 @@ const ProjectDashboard = () => {
 	useEffect(() => {
 		if (!projectId) return;
 		loadCitationResults(projectId);
-	}, [projectId, loadCitationResults]);
+		loadProjectSummary(projectId);
+	}, [projectId, loadCitationResults, loadProjectSummary]);
 
 	return (
 		<div>

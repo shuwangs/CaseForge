@@ -1,5 +1,22 @@
 import pool from "../db/db.js";
 
+export const getSummaryByProjectId = async (projectId, clerkId) => {
+	const query = `
+		SELECT s.*
+		FROM caseforge.summaries s
+		JOIN caseforge.projects p
+			ON s.project_id = p.id
+		JOIN caseforge.users u
+			ON p.user_id = u.id
+		WHERE s.project_id = $1
+			AND u.clerk_id = $2
+	    `;
+
+	const { rows } = await pool.query(query, [projectId, clerkId]);
+
+	return rows[0] || null;
+};
+
 export const saveTrendSummary = async (projectId, clerkId, summary) => {
 	const query = `
 		INSERT INTO caseforge.summaries (project_id, ai_trend)

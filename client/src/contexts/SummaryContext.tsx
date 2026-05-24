@@ -1,6 +1,7 @@
 import { useAuth } from "@clerk/react-router";
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 import {
+	fetchProjectSummary,
 	generateJournalTableSummary,
 	generateMapSummary,
 	generateTrendSummary,
@@ -88,6 +89,31 @@ export const SummaryProvider = ({ children }) => {
 		}
 	};
 
+	const loadProjectSummary = useCallback(async (projectId) => {
+		try {
+			setLoading(true);
+			setError("");
+
+			const token = await getToken();
+
+			if (!token) {
+				throw new Error("Missing auth token");
+			}
+			const result = await fetchProjectSummary(projectId, token);
+			setJournalTableSummary(result?.ai_overview || "");
+			setTrendSummary(result?.ai_trend || "");
+			setMapSummary(result?.ai_geographic || "");
+			return result;
+		} catch (error) {
+			setError(
+				error instanceof Error ? error.message : "Failed to load summary",
+			);
+			throw error;
+		} finally {
+			setLoading(false);
+		}
+	}, [getToken]);
+
 	const values = {
 		error,
 		loading,
@@ -97,6 +123,7 @@ export const SummaryProvider = ({ children }) => {
 		handleGenerateJournalTableSummary,
 		handleGenerateMapSummary,
 		handleGenerateTrendSummary,
+		loadProjectSummary,
 	};
 
 	return (

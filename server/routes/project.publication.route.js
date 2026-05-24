@@ -3,6 +3,7 @@ import {
 	generateJournalImpactSummary,
 	generateMapSummary,
 	generateTrendSummary,
+	getProjectSummary,
 } from "../controllers/ai.summary.controller.js";
 import {
 	enqueueCitationJobs,
@@ -48,4 +49,5 @@ router.post(
 	generateJournalImpactSummary,
 );
 
+router.get("/:projectId/ai/summary", getProjectSummary);
 export default router;

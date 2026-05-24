@@ -69,3 +69,21 @@ export const generateMapSummary = async (
 	}
 	return result.data;
 };
+
+export const fetchProjectSummary = async (
+	projectId: number | string,
+	token: string,
+) => {
+	const response = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}/ai/summary`,
+	);
+
+	const result = await response.json();
+
+	if (!response.ok) {
+		throw new Error(result.message || "Failed to fetch AI summary");
+	}
+
+	return result.data;
+};
