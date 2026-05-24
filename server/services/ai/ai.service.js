@@ -4,6 +4,11 @@ import {
 	getCitationMapData,
 } from "../citation.service.js";
 import { getJournalPublicationData } from "../publication.service.js";
+import {
+	saveGeographicSummary,
+	saveOverviewJournal,
+	saveTrendSummary,
+} from "../summary.service.js";
 import { generateSummaryProvider } from "./gemini.provider.js";
 
 const system_message = `You are a helpful  professional research impact writing assistant for CaseForge, which is an immigration aid application.
@@ -31,10 +36,8 @@ export const generateJournalImpactSummaryService = async (
 	projectId,
 	clerkId,
 ) => {
-	console.log("In generateJournalImpactSummary service");
 	const analytics = await getJournalPublicationData(projectId, clerkId);
 
-	console.log("In generateJournalImpactSummary service: ", analytics);
 	const totalJournals = analytics.length;
 
 	const topJournal = analytics.reduce((max, row) => {
@@ -59,10 +62,10 @@ export const generateJournalImpactSummaryService = async (
 	`;
 
 	const summary = await generateSummaryProvider(system_message, user_message);
+	const savedSummary = await saveOverviewJournal(projectId, clerkId, summary);
 
 	return {
-		summary,
-		analytics,
+		summary: savedSummary.ai_overview,
 	};
 };
 
@@ -100,9 +103,10 @@ export const generateMapSummaryService = async (projectId, clerkId) => {
 
 	const summary = await generateSummaryProvider(system_message, user_message);
 
+	const savedSummary = await saveGeographicSummary(projectId, clerkId, summary);
+
 	return {
-		summary,
-		analytics,
+		summary: savedSummary.ai_geographic,
 	};
 };
 
@@ -141,8 +145,9 @@ export const generateTrendSummaryService = async (projectId, clerkId) => {
 
 	const summary = await generateSummaryProvider(system_message, user_message);
 
+	const savedSummary = await saveTrendSummary(projectId, clerkId, summary);
+	console.log("saved trend summary is: ", savedSummary);
 	return {
-		summary,
-		analytics,
+		summary: savedSummary.ai_trend,
 	};
 };
