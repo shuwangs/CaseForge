@@ -41,7 +41,7 @@ const BaseBtn = ({
 			className={`
 				px-4 py-2
 				rounded-lg
-				text-md font-medium
+				text-sm font-medium
 				transition
 				${variants[variant]}
 				${className}
