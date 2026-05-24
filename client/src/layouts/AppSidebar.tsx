@@ -1,43 +1,70 @@
-import { Link, NavLink, useParams } from "react-router-dom";
+import { GoBook, GoBriefcase, GoGraph, GoPlusCircle } from "react-icons/go";
+import { NavLink, useParams } from "react-router-dom";
 
 const AppSidebar = () => {
 	const { projectId } = useParams();
 
 	const baseLink =
-		"block rounded-md px-4 py-2 text-md font-medium text-[var(--color-primary)] hover:bg-[var(--color-bg)] hover:text-[var(--color-accent)]";
+		"flex items-center gap-3 rounded-lg px-4 py-2 text-sm font-medium text-[var(--color-primary)] transition hover:bg-blue-50 hover:text-[var(--color-accent)]";
 	const activeLink =
-		"bg-[var(--color-bg)] text-[var(--color-accent)] border-l-4 border-[var(--color-accent)]";
+		" bg-blue-50 text-[var(--color-accent)] font-semibold border-[var(--color-accent)]";
 
 	return (
-		<aside className="min-h-[calc(100vh-73px)] w-64 shrink-0 border-r border-gray-200 bg-[var(--color-surface)] px-4 py-6">
+		<aside className="min-h-[calc(100vh-73px)] w-60 shrink-0 border-r border-gray-200 bg-[var(--color-surface)] px-4 py-6">
 			<nav className="flex flex-col gap-2">
-				<Link to="/projects" className={baseLink}>
+				<NavLink
+					to="/projects"
+					end
+					className={({ isActive }) =>
+						`${baseLink} ${isActive ? activeLink : ""}`
+					}
+				>
+					<span>
+						<GoBriefcase className="h-4 w-4" />
+					</span>
 					Projects
-				</Link>
+				</NavLink>
 
-				<Link to="/projects/new" className={baseLink}>
+				<NavLink
+					to="/projects/new"
+					end
+					className={({ isActive }) =>
+						`${baseLink} ${isActive ? activeLink : ""}`
+					}
+				>
+					<span>
+						<GoPlusCircle className="h-4 w-4" />
+					</span>
 					New Analysis
-				</Link>
+				</NavLink>
 
 				{projectId && (
 					<NavLink
-						to={`/projects/${projectId}/dashboard`}
+						to={`/projects/${projectId}/publication`}
+						end
 						className={({ isActive }) =>
 							`${baseLink} ${isActive ? activeLink : ""}`
 						}
 					>
-						Results
+						<span>
+							<GoBook className="h-4 w-4" />
+						</span>
+						Publication
 					</NavLink>
 				)}
 
 				{projectId && (
 					<NavLink
-						to={`/projects/${projectId}/publication`}
+						to={`/projects/${projectId}/dashboard`}
+						end
 						className={({ isActive }) =>
 							`${baseLink} ${isActive ? activeLink : ""}`
 						}
 					>
-						Publication
+						<span>
+							<GoGraph className="h-4 w-4" />
+						</span>
+						Results
 					</NavLink>
 				)}
 			</nav>
