@@ -1,7 +1,7 @@
 const PageTitle = ({ children, className = "", ...rest }) => {
 	return (
 		<h1
-			className={`text-2xl font-semibold text-[var(--color-primary)]
+			className={`text-xl font-semibold text-[var(--color-primary)]
 				${className}
 			`}
 			{...rest}

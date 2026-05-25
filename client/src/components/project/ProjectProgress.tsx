@@ -1,3 +1,5 @@
+import ProjectDetailHeader from "../ui/ProjectDetailHeader.js";
+
 const ProjectProgress = ({ hasPublications, hasCitations }) => {
 	const currentStep = !hasPublications
 		? "Import publications"
@@ -6,12 +8,10 @@ const ProjectProgress = ({ hasPublications, hasCitations }) => {
 			: "View dashboard";
 
 	return (
-		<section className="rounded-xl border  border-gray-100 p-6 bg-[var(--color-surface)] shadow-sm">
-			<h2 className="text-xl font-semibold text-[var(--color-primary)]">
-				Progress
-			</h2>
+		<section className="rounded-xl border  border-gray-100 px-6 py-4 bg-[var(--color-surface)] shadow-sm">
+			<ProjectDetailHeader>Progress</ProjectDetailHeader>
 
-			<div className="mt-5 flex items-center gap-3 text-lg">
+			<div className="mt-5 flex items-center gap-3 text-sm">
 				<span className="font-medium text-[var(--color-secondary)]">
 					✓ Project Info
 				</span>
@@ -60,11 +60,11 @@ const ProjectProgress = ({ hasPublications, hasCitations }) => {
 			</div>
 
 			<div className="mt-5 rounded-lg bg-gray-50 p-4">
-				<p className="text-md font-medium text-gray-700">
+				<p className="text-sm font-medium text-gray-700">
 					Next step: {currentStep}
 				</p>
 
-				<p className="mt-1 text-sm text-gray-500">
+				<p className="mt-1 text-xs text-gray-500">
 					{!hasPublications
 						? "Start by importing publications from the ORCID saved in this project."
 						: !hasCitations
