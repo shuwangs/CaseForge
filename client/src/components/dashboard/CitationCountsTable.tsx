@@ -12,11 +12,9 @@ import AICard from "../ui/AICard.js";
 import BaseBtn from "../ui/BaseBtn.js";
 import BaseDataGrid from "../ui/BaseDataGrid.jsx";
 
-const citationColumns = [
-	{ field: "title", headerName: "Title", flex: 2 },
-	{ field: "journal_name", headerName: "Journal", flex: 1 },
-	{ field: "publication_date", headerName: "Date", width: 120 },
-	{ field: "citation_count", headerName: "Citation Counts", flex: 1 },
+const journalColumns = [
+	{ field: "journal_name", headerName: "Journal", flex: 2 },
+	{ field: "publication_count", headerName: "Publication Count", flex: 1 },
 ];
 ModuleRegistry.registerModules([CsvExportModule]);
 
@@ -25,8 +23,8 @@ const CitationCountsTable = () => {
 	const { projectId } = useParams();
 	const { handleGenerateJournalTableSummary, journalTableSummary } =
 		useSummary();
-	const { citationCounts, loading, error } = useCitation();
-	const rowData = citationCounts ?? [];
+	const { journalPublicationData, loading, error } = useCitation();
+	const rowData = journalPublicationData ?? [];
 
 	function onGridReady(params: GridReadyEvent) {
 		gridApiRef.current = params.api;
@@ -61,7 +59,7 @@ const CitationCountsTable = () => {
 
 			<BaseDataGrid
 				rowData={rowData}
-				columnDefs={citationColumns}
+				columnDefs={journalColumns}
 				suppressExcelExport={true}
 				onGridReady={onGridReady}
 			/>
