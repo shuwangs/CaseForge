@@ -15,6 +15,7 @@ import {
 import {
 	createProject,
 	deleteProject,
+	getProjectStatus,
 	getProjects,
 	putProject,
 } from "../controllers/project.controller.js";
@@ -50,4 +51,7 @@ router.post(
 );
 
 router.get("/:projectId/ai/summary", getProjectSummary);
+
+// Project status
+router.get("/:projectId/status", getProjectStatus);
 export default router;

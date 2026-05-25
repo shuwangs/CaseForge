@@ -13,17 +13,22 @@ import usePublication from "../contexts/usePublication.ts";
 const ProjectDetailPage = () => {
 	const { projectId } = useParams();
 	const navigate = useNavigate();
-	const { projects } = useProject();
+	const { projects, projectStatus, getProjectStatus } = useProject();
 
-	const { publications, onFetchPublication, loadProjectPublications } =
-		usePublication();
+	const { onFetchPublication, loadProjectPublications } = usePublication();
 	const { handleFetchCitations } = useCitation();
 
 	const project = projects.find(
 		(item) => Number(item.id) === Number(projectId),
 	);
-	const hasPublications = publications.length > 0;
-	const hasCitations = false;
+
+	useEffect(() => {
+		getProjectStatus(projectId);
+	}, [projectId, getProjectStatus]);
+
+	const hasPublications = projectStatus?.hasPublications ?? false;
+	const hasCitations = projectStatus?.hasCitations ?? false;
+
 	const stage = !hasPublications
 		? "NEEDS_PUBLICATIONS"
 		: !hasCitations
@@ -31,10 +36,6 @@ const ProjectDetailPage = () => {
 			: "READY";
 
 	const handleSubmit = async () => {
-		console.log("clicked fetch publications");
-		console.log("project:", project);
-		console.log("projectId:", projectId);
-
 		if (!project?.orcid) return;
 
 		await onFetchPublication(project.orcid, projectId);
@@ -88,8 +89,6 @@ const ProjectDetailPage = () => {
 						<Link to={`/projects/${project.id}/edit`}>
 							<BaseBtn variant="secondary">Edit Project</BaseBtn>
 						</Link>
-
-						{/* <DeleteBtn onClick={handleDelete}>Delete Project</DeleteBtn> */}
 
 						<BaseBtn variant="secondary" onClick={handleSubmit}>
 							Fetch Publications

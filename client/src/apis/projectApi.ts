@@ -3,6 +3,7 @@ import type {
 	NewProjectPayload,
 	Project,
 	ProjectDTO,
+	ProjectStatus,
 } from "../types/project.ts";
 import fetchWithAuth from "./fetchWithAuth.ts";
 
@@ -90,5 +91,21 @@ export const updateProject = async (
 		throw new Error("Update Project failed");
 	}
 	const data = await result.json();
+	return data.data;
+};
+
+export const fetchProjectStatus = async (
+	projectId: number,
+	token: string,
+): Promise<ProjectStatus> => {
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}/status`,
+	);
+	if (!result.ok) {
+		throw new Error("Fetch projects failed");
+	}
+	const data: ApiResponse<ProjectStatus> = await result.json();
+
 	return data.data;
 };
