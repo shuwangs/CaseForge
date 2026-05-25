@@ -120,7 +120,9 @@ const ProjectDetailPage = () => {
 						</p>
 
 						<div className="mt-5">
-							<BaseBtn variant="secondary">View Dashboard</BaseBtn>
+							<Link to={`/projects/${project.id}/dashboard`}>
+								<BaseBtn variant="secondary">View Dashboard</BaseBtn>
+							</Link>
 						</div>
 					</div>
 				)}
