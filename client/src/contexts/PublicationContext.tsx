@@ -54,23 +54,27 @@ export const PublicationProvider = ({ children }) => {
 		}
 	};
 
-	const loadProjectPublications = useCallback(() => async (projectId) => {
-		try {
-			setLoading(true);
-			setError("");
+	const loadProjectPublications = useCallback(
+		async (projectId) => {
+			try {
+				setLoading(true);
+				setError("");
 
-			const token = await getToken();
-			const data = await loadPublications(projectId, token);
+				const token = await getToken();
+				const data = await loadPublications(projectId, token);
+				console.log("in publication context loadProject Publications: ", data);
+				setPublications(data);
+				return data;
+			} catch (err) {
+				setError(err.message || "Failed to load publications");
+				throw err;
+			} finally {
+				setLoading(false);
+			}
+		},
+		[getToken],
+	);
 
-			setPublications(data);
-			return data;
-		} catch (err) {
-			setError(err.message || "Failed to load publications");
-			throw err;
-		} finally {
-			setLoading(false);
-		}
-	});
 	const values = {
 		publications,
 		loading,

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import BaseBtn from "../components/ui/BaseBtn.js";
@@ -7,8 +8,22 @@ import usePublication from "../contexts/usePublication.ts";
 
 const PublicationPage = () => {
 	const { projectId } = useParams();
+	const { publications, loading, error, loadProjectPublications } =
+		usePublication();
 
-	const { publications } = usePublication();
+	useEffect(() => {
+		if (!projectId) return;
+
+		loadProjectPublications(projectId);
+	}, [projectId, loadProjectPublications]);
+
+	if (loading) {
+		return <p>Loading publications...</p>;
+	}
+
+	if (error) {
+		return <p>{error}</p>;
+	}
 	return (
 		<section>
 			<div className="flex">
