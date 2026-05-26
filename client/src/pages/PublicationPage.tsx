@@ -25,8 +25,8 @@ const PublicationPage = () => {
 		return <p>{error}</p>;
 	}
 	return (
-		<section>
-			<div className="flex">
+		<section className="px-8 py-8">
+			<div className="flex justify-between items-start gap-6 mb-8">
 				<div>
 					<PageTitle>Publications</PageTitle>
 					<PageDescription>
@@ -35,18 +35,29 @@ const PublicationPage = () => {
 						data
 					</PageDescription>
 				</div>
-				<div>
-					<div>
-						<BaseBtn>Refresh from ORCID</BaseBtn>
-						<BaseBtn variant="secondary">FetchCitation</BaseBtn>
+				<div className="flex flex-col items-end gap-3">
+					<div className="flex gap-3">
+						<BaseBtn onClick={() => console.log("refresh ORCID")}>
+							Refresh from ORCID
+						</BaseBtn>
+						<BaseBtn
+							variant="secondary"
+							onClick={() => console.log("fetch citation")}
+						>
+							FetchCitation
+						</BaseBtn>
 					</div>
-					<div>
-						<BaseBtn variant="ghost">Download</BaseBtn>
-						<BaseBtn variant="ghost">Upload</BaseBtn>
+					<div className="flex gap-3">
+						<BaseBtn variant="ghost" onClick={() => console.log("download")}>
+							Download
+						</BaseBtn>
+						<BaseBtn variant="ghost" onClick={() => console.log("upload")}>
+							Upload
+						</BaseBtn>
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-col items-center">
+			<div className="mt-b">
 				{publications.length > 0 && (
 					<PublicationsGrid projectId={projectId} publications={publications} />
 				)}
