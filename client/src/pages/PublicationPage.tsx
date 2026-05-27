@@ -5,11 +5,13 @@ import {
 	ModuleRegistry,
 } from "ag-grid-community";
 import { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import BaseBtn from "../components/ui/BaseBtn.js";
 import PageDescription from "../components/ui/PageDescription.js";
 import PageTitle from "../components/ui/PageTitle.js";
+import useCitation from "../contexts/useCitation.js";
+import useProject from "../contexts/useProject.js";
 import usePublication from "../contexts/usePublication.ts";
 
 ModuleRegistry.registerModules([CsvExportModule]);
@@ -17,10 +19,14 @@ ModuleRegistry.registerModules([CsvExportModule]);
 const PublicationPage = () => {
 	const { projectId } = useParams();
 	const gridApiRef = useRef<GridApi | null>(null);
+	const { projects } = useProject();
 
 	const { publications, loading, error, loadProjectPublications } =
 		usePublication();
+	const { handleFetchCitations } = useCitation();
 
+	const project = projects.find((pr) => Number(pr.id) === Number(projectId));
+	// For download the table
 	function onGridReady(params: GridReadyEvent) {
 		gridApiRef.current = params.api;
 	}
@@ -60,12 +66,12 @@ const PublicationPage = () => {
 				</div>
 				<div className="flex flex-col items-end gap-3">
 					<div className="flex gap-3">
-						<BaseBtn onClick={() => console.log("refresh ORCID")}>
+						<BaseBtn onClick={() => loadProjectPublications(projectId)}>
 							Refresh from ORCID
 						</BaseBtn>
 						<BaseBtn
 							variant="secondary"
-							onClick={() => console.log("fetch citation")}
+							onClick={() => handleFetchCitations(projectId)}
 						>
 							FetchCitation
 						</BaseBtn>
@@ -74,9 +80,9 @@ const PublicationPage = () => {
 						<BaseBtn variant="ghost" onClick={onBtnExport}>
 							Download
 						</BaseBtn>
-						<BaseBtn variant="ghost" onClick={() => console.log("upload")}>
-							Upload
-						</BaseBtn>
+						<Link to={`/projects/${projectId}`}>
+							<BaseBtn variant="ghost">Back</BaseBtn>
+						</Link>
 					</div>
 				</div>
 			</div>
