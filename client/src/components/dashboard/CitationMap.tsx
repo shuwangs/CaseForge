@@ -61,17 +61,13 @@ const CitationMap = () => {
 		return <p>No citation map data available yet.</p>;
 	}
 	return (
-		<div>
-			<div className="max-w-4xl flex justify-between items-center mb-2">
-				<h2>Citaion Map</h2>
-			</div>
-
+		<div className="space-y-2">
 			<div ref={mapRef} className="max-w-4xl  flex justify-center">
 				<WorldMap
 					color="#028ca6"
 					backgroundColor="white"
 					valueSuffix=""
-					size="lg"
+					size="md"
 					data={mapData}
 				/>
 			</div>

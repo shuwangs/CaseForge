@@ -13,11 +13,11 @@ const publicationColumns = [
 
 const PublicationsGrid = ({ publications, ...gridProps }) => {
 	return (
-		<div className="w-full">
+		<div className="w-full caseforge-grid">
 			<BaseDataGrid
 				rowData={publications}
 				columnDefs={publicationColumns}
-				height={560}
+				height={500}
 				{...gridProps}
 			/>
 		</div>

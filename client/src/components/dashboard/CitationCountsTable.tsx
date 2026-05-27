@@ -24,6 +24,7 @@ const CitationCountsTable = () => {
 	const { handleGenerateJournalTableSummary, journalTableSummary } =
 		useSummary();
 	const { journalPublicationData, loading, error } = useCitation();
+
 	const rowData = journalPublicationData ?? [];
 
 	function onGridReady(params: GridReadyEvent) {
@@ -52,17 +53,16 @@ const CitationCountsTable = () => {
 	}
 
 	return (
-		<div>
-			<div className="flex items-align justify-between mb-4">
-				<h2>Citation Counts Table</h2>
+		<div className="space-y-2">
+			<div className="caseforge-grid">
+				<BaseDataGrid
+					rowData={rowData}
+					columnDefs={journalColumns}
+					suppressExcelExport={true}
+					onGridReady={onGridReady}
+					height={400}
+				/>
 			</div>
-
-			<BaseDataGrid
-				rowData={rowData}
-				columnDefs={journalColumns}
-				suppressExcelExport={true}
-				onGridReady={onGridReady}
-			/>
 
 			<div>
 				<BaseBtn onClick={onBtnExport} variant="secondary">
