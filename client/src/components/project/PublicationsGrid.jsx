@@ -6,10 +6,15 @@ const publicationColumns = [
 	{ field: "journalName", headerName: "Journal", flex: 1 },
 ];
 
-const PublicationsGrid = ({ publications }) => {
+const PublicationsGrid = ({ publications, ...gridProps }) => {
 	return (
 		<div className="w-full">
-			<BaseDataGrid rowData={publications} columnDefs={publicationColumns} />
+			<BaseDataGrid
+				rowData={publications}
+				columnDefs={publicationColumns}
+				height={560}
+				{...gridProps}
+			/>
 		</div>
 	);
 };

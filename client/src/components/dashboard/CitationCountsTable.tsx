@@ -35,7 +35,7 @@ const CitationCountsTable = () => {
 				fileName: "caseforge-citations.csv",
 			});
 		} else {
-			console.warn("Agrid Api is not ready！");
+			console.warn("Agrid Api is not ready!");
 		}
 	}
 

@@ -1,4 +1,10 @@
-import { useEffect } from "react";
+import {
+	CsvExportModule,
+	type GridApi,
+	type GridReadyEvent,
+	ModuleRegistry,
+} from "ag-grid-community";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import PublicationsGrid from "../components/project/PublicationsGrid.jsx";
 import BaseBtn from "../components/ui/BaseBtn.js";
@@ -6,10 +12,27 @@ import PageDescription from "../components/ui/PageDescription.js";
 import PageTitle from "../components/ui/PageTitle.js";
 import usePublication from "../contexts/usePublication.ts";
 
+ModuleRegistry.registerModules([CsvExportModule]);
+
 const PublicationPage = () => {
 	const { projectId } = useParams();
+	const gridApiRef = useRef<GridApi | null>(null);
+
 	const { publications, loading, error, loadProjectPublications } =
 		usePublication();
+
+	function onGridReady(params: GridReadyEvent) {
+		gridApiRef.current = params.api;
+	}
+	function onBtnExport() {
+		if (gridApiRef.current) {
+			gridApiRef.current.exportDataAsCsv({
+				fileName: "publication_list.csv",
+			});
+		} else {
+			console.warn("Agrid Api is not ready!");
+		}
+	}
 
 	useEffect(() => {
 		if (!projectId) return;
@@ -48,7 +71,7 @@ const PublicationPage = () => {
 						</BaseBtn>
 					</div>
 					<div className="flex gap-3">
-						<BaseBtn variant="ghost" onClick={() => console.log("download")}>
+						<BaseBtn variant="ghost" onClick={onBtnExport}>
 							Download
 						</BaseBtn>
 						<BaseBtn variant="ghost" onClick={() => console.log("upload")}>
@@ -59,7 +82,12 @@ const PublicationPage = () => {
 			</div>
 			<div className="mt-b">
 				{publications.length > 0 && (
-					<PublicationsGrid projectId={projectId} publications={publications} />
+					<PublicationsGrid
+						projectId={projectId}
+						publications={publications}
+						suppressExcelExport={true}
+						onGridReady={onGridReady}
+					/>
 				)}
 			</div>
 		</section>
