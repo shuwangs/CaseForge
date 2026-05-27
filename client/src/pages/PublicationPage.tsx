@@ -48,8 +48,8 @@ const PublicationPage = () => {
 		return <p>{error}</p>;
 	}
 	return (
-		<section className="px-8 py-8">
-			<div className="flex justify-between items-start gap-6 mb-8">
+		<section className="px-8">
+			<div className="flex justify-between items-start gap-6 mb-4">
 				<div>
 					<PageTitle>Publications</PageTitle>
 					<PageDescription>
