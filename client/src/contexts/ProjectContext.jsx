@@ -86,13 +86,7 @@ export const ProjectProvider = ({ children }) => {
 			const token = await getToken();
 
 			const data = await updateProject(projectId, payload, token);
-			getAllProjects(user_id);
-			setProjects((prev) =>
-				prev.map((project) =>
-					Number(project.id) === Number(projectId) ? data : project,
-				),
-			);
-
+			await getAllProjects();
 			return data;
 		} catch (err) {
 			setError(err.message || "Failed to save publications");
