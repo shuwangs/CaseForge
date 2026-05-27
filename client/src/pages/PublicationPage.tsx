@@ -21,8 +21,13 @@ const PublicationPage = () => {
 	const gridApiRef = useRef<GridApi | null>(null);
 	const { projects } = useProject();
 
-	const { publications, loading, error, loadProjectPublications } =
-		usePublication();
+	const {
+		publications,
+		loading,
+		error,
+		loadProjectPublications,
+		onFetchPublication,
+	} = usePublication();
 	const { handleFetchCitations } = useCitation();
 
 	const project = projects.find((pr) => Number(pr.id) === Number(projectId));
@@ -66,7 +71,9 @@ const PublicationPage = () => {
 				</div>
 				<div className="flex flex-col items-end gap-3">
 					<div className="flex gap-3">
-						<BaseBtn onClick={() => loadProjectPublications(projectId)}>
+						<BaseBtn
+							onClick={() => onFetchPublication(project.orcid, projectId)}
+						>
 							Refresh from ORCID
 						</BaseBtn>
 						<BaseBtn
