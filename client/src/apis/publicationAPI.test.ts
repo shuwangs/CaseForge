@@ -16,7 +16,7 @@ describe("publicationApi", () => {
 			json: async () => mockResponse,
 		} as Response);
 
-		const result = await loadPublications("123", "fake-token");
+		const result = await loadPublications("123", token);
 
 		expect(fetchMock).toHaveBeenCalledWith(
 			`${API_BASE_URL}/api/projects/123/publications`,
