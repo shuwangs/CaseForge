@@ -1,4 +1,4 @@
-import FeatureCard from "../ui/FeatureCard.jsx";
+import FeatureCard from "../ui/FeatureCard.tsx";
 
 const HeroFeatures = () => {
 	return (
