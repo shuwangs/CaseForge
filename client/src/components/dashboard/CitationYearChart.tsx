@@ -1,14 +1,19 @@
 import { Chart, LinearScale } from "chart.js/auto";
 import { useRef } from "react";
 import { Line } from "react-chartjs-2";
+import { useParams } from "react-router-dom";
 import useCitation from "../../contexts/useCitation.js";
+import useSummary from "../../contexts/useSummary.js";
+import AICard from "../ui/AICard.js";
 import BaseBtn from "../ui/BaseBtn.js";
 
 Chart.register(LinearScale);
 
 const CitationYearChart = () => {
 	const lineChart = useRef(null);
+	const { projectId } = useParams();
 	const { citationYearlyCount, loading, error } = useCitation();
+	const { handleGenerateTrendSummary, trendSummary } = useSummary();
 	const yearlyData = citationYearlyCount ?? [];
 
 	const downloadChart = () => {
@@ -51,13 +56,25 @@ const CitationYearChart = () => {
 		<div>
 			<div className="flex justify-between items-center">
 				<h1>Citation Trend Over the Years</h1>
-				<BaseBtn variant="secondary" onClick={downloadChart}>
-					Download Chart
-				</BaseBtn>
 			</div>
 			<div className="w-full h-[400px] justify-center">
 				<Line ref={lineChart} data={data} />
 			</div>
+
+			<div>
+				<BaseBtn variant="secondary" onClick={downloadChart}>
+					Download Chart
+				</BaseBtn>
+
+				<BaseBtn
+					onClick={() => handleGenerateTrendSummary(projectId)}
+					variant="secondary"
+				>
+					Generate Summary
+				</BaseBtn>
+			</div>
+
+			<AICard loading={loading} summary={trendSummary} />
 		</div>
 	);
 };
