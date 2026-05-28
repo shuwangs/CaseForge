@@ -24,7 +24,7 @@ const CitationYearChart = () => {
 
 		const link = document.createElement("a");
 		link.href = imageUrl;
-		link.download = "citation_trend.png";
+		link.download = `project${projectId}-citation_trend.png`;
 		link.click();
 	};
 

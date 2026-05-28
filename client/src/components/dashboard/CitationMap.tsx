@@ -43,7 +43,7 @@ const CitationMap = () => {
 
 			const link = document.createElement("a");
 			link.href = pngUrl;
-			link.download = "caseforge-citation-map.png";
+			link.download = `project${projectId}-caseforge-citation-map.png`;
 			link.click();
 		};
 		image.src = svgDataUrl;
