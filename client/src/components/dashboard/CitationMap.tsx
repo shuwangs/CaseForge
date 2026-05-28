@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom";
 import WorldMap from "react-svg-worldmap";
 import useCitation from "../../contexts/useCitation.js";
 import useSummary from "../../contexts/useSummary.js";
+import { downloadMap } from "../../utils/downloadMap.js";
 import AICard from "../ui/AICard.js";
 import BaseBtn from "../ui/BaseBtn.js";
-import { downloadMap } from "../../utils/downloadMap.js";
+
 const CitationMap = () => {
 	const mapRef = useRef(null);
 	const { projectId } = useParams();
@@ -42,9 +43,15 @@ const CitationMap = () => {
 			</div>
 
 			<div>
-				<BaseBtn variant="secondary" onClick={
-					() => downloadMap(mapRef.current, `caseforge-citation-map-${Date.now()}.png`)
-				}>
+				<BaseBtn
+					variant="secondary"
+					onClick={() =>
+						downloadMap(
+							mapRef.current,
+							`caseforge-citation-map-${Date.now()}.png`,
+						)
+					}
+				>
 					Download Map
 				</BaseBtn>
 				<BaseBtn
