@@ -1,10 +1,18 @@
 import { useContext } from "react";
-import { ProjectContext } from "./ProjectContext.jsx";
+// import { ProjectContext } from "./ProjectContext.jsx";
+import { ProjectGraphQLContext } from "./ProjectContextGraphQL.tsx";
 
-const useProject = () => {
-	const context = useContext(ProjectContext);
+const useProject = (shouldUseGraphQL = true) => {
+	const gqlContext = useContext(ProjectGraphQLContext);
+	// const restContext = useContext(ProjectContext);
+	// const context = shouldUseGraphQL ? gqlContext : restContext;
+	const context = gqlContext;
 	if (!context) {
-		throw new Error("useProject must be used within a ProjectProvider");
+		throw new Error(
+			shouldUseGraphQL
+				? "useProject must be used within a ProjectGraphQLProvider"
+				: "useProject must be used within a ProjectProvider",
+		);
 	}
 	return context;
 };

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import type { Project } from "../../types/project.ts";
+import type { ProjectFieldsFragment } from "../../__generated__/graphql.js";
 
 interface ProjectCardProps {
-	project: Project;
+	project: ProjectFieldsFragment;
 	href: string;
 }
 

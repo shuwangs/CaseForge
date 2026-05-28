@@ -98,6 +98,7 @@ PUBLICATION_API=https://api.opencitations.net/meta/v1/author/orcid:
 OPENALEX_URL=https://api.openalex.org/works?filter=cites:
 REDIS_URL=redis://localhost:6379
 CLERK_SECRET_KEY=your_clerk_secret_key
+CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_WEBHOOK_SIGNING_SECRET=your_clerk_webhook_signing_secret
 ```
 
