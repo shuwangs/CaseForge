@@ -34,7 +34,7 @@ const CitationCountsTable = () => {
 	function onBtnExport() {
 		if (gridApiRef.current) {
 			gridApiRef.current.exportDataAsCsv({
-				fileName: `project${projectId}-caseforge-citations.csv`,
+				fileName: `caseforge-citations-${Date.now()}.csv`,
 			});
 		} else {
 			console.warn("Agrid Api is not ready！");
