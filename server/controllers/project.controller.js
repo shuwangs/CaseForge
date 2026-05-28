@@ -2,6 +2,7 @@ import AppError from "../errors/AppError.js";
 import {
 	addProject,
 	deleteProjectById,
+	getProjectStatusService,
 	getProjectsByClerkId,
 	updateProjectById,
 } from "../services/project.service.js";
@@ -83,6 +84,26 @@ export const putProject = async (req, res, next) => {
 		}
 
 		const result = await updateProjectById(projectId, payload, clerkId);
+
+		res.status(200).json({
+			success: true,
+			data: result,
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getProjectStatus = async (req, res, next) => {
+	try {
+		const clerkId = req.clerkId;
+		const projectId = req.params.projectId;
+
+		if (!idValidate(projectId)) {
+			throw new AppError("Invalid Project", 400);
+		}
+
+		const result = await getProjectStatusService(projectId, clerkId);
 
 		res.status(200).json({
 			success: true,

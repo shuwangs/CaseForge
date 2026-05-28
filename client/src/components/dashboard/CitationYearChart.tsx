@@ -53,11 +53,8 @@ const CitationYearChart = () => {
 	};
 
 	return (
-		<div>
-			<div className="flex justify-between items-center">
-				<h1>Citation Trend Over the Years</h1>
-			</div>
-			<div className="w-full h-[400px] justify-center">
+		<div className="space-y-2">
+			<div className="w-full h-[300px] justify-center">
 				<Line ref={lineChart} data={data} />
 			</div>
 

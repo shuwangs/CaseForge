@@ -83,10 +83,6 @@ export const getProjectPublications = async (req, res, next) => {
 		const clerkId = req.clerkId;
 
 		const publications = await getPublicationsByProjectId(clerkId, projectId);
-		console.log(
-			"in publication controller  get publications by projct ID: ",
-			publications,
-		);
 
 		const mappedPublications = publications.map(mapPublicationDTO);
 		res.status(200).json({

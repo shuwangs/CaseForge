@@ -39,9 +39,9 @@ const BaseBtn = ({
 		<button
 			type={type}
 			className={`
-				px-4 py-2
+				px-4 py-1.5
 				rounded-lg
-				text-md font-medium
+				text-xs font-medium
 				transition
 				${variants[variant]}
 				${className}

@@ -4,6 +4,7 @@ import {
 	addNewProject,
 	deleteProject,
 	fetchAllProjects,
+	fetchProjectStatus,
 	updateProject,
 } from "../apis/projectApi.ts";
 
@@ -13,6 +14,7 @@ export const ProjectProvider = ({ children }) => {
 	const { getToken, isSignedIn, isLoaded } = useAuth();
 
 	const [projects, setProjects] = useState([]);
+	const [projectStatus, setProjectStatus] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 
@@ -80,18 +82,11 @@ export const ProjectProvider = ({ children }) => {
 		try {
 			setError("");
 			setLoading(true);
-			console.log("update project in the provider :", payload);
 
 			const token = await getToken();
 
 			const data = await updateProject(projectId, payload, token);
-			getAllProjects(user_id);
-			setProjects((prev) =>
-				prev.map((project) =>
-					Number(project.id) === Number(projectId) ? data : project,
-				),
-			);
-
+			await getAllProjects();
 			return data;
 		} catch (err) {
 			setError(err.message || "Failed to save publications");
@@ -99,6 +94,27 @@ export const ProjectProvider = ({ children }) => {
 			setLoading(false);
 		}
 	};
+
+	const getProjectStatus = useCallback(
+		async (projectId) => {
+			try {
+				setLoading(true);
+				setError("");
+				const token = await getToken();
+
+				const data = await fetchProjectStatus(projectId, token);
+				console.log("In context getProjectStatus: ", data);
+				setProjectStatus(data);
+				return data;
+			} catch (err) {
+				setError(err.message || "Failed to fetch projects");
+				throw err;
+			} finally {
+				setLoading(false);
+			}
+		},
+		[getToken],
+	);
 
 	useEffect(() => {
 		if (!isLoaded || !isSignedIn) return;
@@ -110,10 +126,12 @@ export const ProjectProvider = ({ children }) => {
 		projects,
 		loading,
 		error,
+		projectStatus,
 		onDeleteProject,
 		setError,
 		getAllProjects,
 		createProject,
+		getProjectStatus,
 		onUpdateProject,
 	};
 

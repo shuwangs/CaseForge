@@ -16,7 +16,7 @@ const FormInputField = ({
 }: FormInputFieldProps) => {
 	return (
 		<div className="flex flex-col">
-			<label className="text-lg font-semibold" htmlFor={id}>
+			<label className="text-sm font-semibold" htmlFor={id}>
 				{label}
 			</label>
 			<input
@@ -25,7 +25,7 @@ const FormInputField = ({
 				placeholder={placeholder}
 				onChange={onChange}
 				value={value}
-				className="border-2 rounded-md px-3 py-2 border-[var(--color-accent)]"
+				className="border rounded-lg text-sm px-3 py-2 border-gray-200"
 			/>
 		</div>
 	);

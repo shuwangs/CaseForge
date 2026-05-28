@@ -2,10 +2,10 @@ import { useAuth } from "@clerk/react-router";
 import { createContext, useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import {
-	fetchCitationCount,
 	fetchCitationMapData,
 	fetchCitationStatus,
 	fetchCitationYearlyCounts,
+	fetchJournalPublicationData,
 	getCitations,
 } from "../apis/citationApi.ts";
 
@@ -16,9 +16,9 @@ export const CitationProvider = ({ children }) => {
 	const { getToken, _isSignedIn, _isLoaded } = useAuth();
 	const [citationStatus, setCitationStatus] = useState(null);
 	const [isPolling, setIsPolling] = useState(false);
-	const [citationCounts, setCitationCounts] = useState(null);
 	const [citationYearlyCount, setCitationYearlyCount] = useState(null);
 	const [citationMap, setCitationMap] = useState(null);
+	const [journalPublicationData, setJournalPublicationData] = useState(null);
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -80,13 +80,15 @@ export const CitationProvider = ({ children }) => {
 			try {
 				const token = await getToken();
 
-				const [tableData, yearlyData, mapData] = await Promise.all([
-					fetchCitationCount(projectId, token),
-					fetchCitationYearlyCounts(projectId, token),
-					fetchCitationMapData(projectId, token),
-				]);
+				const [journalPublicationData, yearlyData, mapData] = await Promise.all(
+					[
+						fetchJournalPublicationData(projectId, token),
+						fetchCitationYearlyCounts(projectId, token),
+						fetchCitationMapData(projectId, token),
+					],
+				);
 
-				setCitationCounts(tableData);
+				setJournalPublicationData(journalPublicationData);
 				setCitationYearlyCount(yearlyData);
 				setCitationMap(mapData);
 			} catch (err) {
@@ -100,10 +102,10 @@ export const CitationProvider = ({ children }) => {
 	);
 
 	const values = {
-		citationCounts,
 		citationMap,
 		citationYearlyCount,
 		citationStatus,
+		journalPublicationData,
 		error,
 		isPolling,
 		loading,

@@ -46,7 +46,7 @@ const ProjectDashboard = () => {
 						onClick={() => setActiveTab(tab.id)}
 						className={`
 							px-4 py-2
-							text-lg font-medium
+							text-sm font-medium
 							transition
 							${
 								activeTab === tab.id
@@ -60,7 +60,7 @@ const ProjectDashboard = () => {
 				))}
 			</div>
 
-			<div className="mt-6">
+			<div className="">
 				{activeTab === "publications" && <CitationCountsTable />}
 
 				{activeTab === "yearlyCounts" && <CitationYearChart />}

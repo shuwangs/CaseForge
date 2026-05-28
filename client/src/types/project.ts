@@ -52,3 +52,10 @@ export type ProjectFormValues = {
 	careerStage: string;
 	target: string;
 };
+
+export type ProjectStatus = {
+	hasPublications: boolean;
+	hasCitations: boolean;
+	publicationCount: number;
+	citationCount: number;
+};

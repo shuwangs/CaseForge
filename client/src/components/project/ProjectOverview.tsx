@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useProject from "../../contexts/useProject.js";
 import type { Project } from "../../types/project.js";
 import BaseBtn from "../ui/BaseBtn.js";
+import ProjectDetailHeader from "../ui/ProjectDetailHeader.tsx";
 import ProjectHeader from "../ui/ProjectHeader.tsx";
 
 type ProjectOverviewProps = {
@@ -19,13 +20,11 @@ const ProjectOverview = ({ project }: ProjectOverviewProps) => {
 	};
 
 	return (
-		<section className="flex rounded-xl border border-gray-100 bg-[var(--color-surface)] p-6 shadow-sm">
+		<section className="flex rounded-lg border border-gray-100 bg-[var(--color-surface)] px-6 py-4 shadow-sm">
 			<div className="flex-1">
-				<h2 className="text-lg font-semibold text-[var(--color-primary)]">
-					Project Information
-				</h2>
+				<ProjectDetailHeader>Project Information</ProjectDetailHeader>
 
-				<div className="mt-5 grid grid-cols-2 gap-5 text-sm">
+				<div className="mt-5 grid grid-cols-2 gap-3">
 					<ProjectHeader
 						title="Applicant"
 						description={`${project.firstName} ${project.lastName}`}

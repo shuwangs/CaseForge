@@ -15,14 +15,14 @@ const ProjectsPage = () => {
 	if (!isSignedIn) return <div>Sign in to view this page</div>;
 
 	return (
-		<div className="mx-auto space-y-6 px-16">
-			<div className="flex justify-between py-8">
+		<div className="mx-auto max-w-5xl space-y-6 px-8">
+			<div className="flex justify-between">
 				<div>
-					<h1 className="text-2xl font-semibold text-[var(--color-primary)]">
+					<h1 className="text-xl font-semibold text-[var(--color-primary)]">
 						Projects
 					</h1>
 
-					<p className="text-md text-gray-500 mt-1">
+					<p className="text-sm text-gray-500 mt-1 text-[var(--color-accent)]">
 						Manage your citation analysis projects
 					</p>
 				</div>
