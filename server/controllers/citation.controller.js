@@ -114,12 +114,11 @@ export const getCitationStatus = async (req, res, next) => {
 			throw new AppError("Invalid project Id", 400);
 		}
 
-		const jobs = await citationsQueue.getJobs([
-			"active",
-			"wait",
-			"completed",
-			"failed"
-		], 0, -1);
+		const jobs = await citationsQueue.getJobs(
+			["active", "wait", "completed", "failed"],
+			0,
+			-1,
+		);
 
 		const projectJobs = jobs.filter(
 			(job) => job.data.projectId === projectId && job.data.clerkId === clerkId,
