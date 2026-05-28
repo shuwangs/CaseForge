@@ -11,7 +11,7 @@ const AppSidebar = () => {
 		" bg-blue-50 text-[var(--color-accent)] font-semibold border-[var(--color-accent)]";
 
 	return (
-		<aside className="min-h-[calc(100vh-73px)] w-60 shrink-0 border-r border-gray-200 bg-[var(--color-surface)] px-4 py-6">
+		<aside className="flex flex-col min-h-[calc(100vh-73px)] w-60 shrink-0 border-r border-gray-200 bg-[var(--color-surface)] px-4 py-6 justify-between">
 			<nav className="flex flex-col gap-2">
 				<NavLink
 					to="/projects"

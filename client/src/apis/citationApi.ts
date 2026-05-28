@@ -12,6 +12,7 @@ export const getCitations = async (projectId: number, token: string) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
+			cache: "no-store",
 		},
 	);
 

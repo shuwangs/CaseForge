@@ -15,7 +15,6 @@ export const CitationProvider = ({ children }) => {
 	const navigate = useNavigate();
 	const { getToken, _isSignedIn, _isLoaded } = useAuth();
 	const [citationStatus, setCitationStatus] = useState(null);
-	const [totalJobsQueued, setTotalJobsQueued] = useState(0);
 	const [isPolling, setIsPolling] = useState(false);
 	const [citationYearlyCount, setCitationYearlyCount] = useState(null);
 	const [citationMap, setCitationMap] = useState(null);
@@ -29,9 +28,7 @@ export const CitationProvider = ({ children }) => {
 			setLoading(true);
 			setError("");
 			const token = await getToken();
-			const result = await getCitations(projectId, token);
-			// console.log(result.jobsQueued);
-			setTotalJobsQueued(result.jobsQueued);
+			const _result = await getCitations(projectId, token);
 			startPollingCitationStatus(projectId);
 
 			// navigate to dashboard
@@ -116,7 +113,7 @@ export const CitationProvider = ({ children }) => {
 		error,
 		isPolling,
 		loading,
-		totalJobsQueued,
+		setCitationStatus,
 		handleFetchCitations,
 		loadCitationResults,
 		startPollingCitationStatus,
