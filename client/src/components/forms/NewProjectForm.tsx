@@ -30,7 +30,7 @@ const NewProjectForm = ({
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex flex-col text-xl justify-center max-w-xl gap-4"
+			className="mx-auto flex flex-col w-full justify-center max-w-xl gap-4"
 		>
 			<FormInputField
 				label="Project Name"
@@ -40,7 +40,7 @@ const NewProjectForm = ({
 				onChange={handleChange}
 				placeholder="Enter Project Name"
 			/>
-			<div className="flex justify-between">
+			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<FormInputField
 					label="First Name"
 					id="firstName"
@@ -96,10 +96,15 @@ const NewProjectForm = ({
 			/>
 			{error && <p className="text-sm text-red-500">{error}</p>}
 
-			<div>
-				<label htmlFor="target">Petition Type</label>
+			<div className="flex flex-col gap-2">
+				<label
+					htmlFor="target"
+					className="text-md font-semibold text-[var(--color-primary)]"
+				>
+					Petition Type
+				</label>
 				<select
-					className="px-4 py-2"
+					className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-[var(--color-primary)] focus:border-[var(--color-accent)] focus:outline-none"
 					id="target"
 					name="target"
 					value={formData.target}
@@ -110,7 +115,7 @@ const NewProjectForm = ({
 					<option value="O1">Extraordinary Ability visa</option>
 				</select>
 			</div>
-			<div className="flex gap-10 justify-center">
+			<div className="mt-3 flex justify-end gap-3">
 				<BaseBtn type="submit">
 					{mode === "edit" ? "Save Changes" : "Create Project"}
 				</BaseBtn>

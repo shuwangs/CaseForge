@@ -139,3 +139,22 @@ export const importPublicationsByOrcid = async (clerkId, projectId, orcid) => {
 
 	return savedPublications;
 };
+
+export const getJournalPublicationData = async (projectId, clerkId) => {
+	const query = `
+		SELECT pub.journal_name, COUNT(*) AS publication_count
+		FROM caseforge.publications pub
+		JOIN caseforge.projects pr ON pub.project_id = pr.id
+		JOIN caseforge.users u ON pr.user_id = u.id
+		WHERE pr.id = $1
+		  AND u.clerk_id = $2
+		GROUP BY pub.journal_name
+		ORDER BY publication_count DESC;
+	`;
+
+	const { rows } = await pool.query(query, [projectId, clerkId]);
+	if (rows.length === 0) {
+		throw new AppError("Project not found or unauthorized", 404);
+	}
+	return rows;
+};

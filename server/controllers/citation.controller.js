@@ -5,7 +5,10 @@ import {
 	getCitationMapData,
 	getCitationsCountByProjectId,
 } from "../services/citation.service.js";
-import { getPublicationsByProjectId } from "../services/publication.service.js";
+import {
+	getJournalPublicationData,
+	getPublicationsByProjectId,
+} from "../services/publication.service.js";
 import { idValidate } from "../utitls/idValidate.js";
 
 export const enqueueCitationJobs = async (req, res, next) => {
@@ -28,6 +31,8 @@ export const enqueueCitationJobs = async (req, res, next) => {
 			});
 		}
 
+		let jobsQueued = 0;
+
 		for (const pub of publications) {
 			if (!pub.openalex_id) {
 				continue;
@@ -38,14 +43,14 @@ export const enqueueCitationJobs = async (req, res, next) => {
 				projectId,
 				publicationOpenAlexId: pub.openalex_id,
 			});
-
+			jobsQueued++;
 			console.log("after enqueueCitation id: ", pub.openalex_id);
 		}
 
 		res.status(200).json({
 			success: true,
 			message: "Citation jobs queued",
-			jobsQueued: publications.length,
+			jobsQueued: jobsQueued,
 		});
 	} catch (err) {
 		next(err);
@@ -109,12 +114,11 @@ export const getCitationStatus = async (req, res, next) => {
 			throw new AppError("Invalid project Id", 400);
 		}
 
-		const jobs = await citationsQueue.getJobs([
-			"active",
-			"wait",
-			"completed",
-			"failed",
-		]);
+		const jobs = await citationsQueue.getJobs(
+			["active", "wait", "completed", "failed"],
+			0,
+			-1,
+		);
 
 		const projectJobs = jobs.filter(
 			(job) => job.data.projectId === projectId && job.data.clerkId === clerkId,
@@ -143,5 +147,21 @@ export const getCitationStatus = async (req, res, next) => {
 		});
 	} catch (err) {
 		next(err);
+	}
+};
+
+export const getProjectJournalPublications = async (req, res, next) => {
+	try {
+		const { projectId } = req.params;
+		const clerkId = req.clerkId;
+
+		const journals = await getJournalPublicationData(projectId, clerkId);
+
+		res.status(200).json({
+			success: true,
+			data: journals,
+		});
+	} catch (error) {
+		next(error);
 	}
 };

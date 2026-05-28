@@ -1,3 +1,5 @@
+import fetchWithAuth from "./fetchWithAuth.ts";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 // Enqueue the jobs
@@ -10,6 +12,7 @@ export const getCitations = async (projectId: number, token: string) => {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
+			cache: "no-store",
 		},
 	);
 
@@ -18,7 +21,9 @@ export const getCitations = async (projectId: number, token: string) => {
 	}
 
 	const out = await result.json();
+
 	alert(`${out.jobsQueued} citation jobs queued!`);
+	return out;
 };
 
 export const fetchCitationStatus = async (ProjectId: number, token: string) => {
@@ -74,6 +79,7 @@ export const fetchCitationYearlyCounts = async (
 	const data = await result.json();
 	return data.data;
 };
+
 export const fetchCitationMapData = async (
 	ProjectId: number,
 	token: string,
@@ -89,5 +95,24 @@ export const fetchCitationMapData = async (
 	}
 
 	const data = await result.json();
+	return data.data;
+};
+
+export const fetchJournalPublicationData = async (
+	projectId: number | string,
+	token: string,
+) => {
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${projectId}/journals`,
+	);
+
+	if (!result.ok) {
+		throw new Error("Failed to fetch journal publication data");
+	}
+
+	const data = await result.json();
+	console.log("In citationApi, fetchJournalPublicationData, result is: ", data);
+
 	return data.data;
 };

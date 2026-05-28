@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { loadPublications } from "./publicationAPI.ts";
+import { loadPublications } from "../publicationAPI.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -16,7 +16,7 @@ describe("publicationApi", () => {
 			json: async () => mockResponse,
 		} as Response);
 
-		const result = await loadPublications("123", "fake-token");
+		const result = await loadPublications("123", token);
 
 		expect(fetchMock).toHaveBeenCalledWith(
 			`${API_BASE_URL}/api/projects/123/publications`,

@@ -2,10 +2,10 @@ import { useAuth } from "@clerk/react-router";
 import { createContext, useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import {
-	fetchCitationCount,
 	fetchCitationMapData,
 	fetchCitationStatus,
 	fetchCitationYearlyCounts,
+	fetchJournalPublicationData,
 	getCitations,
 } from "../apis/citationApi.ts";
 
@@ -16,9 +16,9 @@ export const CitationProvider = ({ children }) => {
 	const { getToken, _isSignedIn, _isLoaded } = useAuth();
 	const [citationStatus, setCitationStatus] = useState(null);
 	const [isPolling, setIsPolling] = useState(false);
-	const [citationCounts, setCitationCounts] = useState(null);
 	const [citationYearlyCount, setCitationYearlyCount] = useState(null);
 	const [citationMap, setCitationMap] = useState(null);
+	const [journalPublicationData, setJournalPublicationData] = useState(null);
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -28,9 +28,7 @@ export const CitationProvider = ({ children }) => {
 			setLoading(true);
 			setError("");
 			const token = await getToken();
-			const result = await getCitations(projectId, token);
-			console.log(result);
-
+			const _result = await getCitations(projectId, token);
 			startPollingCitationStatus(projectId);
 
 			// navigate to dashboard
@@ -43,7 +41,7 @@ export const CitationProvider = ({ children }) => {
 		}
 	};
 
-	const startPollingCitationStatus = async (projectId) => {
+	const startPollingCitationStatus = (projectId) => {
 		setIsPolling(true);
 		const citationIntervalId = setInterval(async () => {
 			try {
@@ -51,20 +49,26 @@ export const CitationProvider = ({ children }) => {
 				const result = await fetchCitationStatus(projectId, token);
 
 				setCitationStatus(result.data);
-				const { active, waiting, _fail } = result.data;
+				const { active, _completed, wait, failed } = result.data;
 
-				const stillProcessing = active > 0 || waiting > 0;
+				const stillProcessing = active > 0 || wait > 0;
+				const hasFailed = failed > 0;
 
 				if (!stillProcessing) {
 					clearInterval(citationIntervalId);
 					setIsPolling(false);
+
+					if (hasFailed) {
+						setError("Some citation jobs failed. Please try again.");
+						return;
+					}
 
 					// jobs finished, refresh dashboard data
 
 					await loadCitationResults(projectId);
 				}
 			} catch (err) {
-				console.error(error);
+				console.error(err.message);
 				clearInterval(citationIntervalId);
 				setIsPolling(false);
 				setError(err.message);
@@ -80,13 +84,15 @@ export const CitationProvider = ({ children }) => {
 			try {
 				const token = await getToken();
 
-				const [tableData, yearlyData, mapData] = await Promise.all([
-					fetchCitationCount(projectId, token),
-					fetchCitationYearlyCounts(projectId, token),
-					fetchCitationMapData(projectId, token),
-				]);
+				const [journalPublicationData, yearlyData, mapData] = await Promise.all(
+					[
+						fetchJournalPublicationData(projectId, token),
+						fetchCitationYearlyCounts(projectId, token),
+						fetchCitationMapData(projectId, token),
+					],
+				);
 
-				setCitationCounts(tableData);
+				setJournalPublicationData(journalPublicationData);
 				setCitationYearlyCount(yearlyData);
 				setCitationMap(mapData);
 			} catch (err) {
@@ -100,13 +106,14 @@ export const CitationProvider = ({ children }) => {
 	);
 
 	const values = {
-		citationCounts,
 		citationMap,
 		citationYearlyCount,
 		citationStatus,
+		journalPublicationData,
 		error,
 		isPolling,
 		loading,
+		setCitationStatus,
 		handleFetchCitations,
 		loadCitationResults,
 		startPollingCitationStatus,

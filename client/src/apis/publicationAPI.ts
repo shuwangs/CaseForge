@@ -47,33 +47,6 @@ export const fetchPublications = async (
 	return data.data ?? [];
 };
 
-export const postPublications = async (
-	projectId: number,
-	payload: Publication[],
-	token: string,
-) => {
-	const result = await fetchWithAuth(
-		token,
-		`${API_BASE_URL}/api/projects/${projectId}/publications`,
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				publications: payload,
-			}),
-		},
-	);
-
-	if (!result.ok) {
-		throw new Error("Post publications failed");
-	}
-	const data: ApiResponse<Publication[]> = await result.json();
-
-	return data.data;
-};
-
 export const loadPublications = async (projectId: string, token: string) => {
 	const result = await fetchWithAuth(
 		token,

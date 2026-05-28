@@ -157,3 +157,41 @@ export const updateProjectById = async (projectId, payload, clerkId) => {
 	);
 	return projectRes.rows;
 };
+
+export const getProjectStatusService = async (projectId, clerkId) => {
+	// publications
+	const publicationResult = await pool.query(
+		`
+		SELECT COUNT(*)::int AS count
+		FROM caseforge.publications p
+		JOIN caseforge.projects pr ON p.project_id = pr.id
+		JOIN caseforge.users u ON pr.user_id = u.id
+		WHERE p.project_id = $1
+		AND u.clerk_id = $2
+		`,
+		[projectId, clerkId],
+	);
+	// citations
+	const citationResult = await pool.query(
+		`
+		SELECT COUNT(*)::int AS count
+		FROM caseforge.citation_records c
+		JOIN caseforge.publications p ON c.publication_id = p.id
+		JOIN caseforge.projects pr ON p.project_id = pr.id
+		JOIN caseforge.users u ON pr.user_id = u.id
+		WHERE pr.id = $1
+		AND u.clerk_id = $2
+		`,
+		[projectId, clerkId],
+	);
+
+	const publicationCount = publicationResult.rows[0].count;
+	const citationCount = citationResult.rows[0].count;
+
+	return {
+		hasPublications: publicationCount > 0,
+		hasCitations: citationCount > 0,
+		publicationCount,
+		citationCount,
+	};
+};
