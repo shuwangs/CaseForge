@@ -32,12 +32,12 @@ const CitationMap = () => {
 				<h2>Citaion Map</h2>
 			</div>
 
-			<div ref={mapRef} className="max-w-4xl  flex justify-center">
+			<div ref={mapRef} className="max-w-4xl flex justify-center">
 				<WorldMap
 					color="#028ca6"
 					backgroundColor="white"
 					valueSuffix=""
-					size="lg"
+					size="xl"
 					data={mapData}
 				/>
 			</div>

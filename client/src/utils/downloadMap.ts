@@ -13,8 +13,8 @@ export const downloadMap = (
 
 	image.onload = () => {
 		const canvas = document.createElement("canvas");
-		const width = 1000;
-		const height = 600;
+
+		const { width, height } = svgMap.getBoundingClientRect();
 
 		canvas.width = width;
 		canvas.height = height;
