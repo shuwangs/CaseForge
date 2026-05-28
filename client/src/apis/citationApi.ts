@@ -20,7 +20,9 @@ export const getCitations = async (projectId: number, token: string) => {
 	}
 
 	const out = await result.json();
+
 	alert(`${out.jobsQueued} citation jobs queued!`);
+	return out;
 };
 
 export const fetchCitationStatus = async (ProjectId: number, token: string) => {

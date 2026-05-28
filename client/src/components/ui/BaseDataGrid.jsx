@@ -12,7 +12,7 @@ const BaseDataGrid = ({
 }) => {
 	return (
 		<AgGridProvider modules={modules}>
-			<div className="ag-theme-quartz " style={{ height, width: "100%" }}>
+			<div className="ag-theme-quartz" style={{ height, width: "100%" }}>
 				<AgGridReact
 					rowData={rowData}
 					columnDefs={columnDefs}

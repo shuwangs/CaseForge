@@ -15,6 +15,7 @@ export const CitationProvider = ({ children }) => {
 	const navigate = useNavigate();
 	const { getToken, _isSignedIn, _isLoaded } = useAuth();
 	const [citationStatus, setCitationStatus] = useState(null);
+	const [totalJobsQueued, setTotalJobsQueued] = useState(0);
 	const [isPolling, setIsPolling] = useState(false);
 	const [citationYearlyCount, setCitationYearlyCount] = useState(null);
 	const [citationMap, setCitationMap] = useState(null);
@@ -29,8 +30,8 @@ export const CitationProvider = ({ children }) => {
 			setError("");
 			const token = await getToken();
 			const result = await getCitations(projectId, token);
-			console.log(result);
-
+			// console.log(result.jobsQueued);
+			setTotalJobsQueued(result.jobsQueued);
 			startPollingCitationStatus(projectId);
 
 			// navigate to dashboard
@@ -43,7 +44,7 @@ export const CitationProvider = ({ children }) => {
 		}
 	};
 
-	const startPollingCitationStatus = async (projectId) => {
+	const startPollingCitationStatus = (projectId) => {
 		setIsPolling(true);
 		const citationIntervalId = setInterval(async () => {
 			try {
@@ -51,20 +52,26 @@ export const CitationProvider = ({ children }) => {
 				const result = await fetchCitationStatus(projectId, token);
 
 				setCitationStatus(result.data);
-				const { active, waiting, _fail } = result.data;
+				const { active, _completed, wait, failed } = result.data;
 
-				const stillProcessing = active > 0 || waiting > 0;
+				const stillProcessing = active > 0 || wait > 0;
+				const hasFailed = failed > 0;
 
 				if (!stillProcessing) {
 					clearInterval(citationIntervalId);
 					setIsPolling(false);
+
+					if (hasFailed) {
+						setError("Some citation jobs failed. Please try again.");
+						return;
+					}
 
 					// jobs finished, refresh dashboard data
 
 					await loadCitationResults(projectId);
 				}
 			} catch (err) {
-				console.error(error);
+				console.error(err.message);
 				clearInterval(citationIntervalId);
 				setIsPolling(false);
 				setError(err.message);
@@ -109,6 +116,7 @@ export const CitationProvider = ({ children }) => {
 		error,
 		isPolling,
 		loading,
+		totalJobsQueued,
 		handleFetchCitations,
 		loadCitationResults,
 		startPollingCitationStatus,

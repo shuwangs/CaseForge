@@ -1,5 +1,6 @@
 import { GoBook, GoBriefcase, GoGraph, GoPlusCircle } from "react-icons/go";
 import { NavLink, useParams } from "react-router-dom";
+import CitationStatusBanner from "../components/dashboard/CitationStatusBanner.tsx";
 
 const AppSidebar = () => {
 	const { projectId } = useParams();
@@ -68,6 +69,8 @@ const AppSidebar = () => {
 					</NavLink>
 				)}
 			</nav>
+
+			<CitationStatusBanner />
 		</aside>
 	);
 };
