@@ -24,7 +24,7 @@ export default defineConfig({
 			provider: "v8",
 			all: true,
 			src: ["./src"],
-			include: ["src/**/*.{ts,tsx,js,jsx}"],
+			include: ["src/***/**/*.{ts,tsx,js,jsx}"],
 			exclude: [
 				"src/main.tsx",
 				"src/App.tsx",
