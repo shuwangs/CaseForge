@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("../../contexts/useCitation.ts", () => ({
+vi.mock("../../../contexts/useCitation.ts", () => ({
 	default: () => ({
 		journalPublicationData: [
 			{
@@ -14,7 +14,7 @@ vi.mock("../../contexts/useCitation.ts", () => ({
 	}),
 }));
 
-vi.mock("../ui/BaseDataGrid.jsx", () => ({
+vi.mock("../../ui/BaseDataGrid.jsx", () => ({
 	default: ({ rowData }) => (
 		<div>
 			{rowData.map((row) => (
@@ -24,8 +24,8 @@ vi.mock("../ui/BaseDataGrid.jsx", () => ({
 	),
 }));
 
-import { SummaryContext } from "../../contexts/SummaryContext.js";
-import CitationCountsTable from "./CitationCountsTable.tsx";
+import { SummaryContext } from "../../../contexts/SummaryContext.js";
+import CitationCountsTable from "../CitationCountsTable.js";
 
 const mockSummaryContext = {
 	loading: false,
