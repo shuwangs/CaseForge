@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import BaseBtn from "../components/ui/BaseBtn.js";
 import ProjectCard from "../components/ui/ProjectCard.tsx";
 import useProject from "../contexts/useProject.js";
-import type { Project } from "../types/project.js";
 
 const ProjectsPage = () => {
 	const { projects } = useProject();
-	const { isSignedIn, _user, isLoaded } = useUser();
+	const { isSignedIn, isLoaded } = useUser();
+
+	console.log("######### Projects", projects);
 
 	if (!isLoaded) return <div>Loading...</div>;
 
@@ -44,15 +45,17 @@ const ProjectsPage = () => {
 				</div>
 			) : (
 				<div>
-					{projects.map((project: Project) => (
-						<div key={project.id}>
-							<ProjectCard
-								project={project}
-								key={project.id}
-								href={`/projects/${project.id}`}
-							/>
-						</div>
-					))}
+					{projects.map((project) => {
+						return (
+							<div key={project.id}>
+								<ProjectCard
+									project={project}
+									key={project.id}
+									href={`/projects/${project.id}`}
+								/>
+							</div>
+						);
+					})}
 				</div>
 			)}
 		</div>
