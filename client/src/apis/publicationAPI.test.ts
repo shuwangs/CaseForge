@@ -10,13 +10,13 @@ describe("publicationApi", () => {
 			data: [{ title: "Example publication" }],
 		};
 
-		const _token = "test-token";
+		const token = "test-token";
 		const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue({
 			ok: true,
 			json: async () => mockResponse,
 		} as Response);
 
-		const result = await loadPublications("123", "fake-token");
+		const result = await loadPublications("123", token);
 
 		expect(fetchMock).toHaveBeenCalledWith(
 			`${API_BASE_URL}/api/projects/123/publications`,

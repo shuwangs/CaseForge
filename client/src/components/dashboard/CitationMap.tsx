@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import WorldMap from "react-svg-worldmap";
 import useCitation from "../../contexts/useCitation.js";
 import useSummary from "../../contexts/useSummary.js";
+import { downloadMap } from "../../utils/downloadMap.js";
 import AICard from "../ui/AICard.js";
 import BaseBtn from "../ui/BaseBtn.js";
 
@@ -13,41 +14,6 @@ const CitationMap = () => {
 	const { mapSummary, handleGenerateMapSummary } = useSummary();
 
 	const mapData = citationMap ?? [];
-
-	const downloadMap = () => {
-		const svgMap = mapRef.current?.querySelector("svg");
-		if (!svgMap) return;
-
-		const svgString = new XMLSerializer().serializeToString(svgMap);
-		const svgDataBase64 = btoa(unescape(encodeURIComponent(svgString)));
-		const svgDataUrl = `data:image/svg+xml;charset=utf-8;base64,${svgDataBase64}`;
-
-		const image = new Image();
-
-		image.onload = () => {
-			const canvas = document.createElement("canvas");
-			const width = 1000;
-			const height = 600;
-
-			canvas.width = width;
-			canvas.height = height;
-
-			const context = canvas.getContext("2d");
-			if (!context) return;
-
-			context.fillStyle = "white";
-			context.fillRect(0, 0, width, height);
-			context.drawImage(image, 0, 0, width, height);
-
-			const pngUrl = canvas.toDataURL("image/png");
-
-			const link = document.createElement("a");
-			link.href = pngUrl;
-			link.download = "caseforge-citation-map.png";
-			link.click();
-		};
-		image.src = svgDataUrl;
-	};
 
 	if (loading) {
 		return <p>Loading citation map...</p>;
@@ -67,13 +33,21 @@ const CitationMap = () => {
 					color="#028ca6"
 					backgroundColor="white"
 					valueSuffix=""
-					size="md"
+					size="xl"
 					data={mapData}
 				/>
 			</div>
 
 			<div>
-				<BaseBtn variant="secondary" onClick={downloadMap}>
+				<BaseBtn
+					variant="secondary"
+					onClick={() =>
+						downloadMap(
+							mapRef.current,
+							`caseforge-citation-map-${Date.now()}.png`,
+						)
+					}
+				>
 					Download Map
 				</BaseBtn>
 				<BaseBtn
