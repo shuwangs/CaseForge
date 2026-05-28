@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { loadPublications } from "./publicationAPI.ts";
+import { loadPublications } from "../publicationAPI.ts";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 

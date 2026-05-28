@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { fetchCitationCount, fetchCitationMapData } from "./citationApi.ts";
+import { fetchCitationCount, fetchCitationMapData } from "../citationApi.ts";
 
 beforeEach(() => {
 	vi.clearAllMocks();
