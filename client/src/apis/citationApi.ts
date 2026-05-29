@@ -112,7 +112,6 @@ export const fetchJournalPublicationData = async (
 	}
 
 	const data = await result.json();
-	console.log("In citationApi, fetchJournalPublicationData, result is: ", data);
 
 	return data.data;
 };

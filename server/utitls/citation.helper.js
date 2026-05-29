@@ -32,7 +32,6 @@ export const normCitationFetch = (work) => {
 
 export const normCitationList = (citationList = []) => {
 	if (!Array.isArray(citationList)) {
-		console.log("citationList is not an array:", citationList);
 		return [];
 	}
 

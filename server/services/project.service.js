@@ -29,7 +29,6 @@ export const getProjectsByClerkId = async (clerkId) => {
 };
 
 export const addProject = async (project) => {
-	console.log("adding project in the sevice...", project);
 	const {
 		userId,
 		projectName,
@@ -46,8 +45,6 @@ export const addProject = async (project) => {
 
 	let institutionId = null;
 	if (institution.trim()) {
-		console.log("the institution name is after trim:", institution);
-
 		const institutionResult = await pool.query(
 			`
             INSERT INTO caseforge.institutions (institution_name)
