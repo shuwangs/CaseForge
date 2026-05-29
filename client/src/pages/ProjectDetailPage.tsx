@@ -104,6 +104,10 @@ const ProjectDetailPage = () => {
 							</BaseBtn>
 						</Link>
 
+						<Link to={`/projects/${project.id}/publication`}>
+							<BaseBtn variant="secondary">View Publications</BaseBtn>
+						</Link>
+
 						<BaseBtn
 							variant="secondary"
 							onClick={() => handleFetchCitations(projectId)}
