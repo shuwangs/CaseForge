@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import HeroFeatures from "../HeroFeatures.tsx";
 
 vi.mock("../ui/FeatureCard.tsx", () => ({
-	default: ({ title, description }: any) => (
+	default: ({ title, description }) => (
 		<div data-testid="mock-feature-card">
 			<h3>{title}</h3>
 			<p>{description}</p>

@@ -6,10 +6,16 @@ Users can import publications through ORCID, automatically collect citation reco
 
 By automating data collection and analysis, CaseForge reduces the manual effort required to document scholarly influence and helps applicants present their research achievements more effectively.
 
-## Project Design
-[Project design](https://docs.google.com/document/d/1uBrXL40_HSKAMsKtR2tsXt0LkYKzjACVNEU0j_EcfYg/edit?tab=t.0)
+## Project Links
+- [Planning document](https://docs.google.com/document/d/1uBrXL40_HSKAMsKtR2tsXt0LkYKzjACVNEU0j_EcfYg/edit?tab=t.0)
 
-[Detailed Summary for each Milestone](https://docs.google.com/document/d/12vpcjQTAiN4tyualFO1xeST1ph2WFHPYTIVVDce7Q0c/edit?tab=t.0#heading=h.zau7o7onnc1y)
+- [Detailed Summary for each Milestone](https://docs.google.com/document/d/12vpcjQTAiN4tyualFO1xeST1ph2WFHPYTIVVDce7Q0c/edit?tab=t.0#heading=h.zau7o7onnc1y)
+
+- [Deployment on Render](https://caseforge-web.onrender.com/)
+  
+**Deployment Limitation**: Citation fetching is temporarily unavailable in the deployed version due to background worker hosting limitations. The feature works in the local development environment.
+
+---
 
 ## Features
 
