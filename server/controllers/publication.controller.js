@@ -53,17 +53,10 @@ export const importProjectPublications = async (req, res, next) => {
 		const { orcid } = req.body;
 		const clerkId = req.clerkId;
 
-		console.log("in publication controller projectId is :", projectId);
-		console.log("in publication controller orcid is :", orcid);
-
 		const publications = await importPublicationsByOrcid(
 			clerkId,
 			projectId,
 			orcid,
-		);
-		console.log(
-			"in publication controller after called is mportPublicationsByOrcid datais :",
-			publications,
 		);
 
 		const mappedPublications = publications.map(mapPublicationDTO);

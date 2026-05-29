@@ -19,7 +19,6 @@ export const PublicationProvider = ({ children }) => {
 			const token = await getToken();
 
 			const data = await fetchPublications(orcidId, token, projectId);
-			console.log("in publication context fetch data:", data);
 			setPublications(data);
 
 			return data;
@@ -39,7 +38,6 @@ export const PublicationProvider = ({ children }) => {
 
 				const token = await getToken();
 				const data = await loadPublications(projectId, token);
-				console.log("in publication context loadProject Publications: ", data);
 				setPublications(data);
 				return data;
 			} catch (err) {

@@ -25,7 +25,6 @@ export const ProjectProvider = ({ children }) => {
 			const token = await getToken();
 
 			const data = await fetchAllProjects(token);
-			console.log("In context getallprojects: ", data);
 			setProjects(data);
 		} catch (err) {
 			setError(err.message || "Failed to fetch projects");
@@ -46,7 +45,6 @@ export const ProjectProvider = ({ children }) => {
 			}
 
 			const data = await addNewProject(payload, token);
-			console.log("In context createProject result: ", data);
 			setProjects((prev) => [...prev, data]);
 
 			await fetchAllProjects(token);
@@ -65,7 +63,6 @@ export const ProjectProvider = ({ children }) => {
 			const token = await getToken();
 
 			const data = await deleteProject(projecId, token);
-			console.log("In context deleteProject result: ", data);
 			setProjects((prev) =>
 				prev.filter((p) => Number(p.id) !== Number(projecId)),
 			);
@@ -103,7 +100,6 @@ export const ProjectProvider = ({ children }) => {
 				const token = await getToken();
 
 				const data = await fetchProjectStatus(projectId, token);
-				console.log("In context getProjectStatus: ", data);
 				setProjectStatus(data);
 				return data;
 			} catch (err) {

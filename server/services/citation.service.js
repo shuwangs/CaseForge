@@ -38,7 +38,6 @@ export const saveCitation = async (
 	publicationOpenAlexId,
 	normalizedCitation,
 ) => {
-	// console.log("Save citation, projectId is : ", projectId);
 	const client = await pool.connect();
 
 	try {
@@ -57,7 +56,6 @@ export const saveCitation = async (
 			throw new AppError("Publication not found", 404);
 		}
 		const publicationId = pubResult.rows[0].id;
-		// console.log("save Citation publciation Id is: ", publicationId);
 
 		const { normalized, citation_institutions } = normalizedCitation;
 
@@ -102,10 +100,6 @@ export const saveCitation = async (
 		]);
 
 		const citationId = citationRes.rows[0].id;
-		console.log(
-			"in citation service, save citation.., citationRes is: ",
-			citationId,
-		);
 
 		// insert institutions and
 

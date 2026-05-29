@@ -85,8 +85,6 @@ export const generateMapSummaryService = async (projectId, clerkId) => {
 		}
 	});
 
-	console.log(continents);
-
 	const insights = {
 		totalContinents: continents.size,
 		continents: [...continents],
@@ -111,7 +109,6 @@ export const generateMapSummaryService = async (projectId, clerkId) => {
 };
 
 export const generateTrendSummaryService = async (projectId, clerkId) => {
-	console.log("In generate Trend summary service");
 	// 1. fetch analytics
 	const analytics = await getCitationCountsByYear(projectId, clerkId);
 
@@ -146,7 +143,7 @@ export const generateTrendSummaryService = async (projectId, clerkId) => {
 	const summary = await generateSummaryProvider(system_message, user_message);
 
 	const savedSummary = await saveTrendSummary(projectId, clerkId, summary);
-	console.log("saved trend summary is: ", savedSummary);
+
 	return {
 		summary: savedSummary.ai_trend,
 	};
