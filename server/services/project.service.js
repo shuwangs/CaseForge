@@ -45,7 +45,6 @@ export const addProject = async (project) => {
 
 	let institutionId = null;
 	if (institution.trim()) {
-
 		const institutionResult = await pool.query(
 			`
             INSERT INTO caseforge.institutions (institution_name)

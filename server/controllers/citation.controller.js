@@ -13,7 +13,6 @@ import { idValidate } from "../utitls/idValidate.js";
 
 export const enqueueCitationJobs = async (req, res, next) => {
 	try {
-
 		const clerkId = req.clerkId;
 
 		const { projectId } = req.params;
