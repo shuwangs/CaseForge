@@ -13,6 +13,23 @@ services:
       - key: PUBLICATION_API
         value: "https://api.opencitations.net/meta/v1/author/orcid:"
 
+  - name: caseforge-citation-worker
+    plan: free
+    type: worker
+    runtime: docker
+    repo: https://github.com/shuwangs/CaseForge.git
+    rootDir: server
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+        - key: DATABASE_URL
+          sync: false
+        - key: REDIS_URL
+          sync: false
+        - key: OPENALEX_URL
+          value: "https://api.openalex.org/works?filter=cites:"
+
+
   - name: caseforge-web
     plan: free
     type: web
