@@ -87,6 +87,7 @@ export const ProjectProvider = ({ children }) => {
 			return data;
 		} catch (err) {
 			setError(err.message || "Failed to save publications");
+			throw err;
 		} finally {
 			setLoading(false);
 		}
