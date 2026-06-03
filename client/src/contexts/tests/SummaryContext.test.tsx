@@ -205,7 +205,7 @@ describe("SummaryContext an SummaryProvier", () => {
 			</SummaryProvider>,
 		);
 
-		fireEvent.click(screen.getByAltText("Load Summary"));
+		fireEvent.click(screen.getByRole("button", { name: "Load Summary" }));
 		await waitFor(() => {
 			expect(screen.getByTestId("error")).toHaveTextContent(
 				"Missing auth token",

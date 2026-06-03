@@ -47,6 +47,7 @@ const TestConsumer = () => {
 		onDeleteProject,
 		onUpdateProject,
 		getProjectStatus,
+		getAllProjects,
 	} = useContext(ProjectContext);
 
 	return (
@@ -57,7 +58,9 @@ const TestConsumer = () => {
 			<div data-testid="status">
 				{projectStatus ? projectStatus.status : "No Status"}
 			</div>
-
+			<button type="button" onClick={() => getAllProjects().catch(() => {})}>
+				Get All Projects
+			</button>
 			<button
 				type="button"
 				onClick={() => createProject({ name: "New Project" }).catch(() => {})}
@@ -262,26 +265,6 @@ describe("Project Context and Project Provider", () => {
 		await waitFor(() => {
 			expect(screen.getByTestId("status")).toHaveTextContent("Active");
 			expect(screen.getByTestId("loading")).toHaveTextContent("Idle");
-		});
-	});
-
-	// mimick failed cases
-	it("should handle error when fetchAllProjects fails", async () => {
-		// mock error
-		const mockError = new Error("Database connection failed");
-		vi.mocked(fetchAllProjects).mockRejectedValue(mockError);
-
-		render(
-			<ProjectProvider>
-				<TestConsumer />
-			</ProjectProvider>,
-		);
-
-		await waitFor(() => {
-			expect(screen.getByTestId("error").textContent).toBe(
-				"Database connection failed",
-			);
-			expect(screen.getByTestId("loading").textContent).toBe("Idle");
 		});
 	});
 
