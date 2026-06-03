@@ -54,17 +54,22 @@ const TestConsumer = () => {
 
 			<button
 				type="button"
-				onClick={() => onFetchPublication("orcid-123", "proj-999")}
+				onClick={() =>
+					onFetchPublication("orcid-123", "proj-999").catch(() => {})
+				}
 			>
 				Fetch Pubs
 			</button>
-			<button type="button" onClick={() => loadProjectPublications("proj-999")}>
+			<button
+				type="button"
+				onClick={() => loadProjectPublications("proj-999").catch(() => {})}
+			>
 				Load Pubs
 			</button>
 
 			<ul>
-				{publications.map((p, idx) => (
-					<li key={idx} data-testid="pub-item">
+				{publications.map((p) => (
+					<li key={p.id} data-testid="pub-item">
 						{p.title}
 					</li>
 				))}
@@ -83,7 +88,10 @@ describe("PublicationContext & PublicationProvider", () => {
 	});
 
 	it("fetch publications successfully using ORCID", async () => {
-		const mockData = [{ title: "Paper A" }, { title: "Paper B" }];
+		const mockData = [
+			{ id: 1, title: "Paper A" },
+			{ id: 2, title: "Paper B" },
+		];
 
 		vi.mocked(fetchPublications).mockResolvedValue(mockData);
 		render(

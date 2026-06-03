@@ -2,161 +2,154 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import fetchWithAuth from "../fetchWithAuth.ts";
 import {
-    fetchProjectSummary,
-    generateJournalTableSummary,
-    generateMapSummary,
-    generateTrendSummary,
+	fetchProjectSummary,
+	generateJournalTableSummary,
+	generateMapSummary,
+	generateTrendSummary,
 } from "../summaryApi.ts";
 
 vi.mock("../fetchWithAuth.ts");
 
 describe("summaryApi", () => {
-    const mockToken = "mock-token";
-    const projectId = 1;
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
+	const mockToken = "mock-token";
+	const projectId = 1;
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-    it("generateJournalTableSummary should post request and return data on success ", async () => {
-        const mockData = { summary: "This is summary text" };
+	it("generateJournalTableSummary should post request and return data on success ", async () => {
+		const mockData = { summary: "This is summary text" };
 
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: true,
-            json: async () => ({ data: mockData }),
-        } as Response);
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: true,
+			json: async () => ({ data: mockData }),
+		} as Response);
 
-        const result = await generateJournalTableSummary(projectId, mockToken);
+		const result = await generateJournalTableSummary(projectId, mockToken);
 
-        expect(fetchWithAuth).toHaveBeenCalledWith(
-            mockToken,
-            expect.stringContaining("/api/projects/1/ai/journal-impact-summary"),
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            },
-        );
+		expect(fetchWithAuth).toHaveBeenCalledWith(
+			mockToken,
+			expect.stringContaining("/api/projects/1/ai/journal-impact-summary"),
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
 
-        expect(result).toEqual(mockData);
-    });
+		expect(result).toEqual(mockData);
+	});
 
+	it("generateJournalTableSummary should throw error when backend message is missing", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+			json: async () => ({}),
+		} as Response);
 
-    it("generateJournalTableSummary should throw error when backend message is missing", async () => {
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: false,
-            json: async () => ({}),
-        } as Response);
+		await expect(
+			generateJournalTableSummary(projectId, mockToken),
+		).rejects.toThrow("Failed to generate journal table summary");
+	});
 
-        await expect(
-            generateJournalTableSummary(projectId, mockToken),
-        ).rejects.toThrow("Failed to generate journal table summary");
-    });
+	it("generateMapSummary should post request and return data on success ", async () => {
+		const mockData = { summary: "This is summary text" };
 
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: true,
+			json: async () => ({ data: mockData }),
+		} as Response);
 
-    it("generateMapSummary should post request and return data on success ", async () => {
-        const mockData = { summary: "This is summary text" };
+		const result = await generateMapSummary(projectId, mockToken);
 
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: true,
-            json: async () => ({ data: mockData }),
-        } as Response);
+		expect(fetchWithAuth).toHaveBeenCalledWith(
+			mockToken,
+			expect.stringContaining("/api/projects/1/ai/map-summary"),
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
 
-        const result = await generateMapSummary(projectId, mockToken);
+		expect(result).toEqual(mockData);
+	});
 
-        expect(fetchWithAuth).toHaveBeenCalledWith(
-            mockToken,
-            expect.stringContaining("/api/projects/1/ai/map-summary"),
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            },
-        );
+	it("generateMapSummary should throw error when backend message is missing", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+			json: async () => ({}),
+		} as Response);
 
-        expect(result).toEqual(mockData);
-    });
+		await expect(generateMapSummary(projectId, mockToken)).rejects.toThrow(
+			"Failed to generate map summary",
+		);
+	});
 
+	// generateTrendSummary test
+	it("generateTrendSummary should post request and return data on success ", async () => {
+		const mockData = { summary: "This is summary text" };
 
-    it("generateMapSummary should throw error when backend message is missing", async () => {
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: false,
-            json: async () => ({}),
-        } as Response);
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: true,
+			json: async () => ({ data: mockData }),
+		} as Response);
 
-        await expect(
-            generateMapSummary(projectId, mockToken),
-        ).rejects.toThrow("Failed to generate map summary");
-    });
+		const result = await generateTrendSummary(projectId, mockToken);
 
+		expect(fetchWithAuth).toHaveBeenCalledWith(
+			mockToken,
+			expect.stringContaining("/api/projects/1/ai/trend-summary"),
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
 
-    // generateTrendSummary test
-    it("generateTrendSummary should post request and return data on success ", async () => {
-        const mockData = { summary: "This is summary text" };
+		expect(result).toEqual(mockData);
+	});
 
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: true,
-            json: async () => ({ data: mockData }),
-        } as Response);
+	it("generateTrendSummary should throw error when backend message is missing", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+			json: async () => ({}),
+		} as Response);
 
-        const result = await generateTrendSummary(projectId, mockToken);
+		await expect(generateTrendSummary(projectId, mockToken)).rejects.toThrow(
+			"Failed to generate trend summary",
+		);
+	});
 
-        expect(fetchWithAuth).toHaveBeenCalledWith(
-            mockToken,
-            expect.stringContaining("/api/projects/1/ai/trend-summary"),
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            },
-        );
+	// fetchProjectSummary  test
+	it("fetchProjectSummary should post request and return data on success ", async () => {
+		const mockData = { summary: "This is summary text" };
 
-        expect(result).toEqual(mockData);
-    });
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: true,
+			json: async () => ({ data: mockData }),
+		} as Response);
 
+		const result = await fetchProjectSummary(projectId, mockToken);
 
-    it("generateTrendSummary should throw error when backend message is missing", async () => {
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: false,
-            json: async () => ({}),
-        } as Response);
+		expect(fetchWithAuth).toHaveBeenCalledWith(
+			mockToken,
+			expect.stringContaining("/api/projects/1/ai/summary"),
+		);
 
-        await expect(
-            generateTrendSummary(projectId, mockToken),
-        ).rejects.toThrow("Failed to generate trend summary");
-    });
+		expect(result).toEqual(mockData);
+	});
 
-    // fetchProjectSummary  test
-    it("fetchProjectSummary should post request and return data on success ", async () => {
-        const mockData = { summary: "This is summary text" };
+	it("fetchProjectSummary should throw error when backend message is missing", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+			json: async () => ({}),
+		} as Response);
 
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: true,
-            json: async () => ({ data: mockData }),
-        } as Response);
-
-        const result = await fetchProjectSummary(projectId, mockToken);
-
-        expect(fetchWithAuth).toHaveBeenCalledWith(
-            mockToken,
-            expect.stringContaining("/api/projects/1/ai/summary")
-        );
-
-        expect(result).toEqual(mockData);
-    });
-
-
-    it("fetchProjectSummary should throw error when backend message is missing", async () => {
-        vi.mocked(fetchWithAuth).mockResolvedValue({
-            ok: false,
-            json: async () => ({}),
-        } as Response);
-
-        await expect(
-            fetchProjectSummary(projectId, mockToken),
-        ).rejects.toThrow("Failed to fetch AI summary");
-    });
-
+		await expect(fetchProjectSummary(projectId, mockToken)).rejects.toThrow(
+			"Failed to fetch AI summary",
+		);
+	});
 });

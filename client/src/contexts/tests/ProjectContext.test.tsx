@@ -60,20 +60,20 @@ const TestConsumer = () => {
 
 			<button
 				type="button"
-				onClick={() => createProject({ name: "New Project" })}
+				onClick={() => createProject({ name: "New Project" }).catch(() => {})}
 			>
 				Add Project
 			</button>
-			<button type="button" onClick={() => onDeleteProject(1)}>
+			<button type="button" onClick={() => onDeleteProject(1).catch(() => {})}>
 				Delete Project 1
 			</button>
 			<button
 				type="button"
-				onClick={() => onUpdateProject(1, { name: "Updated" })}
+				onClick={() => onUpdateProject(1, { name: "Updated" }).catch(() => {})}
 			>
 				Update Project 1
 			</button>
-			<button type="button" onClick={() => getProjectStatus(1)}>
+			<button type="button" onClick={() => getProjectStatus(1).catch(() => {})}>
 				Get Status 1
 			</button>
 

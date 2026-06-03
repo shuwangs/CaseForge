@@ -55,7 +55,6 @@ describe("citationApi", () => {
 		await expect(fetchCitationMapData(projectId, mockToken)).rejects.toThrow(
 			"Failed to fetch citation map",
 		);
-		;
 	});
 
 	// fetchCitationCount test
@@ -96,9 +95,7 @@ describe("citationApi", () => {
 		await expect(fetchCitationCount(projectId, mockToken)).rejects.toThrow(
 			"Failed to fetch citation counts",
 		);
-
 	});
-
 
 	// fetchCitationYearlyCounts test
 	it("fetchCitationYearlyCounts test citation count data per Paper", async () => {
@@ -133,12 +130,10 @@ describe("citationApi", () => {
 			ok: false,
 		} as Response);
 
-		await expect(fetchCitationYearlyCounts(projectId, mockToken)).rejects.toThrow(
-			"Failed to fetch citation yearly counts",
-		);
-
+		await expect(
+			fetchCitationYearlyCounts(projectId, mockToken),
+		).rejects.toThrow("Failed to fetch citation yearly counts");
 	});
-
 
 	// fetchJournalPublicationData
 
@@ -174,12 +169,10 @@ describe("citationApi", () => {
 			ok: false,
 		} as Response);
 
-		await expect(fetchJournalPublicationData(projectId, mockToken)).rejects.toThrow(
-			"Failed to fetch journal publication data",
-		);
-
+		await expect(
+			fetchJournalPublicationData(projectId, mockToken),
+		).rejects.toThrow("Failed to fetch journal publication data");
 	});
-
 
 	//getCitations test
 	it("getCitations should enqueue citation jobs and return queued job count", async () => {
@@ -203,8 +196,7 @@ describe("citationApi", () => {
 		);
 
 		expect(result).toEqual({ jobsQueued: 3 });
-
-	})
+	});
 
 	it("getCitations should throw when response is not ok", async () => {
 		vi.mocked(fetchWithAuth).mockResolvedValue({
@@ -241,7 +233,7 @@ describe("citationApi", () => {
 		);
 
 		expect(result).toEqual(mockStatus);
-	})
+	});
 
 	it("fetchCitationStatus should throw when response is not ok", async () => {
 		vi.mocked(fetchWithAuth).mockResolvedValue({
@@ -252,5 +244,4 @@ describe("citationApi", () => {
 			"Failed to fetch citation status",
 		);
 	});
-
 });
