@@ -19,7 +19,7 @@ const EditProjectPage = () => {
 		projectName: currProject.projectName ?? "",
 		firstName: currProject.firstName ?? "",
 		lastName: currProject.lastName ?? "",
-		institution: "",
+		institution: currProject.institution ?? "",
 		researchArea: currProject.researchArea ?? "",
 		orcid: currProject.orcid ?? "",
 		careerStage: currProject.careerStage ?? "",
@@ -28,7 +28,7 @@ const EditProjectPage = () => {
 
 	const handleSubmit = async (values: ProjectFormValues) => {
 		await onUpdateProject(currProject.id, values);
-		navigate(`/projects/`);
+		navigate(`/projects/${currProject.id}`);
 	};
 
 	return (

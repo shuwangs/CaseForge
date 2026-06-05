@@ -11,7 +11,6 @@ const variants = {
         border border-gray-300
 		bg-white
 		text-[var(--color-primary)]
-		hover:bg-lime-200
 		hover:text-[var(--color-accent)]
 		hover:bg-blue-50
     `,
@@ -24,9 +23,8 @@ const variants = {
 	`,
 
 	ghost: `
-		order border-transparent
+		border border-transparent
 		bg-transparent
-		bg-gray-100
 		text-gray-600
 		hover:bg-gray-100
 		hover:text-[var(--color-primary)]
