@@ -50,10 +50,7 @@ const CitationMap = () => {
 				>
 					Download Map
 				</BaseBtn>
-				<BaseBtn
-					onClick={() => handleGenerateMapSummary(projectId)}
-					variant="secondary"
-				>
+				<BaseBtn onClick={() => handleGenerateMapSummary(projectId)}>
 					Generate Summary
 				</BaseBtn>
 			</div>

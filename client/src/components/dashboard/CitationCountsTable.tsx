@@ -69,10 +69,7 @@ const CitationCountsTable = () => {
 					Download CSV
 				</BaseBtn>
 
-				<BaseBtn
-					onClick={() => handleGenerateJournalTableSummary(projectId)}
-					variant="secondary"
-				>
+				<BaseBtn onClick={() => handleGenerateJournalTableSummary(projectId)}>
 					Generate Summary
 				</BaseBtn>
 			</div>

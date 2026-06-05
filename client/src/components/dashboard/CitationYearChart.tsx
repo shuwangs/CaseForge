@@ -63,10 +63,7 @@ const CitationYearChart = () => {
 					Download Chart
 				</BaseBtn>
 
-				<BaseBtn
-					onClick={() => handleGenerateTrendSummary(projectId)}
-					variant="secondary"
-				>
+				<BaseBtn onClick={() => handleGenerateTrendSummary(projectId)}>
 					Generate Summary
 				</BaseBtn>
 			</div>

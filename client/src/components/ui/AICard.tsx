@@ -7,7 +7,7 @@ const AICard = ({ loading, summary }) => {
 				</div>
 
 				<div>
-					<h3 className="text-sm font-semibold text-gray-900">
+					<h3 className="text-sm font-semibold text-[var(--color-primary)]">
 						Research Impact Summary
 					</h3>
 				</div>
