@@ -1,3 +1,4 @@
+import { SignUpButton } from "@clerk/react";
 import BaseBtn from "../ui/BaseBtn.js";
 import Displaydashboard from "./DisplayDashbaord.js";
 
@@ -21,7 +22,9 @@ const HeroContent = () => {
 					</p>
 				</div>
 				<div className="flex gap-2 mt-2">
-					<BaseBtn>Start Free Analysis</BaseBtn>
+					<SignUpButton>
+						<BaseBtn>Start Free Analysis</BaseBtn>
+					</SignUpButton>
 
 					<BaseBtn variant="secondary">View Demo</BaseBtn>
 				</div>
