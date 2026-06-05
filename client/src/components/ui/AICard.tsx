@@ -8,7 +8,7 @@ const AICard = ({ loading, summary }) => {
 
 				<div>
 					<h3 className="text-sm font-semibold text-gray-900">
-						research impact summary
+						Research Impact Summary
 					</h3>
 				</div>
 			</div>

@@ -64,7 +64,7 @@ const CitationCountsTable = () => {
 				/>
 			</div>
 
-			<div>
+			<div className="flex gap-2">
 				<BaseBtn onClick={onBtnExport} variant="secondary">
 					Download CSV
 				</BaseBtn>

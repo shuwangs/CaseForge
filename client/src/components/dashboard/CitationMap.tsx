@@ -38,7 +38,7 @@ const CitationMap = () => {
 				/>
 			</div>
 
-			<div>
+			<div className="flex gap-2">
 				<BaseBtn
 					variant="secondary"
 					onClick={() =>
