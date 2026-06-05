@@ -16,9 +16,9 @@ const Displaydashboard = () => {
 			</div>
 
 			<div className="space-y-3">
-				<div className="h-2 w-3/4 rounded bg-gray-200" />
-				<div className="h-2 w-full rounded bg-gray-100" />
-				<div className="h-2 w-5/6 rounded bg-gray-100" />
+				<div className="h-2 w-full rounded bg-gray-300" />
+				<div className="h-2 w-5/6 rounded bg-gray-200" />
+				<div className="h-2 w-3/4 rounded bg-gray-100" />
 			</div>
 
 			<div className="mt-5 rounded-lg border border-gray-100 bg-gray-50 p-4">
