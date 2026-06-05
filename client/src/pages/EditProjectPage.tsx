@@ -4,7 +4,7 @@ import type { ProjectFormValues } from "../../types/project.ts";
 import NewProjectForm from "../components/forms/NewProjectForm.js";
 import useProject from "../contexts/useProject.js";
 
-const NewProjectPage = () => {
+const EditProjectPage = () => {
 	const { user_id, projects, onUpdateProject } = useProject();
 	const navigate = useNavigate();
 	const { projectId } = useParams();
@@ -32,19 +32,19 @@ const NewProjectPage = () => {
 	};
 
 	return (
-		<div className="flex flex-col mx-auto px-16 justify-center space-y-6 mt-8 max-w-5xl">
+		<div className="flex flex-col mx-auto px-16 justify-center space-y-6 mt-8 max-w-3xl">
 			<div>
 				<Link
 					to="/projects"
-					className="flex text-xl justify-center gap-2 text-gray-500 text-semibold"
+					className="flex text-sm items-center justify-center gap-2 text-gray-500 font-semibold mb-2"
 				>
 					<IoArrowBack />
 					<span>Back to Projects</span>
 				</Link>
 			</div>
 
-			<div className="flex flex-col justify-center items-center rounded-lg border-2 border-[var(--color-accent)] px-6 py-6">
-				<h1 className="text-2xl text-bold mb-2">Edit Project</h1>
+			<div className="flex flex-col justify-center items-center rounded-2xl border-2 border-gray-200 bg-white px-6 py-4 shadow-sm">
+				<h1 className="text-lg font-bold mb-2">Edit Project</h1>
 				<NewProjectForm
 					mode="edit"
 					initialValues={initialValues}
@@ -55,4 +55,4 @@ const NewProjectPage = () => {
 	);
 };
 
-export default NewProjectPage;
+export default EditProjectPage;
