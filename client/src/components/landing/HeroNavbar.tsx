@@ -14,9 +14,6 @@ const HeroNavbar = () => {
 				<a href="#features" className="hover:text-[var(--color-accent)]">
 					Features
 				</a>
-				<a href="#workflow" className="hover:text-[var(--color-accent)]">
-					How it Works
-				</a>
 				<a href="#pricing" className="hover:text-[var(--color-accent)]">
 					Pricing
 				</a>
