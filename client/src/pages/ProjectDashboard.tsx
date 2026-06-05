@@ -37,27 +37,29 @@ const ProjectDashboard = () => {
 	return (
 		<div>
 			<PageTitle>Project Dashboard</PageTitle>
-
-			<div className="flex rounded-xl bg-gray-100 py-4 w-fit">
-				{tabs.map((tab) => (
-					<button
-						key={tab.id}
-						type="button"
-						onClick={() => setActiveTab(tab.id)}
-						className={`
-							px-4 py-2
-							text-sm font-medium
-							transition
+			<div className="mt-2 mb-6 border-b border-gray-200">
+				<div className="flex gap-6">
+					{tabs.map((tab) => (
+						<button
+							key={tab.id}
+							type="button"
+							onClick={() => setActiveTab(tab.id)}
+							className={`					
+								border-b-2 px-1 pb-3 
+								text-sm 
+								font-medium 
+								transition-colors
 							${
 								activeTab === tab.id
-									? "bg-[var(--color-accent)] text-white shadow-sm"
-									: "bg-gray-200 text-gray-600 hover:bg-white"
+									? "border-[var(--color-accent)] text-[var(--color-primary)]	"
+									: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
 							}
 				`}
-					>
-						{tab.label}
-					</button>
-				))}
+						>
+							{tab.label}
+						</button>
+					))}
+				</div>
 			</div>
 
 			<div className="">
