@@ -5,7 +5,7 @@ const useCitation = () => {
 	const context = useContext(CitationContext);
 
 	if (!context) {
-		throw new Error("useCitation must be used within a ProjectProvider");
+		throw new Error("useCitation must be used within a CiationProvider");
 	}
 
 	return context;
