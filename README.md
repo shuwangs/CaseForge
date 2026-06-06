@@ -13,7 +13,7 @@ By automating data collection and analysis, CaseForge reduces the manual effort 
 
 - [Deployment on Render](https://caseforge-web.onrender.com/)
   
-- [Demo Video](https://www.youtube.com/watch?v=9HTRYQloK8w)
+- [Demo Video](https://youtu.be/CCA1onFAI0g)
 
 **Deployment Limitation**: Citation fetching is temporarily unavailable in the deployed version due to background worker hosting limitations. The feature works in the local development environment.
 
