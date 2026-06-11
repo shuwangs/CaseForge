@@ -1,5 +1,5 @@
 import { Queue } from "bullmq";
-import { redisConnection } from "./redis.connection.js";
+import { redisConnection } from "./redis.connection.ts";
 
 export const citationsQueue = new Queue("citation", {
 	connection: redisConnection,
@@ -10,6 +10,10 @@ export const enqueueCitation = async ({
 	clerkId,
 	projectId,
 	publicationOpenAlexId,
+}: {
+	clerkId: string;
+	projectId: number;
+	publicationOpenAlexId: string;
 }) => {
 	const job = await citationsQueue.add(
 		"fetch-citation",

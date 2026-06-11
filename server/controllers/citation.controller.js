@@ -1,5 +1,5 @@
 import AppError from "../errors/AppError.ts";
-import { citationsQueue, enqueueCitation } from "../queues/citation.queue.js";
+import { citationsQueue, enqueueCitation } from "../queues/citation.queue.ts";
 import {
 	getCitationCountsByYear,
 	getCitationMapData,
