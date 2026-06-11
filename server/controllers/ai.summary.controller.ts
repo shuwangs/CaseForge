@@ -1,3 +1,4 @@
+import type { NextFunction, Request, Response } from "express";
 import {
 	generateJournalImpactSummaryService,
 	generateMapSummaryService,
@@ -5,7 +6,11 @@ import {
 } from "../services/ai/ai.service.ts";
 import { getSummaryByProjectId } from "../services/summary.service.ts";
 
-export const generateJournalImpactSummary = async (req, res, next) => {
+export const generateJournalImpactSummary = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -24,7 +29,11 @@ export const generateJournalImpactSummary = async (req, res, next) => {
 	}
 };
 
-export const generateMapSummary = async (req, res, next) => {
+export const generateMapSummary = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -40,7 +49,11 @@ export const generateMapSummary = async (req, res, next) => {
 	}
 };
 
-export const generateTrendSummary = async (req, res, next) => {
+export const generateTrendSummary = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -56,7 +69,11 @@ export const generateTrendSummary = async (req, res, next) => {
 	}
 };
 
-export const getProjectSummary = async (req, res, next) => {
+export const getProjectSummary = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;

@@ -1,10 +1,11 @@
+import type { Request, Response } from "express";
 import { Webhook } from "svix";
 import {
 	deleteUserByClerkId,
 	upsertUserFromClerk,
 } from "../services/clerkWebhook.service.ts";
 
-export const handleClerkWebhook = async (req, res) => {
+export const handleClerkWebhook = async (req: Request, res: Response) => {
 	const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
 	if (!WEBHOOK_SECRET) {
 		throw new Error("Missing webhook signing secret.");
@@ -14,7 +15,7 @@ export const handleClerkWebhook = async (req, res) => {
 	const payload = req.body;
 
 	const wh = new Webhook(WEBHOOK_SECRET);
-	let evt;
+	let evt: unknown;
 
 	try {
 		evt = wh.verify(payload, headers);

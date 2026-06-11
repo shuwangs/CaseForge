@@ -1,3 +1,5 @@
+import type { NextFunction, Request, Response } from "express";
+
 import AppError from "../errors/AppError.ts";
 import { citationsQueue, enqueueCitation } from "../queues/citation.queue.ts";
 import {
@@ -11,7 +13,11 @@ import {
 } from "../services/publication.service.ts";
 import { idValidate } from "../utitls/idValidate.ts";
 
-export const enqueueCitationJobs = async (req, res, next) => {
+export const enqueueCitationJobs = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 
@@ -55,7 +61,11 @@ export const enqueueCitationJobs = async (req, res, next) => {
 	}
 };
 
-export const getCitationsMap = async (req, res, next) => {
+export const getCitationsMap = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -71,7 +81,11 @@ export const getCitationsMap = async (req, res, next) => {
 	}
 };
 
-export const getCitationsYearlyCounts = async (req, res, next) => {
+export const getCitationsYearlyCounts = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -87,7 +101,11 @@ export const getCitationsYearlyCounts = async (req, res, next) => {
 	}
 };
 
-export const getProjectCitations = async (req, res, next) => {
+export const getProjectCitations = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -103,7 +121,11 @@ export const getProjectCitations = async (req, res, next) => {
 	}
 };
 
-export const getCitationStatus = async (req, res, next) => {
+export const getCitationStatus = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;
@@ -148,7 +170,11 @@ export const getCitationStatus = async (req, res, next) => {
 	}
 };
 
-export const getProjectJournalPublications = async (req, res, next) => {
+export const getProjectJournalPublications = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;

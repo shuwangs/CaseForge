@@ -1,3 +1,4 @@
+import type { NextFunction, Request, Response } from "express";
 import AppError from "../errors/AppError.ts";
 import {
 	addProject,
@@ -10,7 +11,11 @@ import { getUserByClerkId } from "../services/user.service.ts";
 
 import { idValidate } from "../utitls/idValidate.ts";
 
-export const getProjects = async (req, res, next) => {
+export const getProjects = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 
@@ -25,7 +30,11 @@ export const getProjects = async (req, res, next) => {
 	}
 };
 
-export const createProject = async (req, res, next) => {
+export const createProject = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 
@@ -50,7 +59,11 @@ export const createProject = async (req, res, next) => {
 	}
 };
 
-export const deleteProject = async (req, res, next) => {
+export const deleteProject = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 
@@ -71,7 +84,11 @@ export const deleteProject = async (req, res, next) => {
 	}
 };
 
-export const putProject = async (req, res, next) => {
+export const putProject = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 
@@ -94,7 +111,11 @@ export const putProject = async (req, res, next) => {
 	}
 };
 
-export const getProjectStatus = async (req, res, next) => {
+export const getProjectStatus = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 		const projectId = req.params.projectId;

@@ -4,7 +4,7 @@ import {
 	generateMapSummary,
 	generateTrendSummary,
 	getProjectSummary,
-} from "../controllers/ai.summary.controller.js";
+} from "../controllers/ai.summary.controller.ts";
 import {
 	enqueueCitationJobs,
 	getCitationStatus,
@@ -12,19 +12,19 @@ import {
 	getCitationsYearlyCounts,
 	getProjectCitations,
 	getProjectJournalPublications,
-} from "../controllers/citation.controller.js";
+} from "../controllers/citation.controller.ts";
 import {
 	createProject,
 	deleteProject,
 	getProjectStatus,
 	getProjects,
 	putProject,
-} from "../controllers/project.controller.js";
+} from "../controllers/project.controller.ts";
 import {
 	getProjectPublications,
 	importProjectPublications,
 	savePublications,
-} from "../controllers/publication.controller.js";
+} from "../controllers/publication.controller.ts";
 
 const router = Router();
 

@@ -1,3 +1,5 @@
+import type { NextFunction, Request, Response } from "express";
+
 import AppError from "../errors/AppError.ts";
 import {
 	getPublicationsByProjectId,
@@ -10,7 +12,11 @@ import {
 	validateOrcid,
 } from "../utitls/publication.helper.ts";
 
-export const searchPublications = async (req, res, next) => {
+export const searchPublications = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { orcid } = req.body;
 		const _clerkId = req.clerkId;
@@ -29,7 +35,11 @@ export const searchPublications = async (req, res, next) => {
 	}
 };
 
-export const savePublications = async (req, res, next) => {
+export const savePublications = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const _clerkId = req.clerkId;
 
@@ -47,7 +57,11 @@ export const savePublications = async (req, res, next) => {
 	}
 };
 
-export const importProjectPublications = async (req, res, next) => {
+export const importProjectPublications = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const { orcid } = req.body;
@@ -70,7 +84,11 @@ export const importProjectPublications = async (req, res, next) => {
 	}
 };
 
-export const getProjectPublications = async (req, res, next) => {
+export const getProjectPublications = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { projectId } = req.params;
 		const clerkId = req.clerkId;

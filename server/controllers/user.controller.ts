@@ -1,5 +1,12 @@
+import type { NextFunction, Request, Response } from "express";
 import AppError from "../errors/AppError.ts";
-export const getCurrentUser = async (req, res, next) => {
+import { getUserByClerkId } from "../services/user.service.ts";
+
+export const getCurrentUser = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const clerkId = req.clerkId;
 
