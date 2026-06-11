@@ -1,10 +1,11 @@
 import dotenv from "dotenv";
 import pool from "../db/db.ts";
 import AppError from "../errors/AppError.ts";
+import type { NormalizedCitation } from "../types/citation.types.ts";
 
 dotenv.config();
 
-export const fetchCitation = async (workId) => {
+export const fetchCitation = async (workId: string) => {
 	try {
 		const OPENALEX_URL =
 			process.env.OPENALEX_URL ||
@@ -34,9 +35,9 @@ export const fetchCitation = async (workId) => {
 };
 
 export const saveCitation = async (
-	projectId,
-	publicationOpenAlexId,
-	normalizedCitation,
+	projectId: number,
+	publicationOpenAlexId: string,
+	normalizedCitation: NormalizedCitation,
 ) => {
 	const client = await pool.connect();
 
@@ -131,7 +132,10 @@ export const saveCitation = async (
 	}
 };
 
-export const getCitationMapData = async (projectId, clerkId) => {
+export const getCitationMapData = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	const query = `
 	SELECT i.country, COUNT(cr.id) as citation_count
 	FROM caseforge.citation_records cr
@@ -165,7 +169,10 @@ export const getCitationMapData = async (projectId, clerkId) => {
 	}));
 };
 
-export const getCitationCountsByYear = async (projectId, clerkId) => {
+export const getCitationCountsByYear = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	const query = `
 	SELECT cr.citing_year, COUNT(cr.id) as citation_count
 	FROM caseforge.citation_records cr
@@ -187,7 +194,10 @@ export const getCitationCountsByYear = async (projectId, clerkId) => {
 	return rows;
 };
 
-export const getCitationsCountByProjectId = async (projectId, clerkId) => {
+export const getCitationsCountByProjectId = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	const query = `
 		SELECT pub.id, pub.title, pub.publication_date, pub.journal_name,
 		COUNT(cr.id) as citation_count

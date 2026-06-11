@@ -4,7 +4,7 @@ import {
 	getCitationCountsByYear,
 	getCitationMapData,
 	getCitationsCountByProjectId,
-} from "../services/citation.service.js";
+} from "../services/citation.service.ts";
 import {
 	getJournalPublicationData,
 	getPublicationsByProjectId,

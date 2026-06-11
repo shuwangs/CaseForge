@@ -2,7 +2,7 @@ import continentMap from "../../utitls/continent.json" with { type: "json" };
 import {
 	getCitationCountsByYear,
 	getCitationMapData,
-} from "../citation.service.js";
+} from "../citation.service.ts";
 import { getJournalPublicationData } from "../publication.service.ts";
 import {
 	saveGeographicSummary,
