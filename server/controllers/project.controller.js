@@ -8,7 +8,7 @@ import {
 } from "../services/project.service.js";
 import { getUserByClerkId } from "../services/user.service.js";
 
-import { idValidate } from "../utitls/idValidate.js";
+import { idValidate } from "../utitls/idValidate.ts";
 
 export const getProjects = async (req, res, next) => {
 	try {

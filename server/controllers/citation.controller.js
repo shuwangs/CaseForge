@@ -9,7 +9,7 @@ import {
 	getJournalPublicationData,
 	getPublicationsByProjectId,
 } from "../services/publication.service.js";
-import { idValidate } from "../utitls/idValidate.js";
+import { idValidate } from "../utitls/idValidate.ts";
 
 export const enqueueCitationJobs = async (req, res, next) => {
 	try {

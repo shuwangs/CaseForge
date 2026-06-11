@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import pool from "../db/db.js";
+import pool from "../db/db.ts";
 import AppError from "../errors/AppError.ts";
 
 dotenv.config();

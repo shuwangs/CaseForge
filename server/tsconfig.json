@@ -1,16 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "es2025",
-    "module": "esnext",
-    "strict": false,
-    "rootDir": ".",
-    "allowJs": true,
-  },
-  "include": [
-    "/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
+	"compilerOptions": {
+		"target": "es2025",
+		"module": "esnext",
+		"strict": false,
+		"rootDir": ".",
+		"allowJs": true
+	},
+	"include": ["/**/*"],
+	"exclude": ["node_modules", "dist"]
 }
