@@ -1,17 +1,17 @@
 import AppError from "../errors/AppError.ts";
 
-export const validateOrcid = () => {
+export const validateOrcid = (): boolean => {
 	// TODO: implement the logic of validation
 	return true;
 };
-export const extractIds = (idString = "") => {
+export const extractIds = (idString: string = "") => {
 	const doi = idString.match(/doi:([^\s]+)/i)?.[1] || null;
 	const openalexId = idString.match(/openalex:(W\d+)/i)?.[1] || null;
 	const pmid = idString.match(/pmid:(\d+)/i)?.[1] || null;
 
 	return { doi, openalexId, pmid };
 };
-export const parseJournal = (venueString = "") => {
+export const parseJournal = (venueString: string = "") => {
 	if (!venueString) {
 		return {
 			journalName: null,
@@ -34,7 +34,7 @@ export const parseJournal = (venueString = "") => {
 		journalOpenalex,
 	};
 };
-export const parsePublisher = (publisherString) => {
+export const parsePublisher = (publisherString: string = "") => {
 	if (!publisherString) {
 		return {
 			publisherName: null,
@@ -50,7 +50,7 @@ export const parsePublisher = (publisherString) => {
 		publisherCrossrefId,
 	};
 };
-const normalizeDate = (dateString) => {
+const normalizeDate = (dateString: string) => {
 	if (!dateString) return null;
 
 	// 2021 -> 2021-01-01
@@ -71,7 +71,9 @@ const normalizeDate = (dateString) => {
 	return null;
 };
 
-export const normalizePublication = (rawPublication) => {
+export const normalizePublication = (
+	rawPublication: Record<string, unknown>,
+) => {
 	const ids = extractIds(rawPublication.id);
 	const journal = parseJournal(rawPublication.venue);
 	const publisher = parsePublisher(rawPublication.publisher);
@@ -97,7 +99,7 @@ export const normalizePublication = (rawPublication) => {
 	};
 };
 
-export const normalizePublications = (publicationList) => {
+export const normalizePublications = (publicationList: unknown[]) => {
 	if (!publicationList || publicationList.length === 0) {
 		throw new AppError("No publication is found", 404);
 	}
@@ -107,7 +109,7 @@ export const normalizePublications = (publicationList) => {
 	});
 };
 
-export const mapPublicationDTO = (publication) => ({
+export const mapPublicationDTO = (publication: Record<string, unknown>) => ({
 	id: publication.id,
 	title: publication.title,
 	authors: publication.authors,

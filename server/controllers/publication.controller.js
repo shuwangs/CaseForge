@@ -8,7 +8,7 @@ import {
 import {
 	mapPublicationDTO,
 	validateOrcid,
-} from "../utitls/publication.helper.js";
+} from "../utitls/publication.helper.ts";
 
 export const searchPublications = async (req, res, next) => {
 	try {
