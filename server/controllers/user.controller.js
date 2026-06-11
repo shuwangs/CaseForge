@@ -1,4 +1,4 @@
-import AppError from "../errors/AppError.js";
+import AppError from "../errors/AppError.ts";
 export const getCurrentUser = async (req, res, next) => {
 	try {
 		const clerkId = req.clerkId;

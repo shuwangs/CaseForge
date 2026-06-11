@@ -1,4 +1,4 @@
-import AppError from "../errors/AppError.js";
+import AppError from "../errors/AppError.ts";
 import { citationsQueue, enqueueCitation } from "../queues/citation.queue.js";
 import {
 	getCitationCountsByYear,

@@ -1,4 +1,4 @@
-import AppError from "../errors/AppError.js";
+import AppError from "../errors/AppError.ts";
 
 export const validateOrcid = () => {
 	// TODO: implement the logic of validation

@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import pool from "../db/db.js";
-import AppError from "../errors/AppError.js";
+import AppError from "../errors/AppError.ts";
 import { normalizePublications } from "../utitls/publication.helper.js";
 
 dotenv.config();
