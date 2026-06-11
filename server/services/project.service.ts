@@ -1,6 +1,7 @@
 import pool from "../db/db.ts";
+import type { ProjectPayload } from "../types/project.types.ts";
 
-export const getProjectsByUserId = async (userId) => {
+export const getProjectsByUserId = async (userId: number) => {
 	const { rows } = await pool.query(
 		`
             SELECT *
@@ -14,7 +15,7 @@ export const getProjectsByUserId = async (userId) => {
 	return rows;
 };
 
-export const getProjectsByClerkId = async (clerkId) => {
+export const getProjectsByClerkId = async (clerkId: string) => {
 	const query = `
 		SELECT p.*
 		FROM caseforge.projects p
@@ -28,7 +29,7 @@ export const getProjectsByClerkId = async (clerkId) => {
 	return rows;
 };
 
-export const addProject = async (project) => {
+export const addProject = async (project: ProjectPayload) => {
 	const {
 		userId,
 		projectName,
@@ -79,7 +80,7 @@ export const addProject = async (project) => {
 	return projectRes.rows[0];
 };
 
-export const deleteProjectById = async (projectId, clerkId) => {
+export const deleteProjectById = async (projectId: number, clerkId: string) => {
 	const results = await pool.query(
 		` 
 		DELETE FROM caseforge.projects
@@ -93,7 +94,11 @@ export const deleteProjectById = async (projectId, clerkId) => {
 	return results.rows[0];
 };
 
-export const updateProjectById = async (projectId, payload, clerkId) => {
+export const updateProjectById = async (
+	projectId: number,
+	payload: Partial<ProjectPayload>,
+	clerkId: string,
+) => {
 	const {
 		projectName,
 		firstName,
@@ -155,7 +160,10 @@ export const updateProjectById = async (projectId, payload, clerkId) => {
 	return projectRes.rows;
 };
 
-export const getProjectStatusService = async (projectId, clerkId) => {
+export const getProjectStatusService = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	// publications
 	const publicationResult = await pool.query(
 		`
