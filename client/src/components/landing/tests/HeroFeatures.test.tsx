@@ -3,6 +3,9 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import HeroFeatures from "../HeroFeatures.tsx";
 
+vi.mock("@clerk/react", () => ({
+	SignUpButton: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
 vi.mock("../ui/FeatureCard.tsx", () => ({
 	default: ({ title, description }) => (
 		<div data-testid="mock-feature-card">
@@ -16,8 +19,7 @@ describe("HeroFeatures Component", () => {
 	it("renders the section headers correctly", () => {
 		render(<HeroFeatures />);
 
-		expect(screen.getByText(/Simple Process/i)).toBeInTheDocument();
-		expect(screen.getByText(/How CaseForge Works/i)).toBeInTheDocument();
+		expect(screen.getByText(/Features/i)).toBeInTheDocument();
 		expect(
 			screen.getByText(/Three simple steps to transform your research record/i),
 		).toBeInTheDocument();
