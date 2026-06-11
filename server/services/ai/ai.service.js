@@ -8,7 +8,7 @@ import {
 	saveGeographicSummary,
 	saveOverviewJournal,
 	saveTrendSummary,
-} from "../summary.service.js";
+} from "../summary.service.ts";
 import { generateSummaryProvider } from "./gemini.provider.js";
 
 const system_message = `You are a helpful  professional research impact writing assistant for CaseForge, which is an immigration aid application.

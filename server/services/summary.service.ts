@@ -1,6 +1,10 @@
 import pool from "../db/db.ts";
+import AppError from "../errors/AppError.ts";
 
-export const getSummaryByProjectId = async (projectId, clerkId) => {
+export const getSummaryByProjectId = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	const query = `
 		SELECT s.*
 		FROM caseforge.summaries s
@@ -17,7 +21,11 @@ export const getSummaryByProjectId = async (projectId, clerkId) => {
 	return rows[0] || null;
 };
 
-export const saveTrendSummary = async (projectId, clerkId, summary) => {
+export const saveTrendSummary = async (
+	projectId: number,
+	clerkId: string,
+	summary: string,
+) => {
 	const query = `
 		INSERT INTO caseforge.summaries (project_id, ai_trend)
 		SELECT p.id, $3
@@ -40,7 +48,11 @@ export const saveTrendSummary = async (projectId, clerkId, summary) => {
 	return rows[0];
 };
 
-export const saveGeographicSummary = async (projectId, clerkId, summary) => {
+export const saveGeographicSummary = async (
+	projectId: number,
+	clerkId: string,
+	summary: string,
+) => {
 	const query = `
 		INSERT INTO caseforge.summaries (project_id, ai_geographic)
 		SELECT p.id, $3
@@ -63,7 +75,11 @@ export const saveGeographicSummary = async (projectId, clerkId, summary) => {
 	return rows[0];
 };
 
-export const saveOverviewJournal = async (projectId, clerkId, summary) => {
+export const saveOverviewJournal = async (
+	projectId: number,
+	clerkId: string,
+	summary: string,
+) => {
 	const query = `
 		INSERT INTO caseforge.summaries (project_id, ai_overview)
 		SELECT p.id, $3
