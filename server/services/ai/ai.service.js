@@ -3,7 +3,7 @@ import {
 	getCitationCountsByYear,
 	getCitationMapData,
 } from "../citation.service.js";
-import { getJournalPublicationData } from "../publication.service.js";
+import { getJournalPublicationData } from "../publication.service.ts";
 import {
 	saveGeographicSummary,
 	saveOverviewJournal,

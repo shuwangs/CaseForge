@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import pool from "../db/db.ts";
 import AppError from "../errors/AppError.ts";
+import type { Publication } from "../types/publication.types.ts";
 import { normalizePublications } from "../utitls/publication.helper.ts";
 
 dotenv.config();
@@ -8,7 +9,7 @@ dotenv.config();
 const api = process.env.PUBLICATION_API;
 
 // Search publication from by Orcid call third party API
-export const searchPublicationsByOrcid = async (orcid) => {
+export const searchPublicationsByOrcid = async (orcid: string) => {
 	const res = await fetch(`${api}${orcid}`);
 	if (!res.ok) {
 		throw new AppError("Failed to fetch publication data", 502);
@@ -25,7 +26,10 @@ export const searchPublicationsByOrcid = async (orcid) => {
 	return normalizedData;
 };
 
-export const insertPublication = async (projectId, publication) => {
+export const insertPublication = async (
+	projectId: number,
+	publication: Publication,
+) => {
 	const query = `
     INSERT INTO caseforge.publications (
         project_id,
@@ -83,7 +87,10 @@ export const insertPublication = async (projectId, publication) => {
 	return rows[0];
 };
 
-export const saveProjectPublication = async (projectId, publications) => {
+export const saveProjectPublication = async (
+	projectId: number,
+	publications: Publication[] = [],
+) => {
 	if (!publications || publications.length === 0) {
 		throw new AppError("No publications provided", 400);
 	}
@@ -96,7 +103,10 @@ export const saveProjectPublication = async (projectId, publications) => {
 	return savedPublications;
 };
 
-export const getPublicationsByProjectId = async (clerkId, projectId) => {
+export const getPublicationsByProjectId = async (
+	clerkId: string,
+	projectId: number,
+) => {
 	const query = `
         SELECT pub.*
         FROM caseforge.publications pub
@@ -112,7 +122,11 @@ export const getPublicationsByProjectId = async (clerkId, projectId) => {
 	return rows;
 };
 
-export const importPublicationsByOrcid = async (clerkId, projectId, orcid) => {
+export const importPublicationsByOrcid = async (
+	clerkId: string,
+	projectId: number,
+	orcid: string,
+) => {
 	const projectQuery = `
 		SELECT pr.id
 		FROM caseforge.projects pr
@@ -140,7 +154,10 @@ export const importPublicationsByOrcid = async (clerkId, projectId, orcid) => {
 	return savedPublications;
 };
 
-export const getJournalPublicationData = async (projectId, clerkId) => {
+export const getJournalPublicationData = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	const query = `
 		SELECT pub.journal_name, COUNT(*) AS publication_count
 		FROM caseforge.publications pub

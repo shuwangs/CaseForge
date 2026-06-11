@@ -4,7 +4,7 @@ import {
 	importPublicationsByOrcid,
 	saveProjectPublication,
 	searchPublicationsByOrcid,
-} from "../services/publication.service.js";
+} from "../services/publication.service.ts";
 import {
 	mapPublicationDTO,
 	validateOrcid,

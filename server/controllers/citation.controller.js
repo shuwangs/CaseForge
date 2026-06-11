@@ -8,7 +8,7 @@ import {
 import {
 	getJournalPublicationData,
 	getPublicationsByProjectId,
-} from "../services/publication.service.js";
+} from "../services/publication.service.ts";
 import { idValidate } from "../utitls/idValidate.ts";
 
 export const enqueueCitationJobs = async (req, res, next) => {
