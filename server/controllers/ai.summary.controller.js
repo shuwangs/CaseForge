@@ -2,7 +2,7 @@ import {
 	generateJournalImpactSummaryService,
 	generateMapSummaryService,
 	generateTrendSummaryService,
-} from "../services/ai/ai.service.js";
+} from "../services/ai/ai.service.ts";
 import { getSummaryByProjectId } from "../services/summary.service.ts";
 
 export const generateJournalImpactSummary = async (req, res, next) => {

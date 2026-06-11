@@ -9,7 +9,7 @@ import {
 	saveOverviewJournal,
 	saveTrendSummary,
 } from "../summary.service.ts";
-import { generateSummaryProvider } from "./gemini.provider.js";
+import { generateSummaryProvider } from "./gemini.provider.ts";
 
 const system_message = `You are a helpful  professional research impact writing assistant for CaseForge, which is an immigration aid application.
 	Your task is to generate concise, evidence-based research impact summaries from structured citation analytics.
@@ -33,8 +33,8 @@ const continentNames = {
 };
 
 export const generateJournalImpactSummaryService = async (
-	projectId,
-	clerkId,
+	projectId: number,
+	clerkId: string,
 ) => {
 	const analytics = await getJournalPublicationData(projectId, clerkId);
 
@@ -69,7 +69,10 @@ export const generateJournalImpactSummaryService = async (
 	};
 };
 
-export const generateMapSummaryService = async (projectId, clerkId) => {
+export const generateMapSummaryService = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	const analytics = await getCitationMapData(projectId, clerkId);
 
 	// Get total continents
@@ -108,7 +111,10 @@ export const generateMapSummaryService = async (projectId, clerkId) => {
 	};
 };
 
-export const generateTrendSummaryService = async (projectId, clerkId) => {
+export const generateTrendSummaryService = async (
+	projectId: number,
+	clerkId: string,
+) => {
 	// 1. fetch analytics
 	const analytics = await getCitationCountsByYear(projectId, clerkId);
 
