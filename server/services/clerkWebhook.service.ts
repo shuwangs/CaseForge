@@ -1,6 +1,6 @@
 import pool from "../db/db.ts";
 
-export const upsertUserFromClerk = async (clerk_id, email) => {
+export const upsertUserFromClerk = async (clerk_id: string, email: string) => {
 	const { rows } = await pool.query(
 		`INSERT INTO caseforge.users(clerk_id, email)
         VALUES($1, $2)
@@ -13,7 +13,7 @@ export const upsertUserFromClerk = async (clerk_id, email) => {
 	return rows[0].id;
 };
 
-export const deleteUserByClerkId = async (clerk_id) => {
+export const deleteUserByClerkId = async (clerk_id: string) => {
 	await pool.query(
 		`
     DELETE FROM caseforge.users

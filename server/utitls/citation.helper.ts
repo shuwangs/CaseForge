@@ -1,4 +1,6 @@
-export const normCitationFetch = (work) => {
+import type { OpenAlexWork } from "../types/citation.types.ts";
+
+export const normCitationFetch = (work: OpenAlexWork) => {
 	const normalized = {
 		citing_title: work.title,
 		citing_authors: work.authorships
@@ -30,7 +32,7 @@ export const normCitationFetch = (work) => {
 	return { normalized, citation_institutions };
 };
 
-export const normCitationList = (citationList = []) => {
+export const normCitationList = (citationList: OpenAlexWork[] = []) => {
 	if (!Array.isArray(citationList)) {
 		return [];
 	}

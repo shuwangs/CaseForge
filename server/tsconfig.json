@@ -6,6 +6,6 @@
 		"rootDir": ".",
 		"allowJs": true
 	},
-	"include": ["/**/*"],
+	"include": ["./**/*"],
 	"exclude": ["node_modules", "dist"]
 }

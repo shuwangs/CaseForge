@@ -6,7 +6,7 @@ import {
 	getProjectsByClerkId,
 	updateProjectById,
 } from "../services/project.service.js";
-import { getUserByClerkId } from "../services/user.service.js";
+import { getUserByClerkId } from "../services/user.service.ts";
 
 import { idValidate } from "../utitls/idValidate.ts";
 

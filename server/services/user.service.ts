@@ -1,6 +1,6 @@
 import pool from "../db/db.ts";
 
-export const getUserByClerkId = async (clerkId) => {
+export const getUserByClerkId = async (clerkId: string) => {
 	const result = await pool.query(
 		`
 		SELECT *

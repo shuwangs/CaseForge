@@ -2,7 +2,7 @@ import { Webhook } from "svix";
 import {
 	deleteUserByClerkId,
 	upsertUserFromClerk,
-} from "../services/clerkWebhook.service.js";
+} from "../services/clerkWebhook.service.ts";
 
 export const handleClerkWebhook = async (req, res) => {
 	const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
