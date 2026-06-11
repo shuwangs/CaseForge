@@ -1,8 +1,8 @@
 import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
 import express from "express";
-import { authMiddleware } from "./middleware/authMiddleware.js";
-import errorHandler from "./middleware/errorHandler.js";
+import { authMiddleware } from "./middleware/authMiddleware.ts";
+import errorHandler from "./middleware/errorHandler.ts";
 import clerkWebhook from "./routes/clerkWebhook.route.js";
 import projectPublicationRoute from "./routes/project.publication.route.js";
 import publicationRoute from "./routes/publication.route.js";

@@ -1,7 +1,12 @@
 import { getAuth } from "@clerk/express";
+import type { NextFunction, Request, Response } from "express";
 import AppError from "../errors/AppError.ts";
 
-export const authMiddleware = (req, _res, next) => {
+export const authMiddleware = (
+	req: Request,
+	_res: Response,
+	next: NextFunction,
+) => {
 	try {
 		const { userId: clerkId } = getAuth(req);
 		if (!clerkId) {
