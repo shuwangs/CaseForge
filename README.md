@@ -1,58 +1,68 @@
-# CaseForge
+# ⚖️ CaseForge
 
-CaseForge helps researchers and immigration applicants build stronger EB-1A and NIW cases by transforming publication and citation data into evidence-ready analytics.
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![BullMQ](https://img.shields.io/badge/BullMQ-Queue-orange)
+![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-AI-8E75FF?logo=google-gemini&logoColor=white)
+
+CaseForge is a full-stack TypeScript web application that helps researchers and immigration applicants transform publication and citation data into evidence-ready analytics for EB-1A and NIW petitions.
 
 Users can import publications through ORCID, automatically collect citation records, analyze research impact through interactive dashboards, and generate AI-powered evidence summaries. The platform provides journal impact analytics, citation trend visualizations, geographic citation insights, and exportable evidence artifacts to support immigration petitions.
 
 By automating data collection and analysis, CaseForge reduces the manual effort required to document scholarly influence and helps applicants present their research achievements more effectively.
 
-## Project Links
-- [Planning document](https://docs.google.com/document/d/1uBrXL40_HSKAMsKtR2tsXt0LkYKzjACVNEU0j_EcfYg/edit?tab=t.0)
+## 🎬 Live DEMO 
+![CaseForge](/client/public/caseforge.gif) 
 
-- [Detailed Summary for each Milestone](https://docs.google.com/document/d/12vpcjQTAiN4tyualFO1xeST1ph2WFHPYTIVVDce7Q0c/edit?tab=t.0#heading=h.zau7o7onnc1y)
-
+## 🔗 Project Links
 - [Deployment on Render](https://caseforge-web.onrender.com/)
-  
 - [Demo Video](https://youtu.be/CCA1onFAI0g)
-
-**Deployment Limitation**: Citation fetching is temporarily unavailable in the deployed version due to background worker hosting limitations. The feature works in the local development environment.
+- [Planning document](https://docs.google.com/document/d/1uBrXL40_HSKAMsKtR2tsXt0LkYKzjACVNEU0j_EcfYg/edit?tab=t.0)
+- [Milestone Summary](https://docs.google.com/document/d/12vpcjQTAiN4tyualFO1xeST1ph2WFHPYTIVVDce7Q0c/edit?tab=t.0#heading=h.zau7o7onnc1y)
+  
+> **Deployment Limitation:** Citation fetching is unavailable in the deployed version due to production worker hosting limitations. The feature works correctly in local and Dockerized environments.
 
 ---
 
-## Features
+## ❓ Problem 
+Researchers preparing EB-1A or NIW petitions often need to:
+
+- Collect publication records from multiple sources
+- Gather citation evidence
+- Analyze research impact
+- Prepare supporting documentation
+
+This process is time-consuming and highly manual.
+
+## 💡 Solution
+
+CaseForge automates publication collection, citation analysis, and evidence generation, allowing applicants to focus on presenting their achievements rather than gathering data.
+
+## ✨ Features
 
 - Clerk-based authentication and project ownership
-- ORCID-based publication retrieval and persistence
+- Containerized local development environment with Docker Compose
 - Asynchronous citation processing with BullMQ and Redis
+- AI-generated evidence summaries powered by Gemini
+- ORCID-based publication retrieval and persistence
 - Citation processing progress tracking
 - Journal impact analytics table
 - Citation trend visualization
 - Geographic citation analysis
-- AI-generated evidence summaries powered by Gemini
 - Summary persistence and retrieval
 - CSV export for analytics tables
 - PNG export for citation visualizations
 - Automated testing with Vitest
 
-## Screenshots
-**Landing Page**
-![Landing Page](/client/public/image.png)
 
-**Project Dashboard**
-![Project Page](/client/public/image-1.png)
-
-**Project Detail Page**
-![Project Progress Page](/client/public/image-2.png)
-
-**Analytica and AI Summaries**
-![Analytic Dashboard Page](/client/public/image-4.png)
-
-
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
 
-- React 19
+- React
 - TypeScript
 - Vite
 - Tailwind CSS
@@ -63,7 +73,7 @@ By automating data collection and analysis, CaseForge reduces the manual effort 
 
 ### Backend
 
-- Node.js
+- TypeScript
 - Express
 - PostgreSQL
 - BullMQ
@@ -76,6 +86,7 @@ By automating data collection and analysis, CaseForge reduces the manual effort 
 
 - Vitest
 - React Testing Library
+- Supertest
   
 ### Infrastructure
 
@@ -97,38 +108,18 @@ Create project
 → Saved summaries reload on future visit
 ```
 
-## Architecture
+## 🏗️ Architecture
+### System Architecture
+![Design Architecture](/client/public/caseforge-architecture.png)
 
-```text
-## Project Structure
-
-```text
-CaseForge/
-├── client/              # React + Vite frontend
-│   └── src/
-│       ├── pages/       # Landing, projects, publications, dashboard
-│       ├── components/  # UI, dashboard, project components
-│       ├── contexts/    # Project, publication, citation, summary state
-│       └── apis/        # Frontend API clients
-├── server/              # Express backend
-│   ├── controllers/     # Route handlers
-│   ├── services/        # Business logic and external API calls
-│   ├── workers/         # BullMQ citation worker
-│   ├── queues/          # Redis/BullMQ queue setup
-│   └── db/              # PostgreSQL schema and seed
-└── compose.yaml         # Docker Compose services
-
-```
-
-
-## Setup
+## ⚙️ Setup
 
 ### Local Setup
 
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/CaseForge.git
+git clone https://github.com/shuwangs/CaseForge.git
 cd CaseForge
 ```
 
@@ -283,7 +274,7 @@ Stop containers and remove volumes:
 docker compose down -v
 ```
 
-## API Overview
+## 📡 API Overview
 
 Most API routes require Clerk authentication.
 
@@ -331,7 +322,7 @@ POST /api/projects/:projectId/ai/map-summary
 GET  /api/projects/:projectId/ai/summary
 ```
 
-## AI Summary Pipeline 
+## 🤖 AI Summary Pipeline 
 ```text
 Fetch analytics
 → Build structured insights
@@ -342,13 +333,13 @@ Fetch analytics
 ```
 CaseForge currently generates summaries for:
 
-Journal/publication impact
-Citation trend
-Geographic citation reach
+- Journal/publication impact
+- Citation trend
+- Geographic citation reach
 The AI is constrained to use only provided analytics data and avoid unsupported legal conclusions.
 
 
-## Testing
+## 🔬 Testing
 
 Run client tests:
 
@@ -367,11 +358,17 @@ npm run coverage
 ```
 
 ### Testing coverage
-- Frontend Coverage
+| Layer    | Coverage |
+| -------- | -------- |
+| Frontend | 64.4%    |
+| Backend  | 70.1%    |
 
-![Frontend Coverage](/client/public/frontend-coverage.png)
-- Backend Coverage
-![Backend Coverage](/client/public/backend-coverage.png)
-## Known Limitations
-- Citation fetching requires Redis and the worker process to be running.
-- Upload functionality is not fully implemented yet.
+Coverage reports are generated using Vitest, React Testing Library and Supertest.
+
+## 🔮 Future Improvements
+
+- Deploy citation workers in production
+- Support additional citation providers
+- Generate downloadable evidence reports
+- Add file upload and document management
+- Improve AI-generated evidence drafting
