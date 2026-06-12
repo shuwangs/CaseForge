@@ -1,9 +1,10 @@
 import type { Request, Response } from "express";
 import { Webhook } from "svix";
+
 import {
 	deleteUserByClerkId,
 	upsertUserFromClerk,
-} from "../services/clerkWebhook.service.ts";
+} from "../services/clerkWebhook.service.js";
 
 export const handleClerkWebhook = async (req: Request, res: Response) => {
 	const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SIGNING_SECRET;
@@ -15,7 +16,9 @@ export const handleClerkWebhook = async (req: Request, res: Response) => {
 	const payload = req.body;
 
 	const wh = new Webhook(WEBHOOK_SECRET);
-	let evt: unknown;
+
+	// biome-ignore lint/suspicious/noExplicitAny: svix webhook event type
+	let evt: any;
 
 	try {
 		evt = wh.verify(payload, headers);

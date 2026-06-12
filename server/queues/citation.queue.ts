@@ -1,5 +1,5 @@
 import { Queue } from "bullmq";
-import { redisConnection } from "./redis.connection.ts";
+import { redisConnection } from "./redis.connection.js";
 
 export const citationsQueue = new Queue("citation", {
 	connection: redisConnection,
@@ -25,7 +25,6 @@ export const enqueueCitation = async ({
 		{
 			attempts: 5,
 			backoff: { type: "exponential", delay: 1000 },
-			timeout: 60000,
 			removeOnComplete: 500,
 			removeOnFail: 500,
 			jobId: `jobId-${clerkId}-${projectId}-${publicationOpenAlexId}`,

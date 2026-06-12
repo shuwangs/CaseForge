@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import pool from "../db/db.ts";
-import AppError from "../errors/AppError.ts";
+import pool from "../db/db.js";
+import AppError from "../errors/AppError.js";
 import type { NormalizedCitation } from "../types/citation.types.ts";
 
 dotenv.config();

@@ -1,5 +1,5 @@
 export type Publication = {
-	project_id: number | null;
+	project_id?: number | null;
 	title: string | null;
 	authors: string | null;
 	publicationType: string | null;

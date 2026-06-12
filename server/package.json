@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
 		"dev:local": "tsx watch --env-file=.env.local index.ts",
 		"dev:docker": "tsx watch index.ts",
 		"lint": "eslint .",

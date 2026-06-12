@@ -1,16 +1,16 @@
 import type { NextFunction, Request, Response } from "express";
 
-import AppError from "../errors/AppError.ts";
+import AppError from "../errors/AppError.js";
 import {
 	getPublicationsByProjectId,
 	importPublicationsByOrcid,
 	saveProjectPublication,
 	searchPublicationsByOrcid,
-} from "../services/publication.service.ts";
+} from "../services/publication.service.js";
 import {
 	mapPublicationDTO,
 	validateOrcid,
-} from "../utitls/publication.helper.ts";
+} from "../utitls/publication.helper.js";
 
 export const searchPublications = async (
 	req: Request,

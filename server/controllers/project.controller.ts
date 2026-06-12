@@ -1,15 +1,15 @@
 import type { NextFunction, Request, Response } from "express";
-import AppError from "../errors/AppError.ts";
+import AppError from "../errors/AppError.js";
 import {
 	addProject,
 	deleteProjectById,
 	getProjectStatusService,
 	getProjectsByClerkId,
 	updateProjectById,
-} from "../services/project.service.ts";
-import { getUserByClerkId } from "../services/user.service.ts";
+} from "../services/project.service.js";
+import { getUserByClerkId } from "../services/user.service.js";
 
-import { idValidate } from "../utitls/idValidate.ts";
+import { idValidate } from "../utitls/idValidate.js";
 
 export const getProjects = async (
 	req: Request,

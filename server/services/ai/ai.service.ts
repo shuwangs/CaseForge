@@ -2,14 +2,14 @@ import continentMap from "../../utitls/continent.json" with { type: "json" };
 import {
 	getCitationCountsByYear,
 	getCitationMapData,
-} from "../citation.service.ts";
-import { getJournalPublicationData } from "../publication.service.ts";
+} from "../citation.service.js";
+import { getJournalPublicationData } from "../publication.service.js";
 import {
 	saveGeographicSummary,
 	saveOverviewJournal,
 	saveTrendSummary,
-} from "../summary.service.ts";
-import { generateSummaryProvider } from "./gemini.provider.ts";
+} from "../summary.service.js";
+import { generateSummaryProvider } from "./gemini.provider.js";
 
 const system_message = `You are a helpful  professional research impact writing assistant for CaseForge, which is an immigration aid application.
 	Your task is to generate concise, evidence-based research impact summaries from structured citation analytics.

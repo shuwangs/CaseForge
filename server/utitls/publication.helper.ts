@@ -1,9 +1,26 @@
-import AppError from "../errors/AppError.ts";
+import AppError from "../errors/AppError.js";
+import type { Publication } from "../types/publication.types.js";
 
-export const validateOrcid = (): boolean => {
-	// TODO: implement the logic of validation
-	return true;
+export const validateOrcid = (orcid: string): boolean => {
+	const cleaned = orcid.trim();
+	const pattern = /^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/;
+
+	if (!pattern.test(cleaned)) return false;
+
+	// Checksum
+	// According to https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier
+	const digits: string = cleaned.replace(/-/g, "");
+	let total: number = 0;
+	for (let i: number = 0; i < 15; i++) {
+		total = (total + Number(digits[i])) * 2;
+	}
+	const remainder: number = total % 11;
+	const result: number = (12 - remainder) % 11;
+	const checkDigit: string = result === 10 ? "X" : String(result);
+
+	return checkDigit === digits[15];
 };
+
 export const extractIds = (idString: string = "") => {
 	const doi = idString.match(/doi:([^\s]+)/i)?.[1] || null;
 	const openalexId = idString.match(/openalex:(W\d+)/i)?.[1] || null;
@@ -73,16 +90,16 @@ const normalizeDate = (dateString: string) => {
 
 export const normalizePublication = (
 	rawPublication: Record<string, unknown>,
-) => {
-	const ids = extractIds(rawPublication.id);
-	const journal = parseJournal(rawPublication.venue);
-	const publisher = parsePublisher(rawPublication.publisher);
+): Publication => {
+	const ids = extractIds(rawPublication.id as string);
+	const journal = parseJournal(rawPublication.venue as string);
+	const publisher = parsePublisher(rawPublication.publisher as string);
 
 	return {
-		title: rawPublication.title || null,
-		authors: rawPublication.author || null,
-		publicationType: rawPublication.type || null,
-		publicationDate: normalizeDate(rawPublication.pub_date) || null,
+		title: (rawPublication.title as string) || null,
+		authors: (rawPublication.author as string) || null,
+		publicationType: (rawPublication.type as string) || null,
+		publicationDate: normalizeDate(rawPublication.pub_date as string) || null,
 
 		doi: ids.doi,
 		openalexId: ids.openalexId,
@@ -99,7 +116,9 @@ export const normalizePublication = (
 	};
 };
 
-export const normalizePublications = (publicationList: unknown[]) => {
+export const normalizePublications = (
+	publicationList: Record<string, unknown>[],
+) => {
 	if (!publicationList || publicationList.length === 0) {
 		throw new AppError("No publication is found", 404);
 	}

@@ -1,4 +1,4 @@
-import pool from "../db/db.ts";
+import pool from "../db/db.js";
 
 export const upsertUserFromClerk = async (clerk_id: string, email: string) => {
 	const { rows } = await pool.query(

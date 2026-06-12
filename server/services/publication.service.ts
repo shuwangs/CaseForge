@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import pool from "../db/db.ts";
-import AppError from "../errors/AppError.ts";
+import pool from "../db/db.js";
+import AppError from "../errors/AppError.js";
 import type { Publication } from "../types/publication.types.ts";
-import { normalizePublications } from "../utitls/publication.helper.ts";
+import { normalizePublications } from "../utitls/publication.helper.js";
 
 dotenv.config();
 

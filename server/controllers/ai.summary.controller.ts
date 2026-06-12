@@ -3,8 +3,8 @@ import {
 	generateJournalImpactSummaryService,
 	generateMapSummaryService,
 	generateTrendSummaryService,
-} from "../services/ai/ai.service.ts";
-import { getSummaryByProjectId } from "../services/summary.service.ts";
+} from "../services/ai/ai.service.js";
+import { getSummaryByProjectId } from "../services/summary.service.js";
 
 export const generateJournalImpactSummary = async (
 	req: Request,

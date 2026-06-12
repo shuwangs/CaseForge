@@ -1,17 +1,17 @@
 import type { NextFunction, Request, Response } from "express";
 
-import AppError from "../errors/AppError.ts";
-import { citationsQueue, enqueueCitation } from "../queues/citation.queue.ts";
+import AppError from "../errors/AppError.js";
+import { citationsQueue, enqueueCitation } from "../queues/citation.queue.js";
 import {
 	getCitationCountsByYear,
 	getCitationMapData,
 	getCitationsCountByProjectId,
-} from "../services/citation.service.ts";
+} from "../services/citation.service.js";
 import {
 	getJournalPublicationData,
 	getPublicationsByProjectId,
-} from "../services/publication.service.ts";
-import { idValidate } from "../utitls/idValidate.ts";
+} from "../services/publication.service.js";
+import { idValidate } from "../utitls/idValidate.js";
 
 export const enqueueCitationJobs = async (
 	req: Request,

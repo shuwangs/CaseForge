@@ -1,5 +1,5 @@
-import pool from "../db/db.ts";
-import AppError from "../errors/AppError.ts";
+import pool from "../db/db.js";
+import AppError from "../errors/AppError.js";
 
 export const getSummaryByProjectId = async (
 	projectId: number,

@@ -1,4 +1,4 @@
-import pool from "../db/db.ts";
+import pool from "../db/db.js";
 import type { ProjectPayload } from "../types/project.types.ts";
 
 export const getProjectsByUserId = async (userId: number) => {
