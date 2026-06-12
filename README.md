@@ -63,7 +63,7 @@ By automating data collection and analysis, CaseForge reduces the manual effort 
 
 ### Backend
 
-- Node.js
+- TypeScript
 - Express
 - PostgreSQL
 - BullMQ
