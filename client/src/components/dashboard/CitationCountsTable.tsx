@@ -64,15 +64,12 @@ const CitationCountsTable = () => {
 				/>
 			</div>
 
-			<div>
+			<div className="flex gap-2">
 				<BaseBtn onClick={onBtnExport} variant="secondary">
 					Download CSV
 				</BaseBtn>
 
-				<BaseBtn
-					onClick={() => handleGenerateJournalTableSummary(projectId)}
-					variant="secondary"
-				>
+				<BaseBtn onClick={() => handleGenerateJournalTableSummary(projectId)}>
 					Generate Summary
 				</BaseBtn>
 			</div>

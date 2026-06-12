@@ -4,15 +4,17 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js",
-		"dev:local": "nodemon --env-file=.env.local index.js",
-		"dev:docker": "nodemon index.js",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"dev:local": "tsx watch --env-file=.env.local index.ts",
+		"dev:docker": "tsx watch index.ts",
 		"lint": "eslint .",
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
 		"test": "vitest",
-		"worker:citation:dev": "nodemon --env-file=.env.local workers/citation.worker.js",
-		"worker:citation": "node workers/citation.worker.js"
+		"worker:citation:dev": "tsx workers/citation.worker.ts",
+		"worker:citation": "tsx workers/citation.worker.js",
+		"coverage": "vitest run --coverage"
 	},
 	"keywords": [],
 	"author": "",
@@ -22,7 +24,7 @@
 		"@clerk/backend": "^3.4.4",
 		"@clerk/express": "^2.1.12",
 		"@google/genai": "^2.6.0",
-		"@types/jest": "^30.0.0",
+		"@types/node": "^25.9.3",
 		"@types/supertest": "^7.2.0",
 		"bullmq": "^5.76.6",
 		"cors": "^2.8.6",
@@ -34,7 +36,11 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.12",
+		"@types/jest": "^30.0.0",
+		"@vitest/coverage-v8": "^4.1.8",
 		"nodemon": "^3.1.14",
+		"tsx": "^4.22.4",
+		"typescript": "^6.0.3",
 		"vitest": "^4.1.5"
 	}
 }
