@@ -36,7 +36,9 @@ const ProjectsPage = () => {
 					<div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-bg)] text-2xl">
 						📊
 					</div>
-					<h2>No projects yet</h2>
+					<h2 className="text-base font-semibold text-[var(--color-primary)]">
+						No projects yet
+					</h2>
 					<p>
 						Create your first project to start retrieving and analyzing
 						publications

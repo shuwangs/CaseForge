@@ -5,6 +5,7 @@ import {
 	deleteProject,
 	fetchAllProjects,
 	fetchProjectStatus,
+	updateProject,
 } from "../projectApi.ts";
 
 vi.mock("../fetchWithAuth.ts");
@@ -42,6 +43,16 @@ describe("projectApi", () => {
 		expect(projects[0].userId).toBe("user-99");
 	});
 
+	it("fetchAllProjects should throw when response is not ok", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+		} as Response);
+
+		await expect(fetchAllProjects(mockToken)).rejects.toThrow(
+			"Fetch projects failed",
+		);
+	});
+
 	it("deleteProject should send DELETE request and return response data", async () => {
 		vi.mocked(fetchWithAuth).mockResolvedValue({
 			ok: true,
@@ -50,6 +61,16 @@ describe("projectApi", () => {
 
 		const res = await deleteProject(1, mockToken);
 		expect(res.success).toBe(true);
+	});
+
+	it("deleteProject should throw when response is not ok", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+		} as Response);
+
+		await expect(deleteProject(1, mockToken)).rejects.toThrow(
+			"Delete Project failed",
+		);
 	});
 
 	it("should fetch project workflow milestone status", async () => {
@@ -64,6 +85,16 @@ describe("projectApi", () => {
 		expect(status.hasCitations).toBe(false);
 	});
 
+	it("fetchProjectStatus should throw when response is not ok", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+		} as Response);
+
+		await expect(fetchProjectStatus(1, mockToken)).rejects.toThrow(
+			"Fetch projects failed",
+		);
+	});
+
 	it("should post payload and return mapped project", async () => {
 		const payload = { projectName: "ABC Project", first_name: "Bo" };
 		vi.mocked(fetchWithAuth).mockResolvedValue({
@@ -74,5 +105,31 @@ describe("projectApi", () => {
 		const result = await addNewProject(payload, mockToken);
 
 		expect(result.firstName).toBe("Bobo");
+	});
+
+	it("updateProject and return updated project", async () => {
+		const payload = { projectName: "Updated Project" };
+		const updatedProject = {
+			...mockDbProject,
+			project_name: "Updated Project",
+		};
+
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: true,
+			json: async () => ({ data: updatedProject }),
+		} as Response);
+
+		const result = await updateProject(1, payload, mockToken);
+		expect(result.project_name).toBe("Updated Project");
+	});
+
+	it("updateProject should throw when response is not ok", async () => {
+		vi.mocked(fetchWithAuth).mockResolvedValue({
+			ok: false,
+		} as Response);
+
+		await expect(
+			updateProject(1, { projectName: "Bad Update" }, mockToken),
+		).rejects.toThrow("Update Project failed");
 	});
 });

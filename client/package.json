@@ -10,7 +10,8 @@
 		"preview": "vite preview",
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
-		"test": "vitest run"
+		"test": "vitest run",
+		"coverage": "npx vitest run --coverage"
 	},
 	"dependencies": {
 		"@clerk/react": "^6.5.0",

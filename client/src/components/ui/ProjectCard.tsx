@@ -12,7 +12,7 @@ const ProjectCard = ({ project, href }: ProjectCardProps) => {
 		<Link to={href}>
 			<div
 				className="max-w-4xl rounded-lg border border-gray-200 shadow-sm 
-			px-6 py-2 bg-white
+			px-6 py-4 bg-white
 			hover:border-[var(--color-accent)] hover:shadow-md mt-2"
 			>
 				<div className="flex items-center gap-4">
