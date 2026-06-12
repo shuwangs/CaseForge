@@ -6,26 +6,26 @@ import {
 	getCitationCountsByYear,
 	getCitationMapData,
 	getCitationsCountByProjectId,
-} from "../services/citation.service.js";
+} from "../../services/citation.service.js";
 
-vi.mock("../queues/citation.queue.js", () => ({
+vi.mock("../../queues/citation.queue.js", () => ({
 	enqueueCitation: vi.fn(),
 	citationsQueue: {
 		getJobCounts: vi.fn(),
 	},
 }));
 
-vi.mock("../services/citation.service.js", () => ({
+vi.mock("../../services/citation.service.js", () => ({
 	getCitationCountsByYear: vi.fn(),
 	getCitationMapData: vi.fn(),
 	getCitationsCountByProjectId: vi.fn(),
 }));
 
-vi.mock("../services/publication.service.js", () => ({
+vi.mock("../../services/publication.service.js", () => ({
 	getPublicationsByProjectId: vi.fn(),
 }));
 
-vi.mock("../utitls/idValidate.js", () => ({
+vi.mock("../../utitls/idValidate.js", () => ({
 	idValidate: vi.fn(),
 }));
 

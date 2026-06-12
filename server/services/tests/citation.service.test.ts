@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import pool from "../db/db.js";
+import pool from "../../db/db.js";
 import {
 	fetchCitation,
 	getCitationCountsByYear,
 	getCitationMapData,
 	getCitationsCountByProjectId,
-} from "./citation.service.js";
+} from "../citation.service.js";
 
-vi.mock("../db/db.js", {
+vi.mock("../../db/db.js", {
 	default: {
 		query: vi.fn(),
 	},

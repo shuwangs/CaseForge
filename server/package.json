@@ -13,7 +13,8 @@
 		"check": "npx @biomejs/biome check --write",
 		"test": "vitest",
 		"worker:citation:dev": "tsx workers/citation.worker.ts",
-		"worker:citation": "tsx workers/citation.worker.js"
+		"worker:citation": "tsx workers/citation.worker.js",
+		"coverage": "vitest run --coverage"
 	},
 	"keywords": [],
 	"author": "",
@@ -36,6 +37,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.4.12",
 		"@types/jest": "^30.0.0",
+		"@vitest/coverage-v8": "^4.1.8",
 		"nodemon": "^3.1.14",
 		"tsx": "^4.22.4",
 		"typescript": "^6.0.3",

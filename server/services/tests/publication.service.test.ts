@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	saveProjectPublication,
 	searchPublicationsByOrcid,
-} from "./publication.service.js";
+} from "../publication.service.js";
 
 vi.mock("../../db/db.js", () => ({
 	default: {
