@@ -2,15 +2,17 @@ const variants = {
 	primary: `
         bg-[var(--color-accent)]
 		text-white
-		hover:opacity-80
+		border border-[var(--color-accent)]
+		hover:bg-[var(--color-primary)]
+		hover:border-[var(--color-primary)]
     `,
 
 	secondary: `
-        border border-[var(--color-secondary)]
+        border border-gray-300
 		bg-white
-		text-[var(--color-secondary)]
-		hover:bg-lime-200
+		text-[var(--color-primary)]
 		hover:text-[var(--color-accent)]
+		hover:bg-blue-50
     `,
 	danger: `
 		border border-red-200
@@ -21,10 +23,11 @@ const variants = {
 	`,
 
 	ghost: `
-        border border-gra-100
-		bg-gray-100
+		border border-transparent
+		bg-transparent
 		text-gray-600
-		hover:bg-gray-300
+		hover:bg-gray-100
+		hover:text-[var(--color-primary)]
 	`,
 };
 
@@ -39,10 +42,18 @@ const BaseBtn = ({
 		<button
 			type={type}
 			className={`
+				inline-flex items-center justify-center gap-2
 				px-4 py-1.5
 				rounded-lg
-				text-xs font-medium
-				transition
+				text-sm font-medium
+				leading-none
+				transition-colors
+				focus:outline-none
+				focus:ring-2
+				focus:ring-[var(--color-accent)]
+				focus:ring-offset-2
+				disabled:cursor-not-allowed
+				disabled:opacity-50
 				${variants[variant]}
 				${className}
 			`}

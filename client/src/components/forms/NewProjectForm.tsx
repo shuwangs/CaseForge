@@ -119,9 +119,9 @@ const NewProjectForm = ({
 				<BaseBtn type="submit">
 					{mode === "edit" ? "Save Changes" : "Create Project"}
 				</BaseBtn>
-				<button type="button" onClick={handleClear}>
+				<BaseBtn variant="ghost" type="button" onClick={handleClear}>
 					Clear
-				</button>
+				</BaseBtn>
 			</div>
 		</form>
 	);

@@ -4,13 +4,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 // Enqueue the jobs
 export const getCitations = async (projectId: number, token: string) => {
-	const result = await fetch(
+	const result = await fetchWithAuth(
+		token,
 		`${API_BASE_URL}/api/projects/${projectId}/citations/jobs`,
 		{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
 			},
 			cache: "no-store",
 		},
@@ -27,13 +27,9 @@ export const getCitations = async (projectId: number, token: string) => {
 };
 
 export const fetchCitationStatus = async (ProjectId: number, token: string) => {
-	const result = await fetch(
+	const result = await fetchWithAuth(
+		token,
 		`${API_BASE_URL}/api/projects/${ProjectId}/citations/status`,
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		},
 	);
 
 	if (!result.ok) {
@@ -44,13 +40,9 @@ export const fetchCitationStatus = async (ProjectId: number, token: string) => {
 };
 
 export const fetchCitationCount = async (ProjectId: number, token: string) => {
-	const result = await fetch(
+	const result = await fetchWithAuth(
+		token,
 		`${API_BASE_URL}/api/projects/${ProjectId}/citation-counts`,
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		},
 	);
 	if (!result.ok) {
 		throw new Error("Failed to fetch citation counts");
@@ -64,13 +56,9 @@ export const fetchCitationYearlyCounts = async (
 	ProjectId: number,
 	token: string,
 ) => {
-	const result = await fetch(
+	const result = await fetchWithAuth(
+		token,
 		`${API_BASE_URL}/api/projects/${ProjectId}/yearly-counts`,
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		},
 	);
 
 	if (!result.ok) {
@@ -84,11 +72,10 @@ export const fetchCitationMapData = async (
 	ProjectId: number,
 	token: string,
 ) => {
-	const result = await fetch(`${API_BASE_URL}/api/projects/${ProjectId}/map`, {
-		headers: {
-			Authorization: `Bearer ${token}`,
-		},
-	});
+	const result = await fetchWithAuth(
+		token,
+		`${API_BASE_URL}/api/projects/${ProjectId}/map`,
+	);
 
 	if (!result.ok) {
 		throw new Error("Failed to fetch citation map");

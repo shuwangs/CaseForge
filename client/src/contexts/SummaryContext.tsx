@@ -5,7 +5,7 @@ import {
 	generateJournalTableSummary,
 	generateMapSummary,
 	generateTrendSummary,
-} from "../apis/summaryApi.js";
+} from "../apis/summaryApi.ts";
 
 export const SummaryContext = createContext();
 

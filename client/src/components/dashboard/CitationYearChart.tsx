@@ -58,15 +58,12 @@ const CitationYearChart = () => {
 				<Line ref={lineChart} data={data} />
 			</div>
 
-			<div>
+			<div className="flex gap-2">
 				<BaseBtn variant="secondary" onClick={downloadChart}>
 					Download Chart
 				</BaseBtn>
 
-				<BaseBtn
-					onClick={() => handleGenerateTrendSummary(projectId)}
-					variant="secondary"
-				>
+				<BaseBtn onClick={() => handleGenerateTrendSummary(projectId)}>
 					Generate Summary
 				</BaseBtn>
 			</div>

@@ -13,7 +13,7 @@ By automating data collection and analysis, CaseForge reduces the manual effort 
 
 - [Deployment on Render](https://caseforge-web.onrender.com/)
   
-- [Demo Video](https://www.youtube.com/watch?v=9HTRYQloK8w)
+- [Demo Video](https://youtu.be/CCA1onFAI0g)
 
 **Deployment Limitation**: Citation fetching is temporarily unavailable in the deployed version due to background worker hosting limitations. The feature works in the local development environment.
 
@@ -355,6 +355,7 @@ Run client tests:
 ```bash
 cd client
 npm run test
+npm run coverage
 ```
 
 Run server tests:
@@ -362,8 +363,15 @@ Run server tests:
 ```bash
 cd server
 npm run test
+npm run coverage
 ```
 
+### Testing coverage
+- Frontend Coverage
+
+![Frontend Coverage](/client/public/frontend-coverage.png)
+- Backend Coverage
+![Backend Coverage](/client/public/backend-coverage.png)
 ## Known Limitations
 - Citation fetching requires Redis and the worker process to be running.
 - Upload functionality is not fully implemented yet.
