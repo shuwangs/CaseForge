@@ -40,12 +40,10 @@ describe("FormInputField", () => {
 		);
 
 		const input = screen.getByLabelText("First Name");
-		console.log(input.tagName);
-		console.log(input.outerHTML);
+
 		fireEvent.change(input, {
 			target: { value: "testCase" },
 		});
-		console.log(onChange.mock.calls);
 		expect(onChange).toHaveBeenCalledTimes(1);
 	});
 });
