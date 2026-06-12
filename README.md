@@ -34,19 +34,8 @@ By automating data collection and analysis, CaseForge reduces the manual effort 
 - PNG export for citation visualizations
 - Automated testing with Vitest
 
-## Screenshots
-**Landing Page**
-![Landing Page](/client/public/image.png)
-
-**Project Dashboard**
-![Project Page](/client/public/image-1.png)
-
-**Project Detail Page**
-![Project Progress Page](/client/public/image-2.png)
-
-**Analytica and AI Summaries**
-![Analytic Dashboard Page](/client/public/image-4.png)
-
+## DEMO 
+![CaseForge](/client/public/caseforge.gif)
 
 ## Tech Stack
 
