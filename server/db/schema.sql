@@ -69,7 +69,7 @@ CREATE TABLE publications (
 
   raw_data JSONB,
 
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   CONSTRAINT unique_project_publication_openalex
     UNIQUE (project_id, openalex_id)
