@@ -1,4 +1,5 @@
 import { Show } from "@clerk/react";
+import { Navigate } from "react-router-dom";
 import AppLayout from "./AppLayout.js";
 
 const ProtectedLayout = () => {
@@ -7,10 +8,9 @@ const ProtectedLayout = () => {
 			<Show when="signed-in">
 				<AppLayout />
 			</Show>
-			{/* 
 			<Show when="signed-out">
-				<RedirectToSignIn />
-			</Show> */}
+				<Navigate to="/" replace />
+			</Show>
 		</>
 	);
 };
