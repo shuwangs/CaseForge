@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { extractIds } from "./publication.helper.js";
+import { extractIds } from "../publication.helper.js";
 
 describe("publication.helper test", () => {
 	describe("extractIds", () => {

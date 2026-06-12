@@ -1,23 +1,23 @@
 import express from "express";
 import request from "supertest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import projectRoutes from "../routes/project.publication.route.js";
+import projectRoutes from "../../routes/project.publication.route.js";
 import {
 	addProject,
 	deleteProjectById,
 	getProjectsByClerkId,
 	updateProjectById,
-} from "../services/project.service.js";
-import { getUserByClerkId } from "../services/user.service.js";
+} from "../../services/project.service.js";
+import { getUserByClerkId } from "../../services/user.service.js";
 
-vi.mock("../services/project.service.js", () => ({
+vi.mock("../../services/project.service.js", () => ({
 	getProjectsByClerkId: vi.fn(),
 	addProject: vi.fn(),
 	deleteProjectById: vi.fn(),
 	updateProjectById: vi.fn(),
 }));
 
-vi.mock("../services/user.service.js", () => ({
+vi.mock("../../services/user.service.js", () => ({
 	getUserByClerkId: vi.fn(),
 }));
 

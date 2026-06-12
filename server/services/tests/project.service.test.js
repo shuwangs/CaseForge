@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import pool from "../../db/db.js";
 import {
 	addProject,
 	deleteProjectById,
 	getProjectsByClerkId,
 	updateProjectById,
-} from "../../services/project.service.js";
-import pool from "../db/db.js";
+} from "../project.service.js";
 
-vi.mock("../db/db.js", () => ({
+vi.mock("../../db/db.js", () => ({
 	default: {
 		query: vi.fn(),
 	},
