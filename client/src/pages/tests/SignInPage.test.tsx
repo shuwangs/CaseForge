@@ -20,9 +20,7 @@ describe("SignInPage", () => {
 			</MemoryRouter>,
 		);
 
-		expect(
-			screen.getByRole("link", { name: "CaseForge" }),
-		).toBeInTheDocument();
+		expect(screen.getByRole("link", { name: "CaseForge" })).toBeInTheDocument();
 		expect(screen.getByTestId("sign-in")).toHaveTextContent("/sign-in");
 	});
 });

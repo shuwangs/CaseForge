@@ -5,7 +5,7 @@ import HeroContent from "../HeroContent.tsx";
 
 vi.mock("@clerk/react", () => ({
 	SignUpButton: ({ children }: { children: React.ReactNode }) => (
-		<button>{children}</button>
+		<button type="button">{children}</button>
 	),
 }));
 describe("HeroContent Component", () => {

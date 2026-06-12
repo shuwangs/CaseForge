@@ -4,7 +4,9 @@ import { describe, expect, it, vi } from "vitest";
 import HeroFeatures from "../HeroFeatures.tsx";
 
 vi.mock("@clerk/react", () => ({
-	SignUpButton: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+	SignUpButton: ({ children }: { children: React.ReactNode }) => (
+		<>{children}</>
+	),
 }));
 vi.mock("../ui/FeatureCard.tsx", () => ({
 	default: ({ title, description }) => (
