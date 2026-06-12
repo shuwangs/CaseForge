@@ -44,26 +44,19 @@ CaseForge automates publication collection, citation analysis, and evidence gene
 ## ✨ Features
 
 - Clerk-based authentication and project ownership
-- ORCID-based publication retrieval and persistence
+- Containerized local development environment with Docker Compose
 - Asynchronous citation processing with BullMQ and Redis
+- AI-generated evidence summaries powered by Gemini
+- ORCID-based publication retrieval and persistence
 - Citation processing progress tracking
 - Journal impact analytics table
 - Citation trend visualization
 - Geographic citation analysis
-- AI-generated evidence summaries powered by Gemini
 - Summary persistence and retrieval
 - CSV export for analytics tables
 - PNG export for citation visualizations
 - Automated testing with Vitest
 
-## 🚀 Technical Highlights
-
-- Migrated backend codebase from JavaScript to TypeScript
-- Implemented asynchronous citation processing using BullMQ and Redis workers
-- Integrated Clerk authentication and user ownership model
-- Built AI-powered evidence summaries with Gemini
-- Added automated frontend and backend testing with Vitest
-- Containerized local development environment with Docker Compose
 
 ## 🛠️ Tech Stack
 
@@ -126,7 +119,7 @@ Create project
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/CaseForge.git
+git clone https://github.com/shuwangs/CaseForge.git
 cd CaseForge
 ```
 
@@ -340,9 +333,9 @@ Fetch analytics
 ```
 CaseForge currently generates summaries for:
 
-Journal/publication impact
-Citation trend
-Geographic citation reach
+- Journal/publication impact
+- Citation trend
+- Geographic citation reach
 The AI is constrained to use only provided analytics data and avoid unsupported legal conclusions.
 
 
