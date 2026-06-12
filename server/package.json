@@ -4,14 +4,14 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js",
-		"dev:local": "nodemon --env-file=.env.local index.js",
-		"dev:docker": "nodemon index.js",
+		"start": "node index.ts",
+		"dev:local": "tsx watch --env-file=.env.local index.ts",
+		"dev:docker": "tsx watch index.ts",
 		"lint": "eslint .",
 		"format": "npx @biomejs/biome format --write",
 		"check": "npx @biomejs/biome check --write",
 		"test": "vitest",
-		"worker:citation:dev": "tsx watch --env-file=.env.local workers/citation.worker.js",
+		"worker:citation:dev": "tsx watch --env-file=.env.local workers/citation.worker.ts",
 		"worker:citation": "node workers/citation.worker.js"
 	},
 	"keywords": [],
@@ -36,6 +36,7 @@
 		"@biomejs/biome": "2.4.12",
 		"@types/jest": "^30.0.0",
 		"nodemon": "^3.1.14",
+		"tsx": "^4.22.4",
 		"typescript": "^6.0.3",
 		"vitest": "^4.1.5"
 	}

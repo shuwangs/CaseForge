@@ -3,10 +3,10 @@ import cors from "cors";
 import express from "express";
 import { authMiddleware } from "./middleware/authMiddleware.ts";
 import errorHandler from "./middleware/errorHandler.ts";
-import clerkWebhook from "./routes/clerkWebhook.route.js";
-import projectPublicationRoute from "./routes/project.publication.route.js";
-import publicationRoute from "./routes/publication.route.js";
-import userRoute from "./routes/user.route.js";
+import clerkWebhook from "./routes/clerkWebhook.route.ts";
+import projectPublicationRoute from "./routes/project.publication.route.ts";
+import publicationRoute from "./routes/publication.route.ts";
+import userRoute from "./routes/user.route.ts";
 
 const app = express();
 
