@@ -43,21 +43,27 @@ CaseForge automates publication collection, citation analysis, and evidence gene
 
 ## ✨ Features
 
-- Clerk-based authentication and project ownership
-- Containerized local development environment with Docker Compose
-- Asynchronous citation processing with BullMQ and Redis
-- AI-generated evidence summaries powered by Gemini
 - ORCID-based publication retrieval and persistence
+- Asynchronous citation collection and processing
 - Citation processing progress tracking
-- Journal impact analytics table
-- Citation trend visualization
-- Geographic citation analysis
+- Journal impact analytics dashboard
+- Citation trend visualization and Geographic citation analysis
+- AI-generated evidence summaries powered by Gemini
 - Summary persistence and retrieval
-- CSV export for analytics tables
-- PNG export for citation visualizations
-- Automated testing with Vitest
+- Clerk-based authentication and project ownership
+- CSV export for analytics tables and PNG export for citation visualizations
 
+## 🚀 Engineering Highlights
 
+- Migrated the backend from JavaScript to TypeScript to improve type safety and maintainability.
+- Designed an asynchronous processing pipeline using BullMQ, Redis, and background workers for citation collection.
+- Built AI-powered analytics summaries using Gemini with persisted results stored in PostgreSQL.
+- Containerized the application using Docker Compose for reproducible local development.
+- Configured automated testing with Vitest, React Testing Library, and Supertest.
+- Implemented automated testing using Vitest, React Testing Library, and Supertes
+- Added code quality and CI validation through Biome formatting and automated test checks.
+- Configured deployment environments using Render, PostgreSQL, Redis, and worker services.
+  
 ## 🛠️ Tech Stack
 
 ### Frontend
